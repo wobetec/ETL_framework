@@ -1,62 +1,63 @@
+#ifndef REPDATA_H
+#define REPDATA_H
+
 #include <iostream>
 #include <string>
 #include <vector>
 
+// Forward declaration of ExtractorEstrategy
+class ExtractorEstrategy;
+
 class RepoData {
-    public:
-        enum ExtractorEstrategyType {
-            ExtractorCSV,
-            ExtractorTXT,
-            ExtractorMemory,
-            ExtractorSQL
-        }
-        RepoData(){
-            strategy_ = NULL;
-        }
-        void setStrategy(int type, std::string path = "", std::string dbAdress = "", 
-                         std::string query = "", std::int *pointer = NULL, std::int size = 0);
-        void extractData();
-        void loadData();
+public:
+    enum ExtractorEstrategyType {
+        ExtractorCSVType,
+        ExtractorTXTType,
+        ExtractorMemoryType,
+        ExtractorSQLType
+    };
+    RepoData();
+    void setStrategy(int type, std::string path = "", std::string dbAdress = "",
+                     std::string query = "", int* pointer = nullptr, int size = 0);
+    void extractData();
+    void loadData();
 
-    private:
-        ExtractorEstrategy* strategy_;
+private:
+    ExtractorEstrategy* strategy_ = nullptr;
 };
-
 
 class ExtractorEstrategy {
-    public:
-        virtual void extractData() = 0;
-        virtual void loadData() = 0;        
+public:
+    virtual void extractData() = 0;
+    virtual void loadData() = 0;
 };
-
 
 class ExtractorCSV : public ExtractorEstrategy {
-    public:
-        ExtractorCSV(std::string path);
-        void extractData();
-        void loadData();
+public:
+    ExtractorCSV(){};
+    void extractData() override;
+    void loadData() override;
 };
-
 
 class ExtractorTXT : public ExtractorEstrategy {
-    public:
-        ExtractorTXT(std::string path);
-        void extractData();
-        void loadData();
+public:
+    ExtractorTXT(){};
+    void extractData() override;
+    void loadData() override;
 };
-
 
 class ExtractorMemory : public ExtractorEstrategy {
-    public:
-        ExtractorMemory(std::int *pointer, std::int size);
-        void extractData();
-        void loadData();
+public:
+    ExtractorMemory(){};
+    void extractData() override;
+    void loadData() override;
 };
-
 
 class ExtractorSQL : public ExtractorEstrategy {
-    public:
-        ExtractorSQL(std::string dbAdress, std::string query);
-        void extractData();
-        void loadData();
+public:
+    ExtractorSQL(){};
+    void extractData() override;
+    void loadData() override;
 };
+
+#endif // REPDATA_H
