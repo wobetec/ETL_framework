@@ -28,12 +28,10 @@ void RepoData::setStrategy(int type, std::string path, std::string dbAdress,
     }
 }
 
-// Extract Data
 void RepoData::extractData() {
     strategy_->extractData();
 }
 
-// Load Data
 void RepoData::loadData() {
     strategy_->loadData();
 }
