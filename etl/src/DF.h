@@ -1,40 +1,24 @@
 #include "../../src/DataFrame.h"
 #include "../../src/utils/datetime.h"
+#include "../../src/utils/char_types.h"
 #include <iomanip>
 
 struct CadeAnalytics{
-    DateTime data_notificacao;
     int id_usuario;
-    char estimulo[20];
-    char component_alvo[20];
+    string32 estimulo;
+    string32 component_alvo;
+    DateTime data_notificacao;
 } typedef CadeAnalytics;
 
 class DF_CadeAnalytics : public DataFrame<CadeAnalytics> {
     private:
         std::vector<CadeAnalytics> data;
+        int print_width[4] = {20, 3, 32, 32};
+
     public:
-        void print() {
-            std::cout 
-                << std::right << std::setw(3) << ""
-                << std::right << std::setw(20) << "Data Notificacao" 
-                << std::right << std::setw(3) << "ID"
-                << std::right << std::setw(20) << "Estimulo"
-                << std::right << std::setw(20) << "Componente Alvo"
-                << std::endl;
-            for (int i = 0; i < data.size(); i++) {
-                std::cout 
-                    << std::right << std::setw(3) << i
-                    << std::right << std::setw(20) << data[i].data_notificacao.strftime()
-                    << std::right << std::setw(3) << data[i].id_usuario
-                    << std::right << std::setw(20) << data[i].estimulo
-                    << std::right << std::setw(20) << data[i].component_alvo
-                    << std::endl;
-            }
-        }
-        void append(CadeAnalytics data) {
-            this->data.push_back(data);
-        }
-        int size() {
-            return data.size();
-        }
+        void print();
+        void append(CadeAnalytics data);
+        int size();
+        std::string type();
+        DF_CadeAnalytics concat(DF_CadeAnalytics &df);
 };

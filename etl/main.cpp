@@ -5,8 +5,8 @@ using namespace std;
 int main(){
 
     DF_CadeAnalytics df;
-    df.append({DateTime(), 1, "Estimulo 1", "Componente 1"});
-    df.append({DateTime(), 2, "Estimulo 2", "Componente 2"});
+    df.append({1, "estimulo", "componente alvo", DateTime(2021, 1, 1)});
+    df.append({2, "estimulo", "componente alvo", DateTime(2021, 1, 2)});
     df.print();
 
     return 0;
