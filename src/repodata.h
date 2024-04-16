@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 // Forward declaration of ExtractorEstrategy
 class ExtractorEstrategy;
@@ -21,41 +22,57 @@ public:
                      std::string query = "", int* pointer = nullptr, int size = 0);
     void extractData();
     void loadData();
+    ExtractorEstrategy* strategy_ = nullptr;
 
 private:
-    ExtractorEstrategy* strategy_ = nullptr;
 };
 
 class ExtractorEstrategy {
 public:
+    std::string path_;
+    std::string dbAdress_;
+    std::string query_;
+    int* pointer_;
+    int size_;
     virtual void extractData() = 0;
     virtual void loadData() = 0;
 };
 
 class ExtractorCSV : public ExtractorEstrategy {
 public:
-    ExtractorCSV(){};
+    ExtractorCSV(std::string path){
+        path_ = path;
+    };
     void extractData() override;
     void loadData() override;
+    void readCSV();
 };
 
 class ExtractorTXT : public ExtractorEstrategy {
 public:
-    ExtractorTXT(){};
+    ExtractorTXT(std::string path){
+        path_ = path;
+    };
     void extractData() override;
     void loadData() override;
 };
 
 class ExtractorMemory : public ExtractorEstrategy {
 public:
-    ExtractorMemory(){};
+    ExtractorMemory(int* pointer, int size){
+        pointer_ = pointer;
+        size_ = size;
+    };
     void extractData() override;
     void loadData() override;
 };
 
 class ExtractorSQL : public ExtractorEstrategy {
 public:
-    ExtractorSQL(){};
+    ExtractorSQL(std::string dbAdress, std::string query){
+        dbAdress_ = dbAdress;
+        query_ = query;
+    };
     void extractData() override;
     void loadData() override;
 };
