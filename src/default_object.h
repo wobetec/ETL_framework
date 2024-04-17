@@ -8,6 +8,7 @@
 typedef std::variant<
     // native C++ types
     int,
+    bool,
     float,
     double,
     std::string,
