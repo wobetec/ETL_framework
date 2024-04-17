@@ -131,6 +131,61 @@ class Series {
             return Series<T>(data);
         }
 
+        template <typename U>
+        Series<T> equal(U value) {
+            std::vector<T> result;
+
+            for (T v : data) {
+                result.push_back(std::get<U>(v) == value);
+            }
+        
+            return Series<T>(result);
+        }
+
+        template <typename U>
+        Series<T> greater_equal(U value) {
+            std::vector<T> result;
+
+            for (T v : data) {
+                result.push_back(std::get<U>(v) >= value);
+            }
+        
+            return Series<T>(result);
+        }
+
+        template <typename U>
+        Series<T> less_equal(U value) {
+            std::vector<T> result;
+
+            for (T v : data) {
+                result.push_back(std::get<U>(v) <= value);
+            }
+        
+            return Series<T>(result);
+        }
+
+        template <typename U>
+        Series<T> greater(U value) {
+            std::vector<T> result;
+
+            for (T v : data) {
+                result.push_back(std::get<U>(v) > value);
+            }
+        
+            return Series<T>(result);
+        }
+
+        template <typename U>
+        Series<T> less(U value) {
+            std::vector<T> result;
+
+            for (T v : data) {
+                result.push_back(std::get<U>(v) < value);
+            }
+        
+            return Series<T>(result);
+        }
+
 
     private:
         std::vector<T> data;
