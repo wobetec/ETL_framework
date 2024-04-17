@@ -17,6 +17,14 @@ class Series {
             data.push_back(value);
         }
 
+        Series<T> append(Series<T> &other) {
+            Series <T> result = copy();
+            for (T value : other.data) {
+                result.append(value);
+            }
+            return result;
+        }
+
         T operator[](int index) {
             return data[index];
         }
@@ -122,6 +130,7 @@ class Series {
         Series<T> copy() {
             return Series<T>(data);
         }
+
 
     private:
         std::vector<T> data;
