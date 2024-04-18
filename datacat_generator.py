@@ -11,12 +11,57 @@ from datetime import datetime
 id_names = {f'{i}': generate_name(style='capital')  for i in range(1000, 6000)}
 list_ids = list(id_names.keys())
 
+product = {
+    1001: "Laptop",
+    1002: "Smartphone",
+    1003: "Headphones",
+    1004: "Tablet",
+    1005: "Smartwatch",
+    1006: "Camera",
+    1007: "Printer",
+    1008: "External Hard Drive",
+    1009: "Wireless Mouse",
+    1010: "Keyboard",
+    1011: "Monitor",
+    1012: "Gaming Console",
+    1013: "Fitness Tracker",
+    1014: "Bluetooth Speaker",
+    1015: "Power Bank",
+    1016: "Drone",
+    1017: "Virtual Reality Headset",
+    1018: "Digital Camera",
+    1019: "Soundbar",
+    1020: "Router",
+    1021: "External SSD",
+    1022: "Action Camera",
+    1023: "Gaming Mouse",
+    1024: "Gaming Keyboard",
+    1025: "Graphics Card",
+    1026: "Fitness Watch",
+    1027: "Bluetooth Earbuds",
+    1028: "Wireless Headphones",
+    1029: "Smart Home Speaker",
+    1030: "Portable Projector",
+    1031: "Computer Case",
+    1032: "Gaming Chair",
+    1033: "Mechanical Keyboard",
+    1034: "Gaming Monitor",
+    1035: "Gaming Laptop",
+    1036: "SSD Drive",
+    1037: "Wireless Router",
+    1038: "Fitness Band",
+    1039: "Gaming Headset",
+    1040: "Portable SSD"
+}
+
+products = list(product.values())
+
 def genEventType():
     eventType = ['audit', 'behavior', 'failings']
     return random.choice(eventType)
 
 def genAction():
-    actions = ['Login', 'Logout', 'Update', 'Delete', 'Add', 'Search', 'Purchase']
+    actions = ['Login', 'Logout', 'Update', 'Delete', 'Add', 'Search', 'Purchase', 'Visualization']
     return random.choice(actions)
 
 def genLineCode():
@@ -50,7 +95,7 @@ def genErrorMsg():
     ]
     return random.choice(errors)
 
-def genAuditMessage(action, name): 
+def genAuditMessage(action, name, prod): 
     phrases = None
 
     if action == 'Login': 
@@ -79,8 +124,11 @@ def genAuditMessage(action, name):
         #name = random.choice(id_names.values())
         return phrases.format(username = name)
     elif action == 'Purchase':
-        phrases = "User {username} made a purchase."
-        return phrases.format(username=name)
+        phrases = "User {username} purchased {Product}."
+        return phrases.format(username=name, Product=prod)
+    elif action == 'Visualization':
+        phrases = "User {username} visualized {Product}."
+        return phrases.format(username=name, Product=prod)
     else:
         phrases = "User {username} did not make any action after 15 seconds."
         #name = random.choice(id_names.values())
@@ -127,12 +175,12 @@ def genBehaviorMessage(stimulus, name):
         return phrases.format(username = name)
 
 
-def gen_logaudit(num_events, interval_minutes=1):
+def gen_logaudit(num_events, interval_minutes=5):
     start_date = datetime.now()
     end_date = start_date+timedelta(minutes=interval_minutes)
     interval_start = start_date
     interval_end = start_date + timedelta(minutes=interval_minutes)
-    print(interval_end)
+    #print(interval_end)
     
     simulated_data = []
     for k in range(num_events):
@@ -140,7 +188,8 @@ def gen_logaudit(num_events, interval_minutes=1):
         notification_date = genRandDate(start_date, end_date)
         user_id = random.choice(list_ids) #audit, behavior
         action = genAction() #audit
-        message = genAuditMessage(action, id_names[user_id])
+        product = random.choice(products)
+        message = genAuditMessage(action, id_names[user_id], product)
         
         event_data = {'notification_date': notification_date.strftime('%Y-%m-%d %H:%M:%S'), 'event_type': event_type, 'message': message,  'user_id': user_id, 'action': action}
         #event_data = [notification_date.strftime('%Y-%m-%d %H:%M:%S'), event_type, message, user_id, action]
@@ -151,24 +200,25 @@ def gen_logaudit(num_events, interval_minutes=1):
         df['notification_date'] = sorted(df['notification_date'])
         #print(1)
         time = datetime.now()
-        if datetime.now() > interval_end:
+        if time > interval_end:
             # Salva o arquivo de log atual antes de iniciar um novo
-            file_name = f"log_{event_type}.txt"
+            file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
+            #print(1)
+            df.to_csv(file_name, index=False, sep=',')
+            return 
+        elif k==num_events-1: 
+            file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             #print(1)
             df.to_csv(file_name, index=False, sep=',')
             return
-        elif k==num_events-1: 
-            file_name = f"log_{event_type}.txt"
-            #print(1)
-            df.to_csv(file_name, index=False, sep=',')
     #return simulated_data
 
-def gen_logbehavior(num_events, interval_minutes=1):
+def gen_logbehavior(num_events, interval_minutes=5):
     start_date = datetime.now()
     end_date = start_date+timedelta(minutes=interval_minutes)
     interval_start = start_date
     interval_end = start_date + timedelta(minutes=interval_minutes)
-    print(interval_end)
+    #print(interval_end)
     
     simulated_data = []
     for k in range(num_events):
@@ -188,25 +238,25 @@ def gen_logbehavior(num_events, interval_minutes=1):
         df['notification_date'] = sorted(df['notification_date'])
         #print(1)
         time = datetime.now()
-        if datetime.now() > interval_end:
+        if time > interval_end:
             # Salva o arquivo de log atual antes de iniciar um novo
-            file_name = f"log_{event_type}_{k}.txt"
+            file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             print(1)
             df.to_csv(file_name, index=False, sep=',')
             return
         elif k==num_events-1: 
-            file_name = f"log_{event_type}.txt"
+            file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             #print(1)
             df.to_csv(file_name, index=False, sep=',')
     #return df
     #return simulated_data
 
-def gen_logfailings(num_events, interval_minutes=1):
+def gen_logfailings(num_events, interval_minutes=5):
     start_date = datetime.now()
-    end_date = start_date+timedelta(seconds=interval_minutes)
+    end_date = start_date+timedelta(minutes=interval_minutes)
     interval_start = start_date
-    interval_end = start_date + timedelta(seconds=interval_minutes)
-    print(interval_end)
+    interval_end = start_date + timedelta(minutes=interval_minutes)
+    #print(interval_end)
     
     simulated_data = []
     for k in range(num_events):
@@ -229,12 +279,12 @@ def gen_logfailings(num_events, interval_minutes=1):
         time = datetime.now()
         if time > interval_end:
             # Salva o arquivo de log atual antes de iniciar um novo
-            file_name = f"log_{event_type}_{k}.txt"
+            file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             print(1)
             df.to_csv(file_name, index=False, sep=',')
             return
         elif k==num_events-1: 
-            file_name = f"log_{event_type}.txt"
+            file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             #print(1)
             df.to_csv(file_name, index=False, sep=',')
     #return df
@@ -255,5 +305,4 @@ def gen_randomlog(num_events):
     gen_logaudit(int(num_events*r))
     #        simulated_logs.append(log)
     #pd.DataFrame(simulated_logs)
-
-gen_randomlog(100)
+    

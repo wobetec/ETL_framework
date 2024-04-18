@@ -1,4 +1,4 @@
 from datacat_generator import gen_randomlog
-
+from contaverde_generator import gen_contaverde_products, gen_contaverde_stock, gen_contaverde_users, gen_purchase_order
 from cadeanalytics_generator import gen_cadeanalytics
 
