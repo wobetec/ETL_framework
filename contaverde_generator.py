@@ -5,7 +5,7 @@ from random import randrange
 from datetime import timedelta
 from random_address import real_random_address
 from datetime import datetime
-from ETL_framework.datacat_generator import gen_logaudit, gen_logbehavior, gen_logfailings, gen_randomlog
+from datacat_generator import gen_logaudit, gen_logbehavior, id_names
 
 product = {
     1001: "Laptop",
@@ -93,6 +93,8 @@ product_stock = [
     100  # Portable SSD
 ]
 
+product_dict = dict(zip(list(product.values()), product_stock))
+
 def genRandDate(start, end):
     delta = end - start
     int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
@@ -113,7 +115,7 @@ def gen_contaverde_users(num_events):
     register_day = []
     birth_day = []
     for i in range(num_events):
-        full_name = generate_name(style='capital')
+        full_name = random.choice(list(id_names.values()))
         name, last_name = full_name.split()
         names.append(name)
         last_names.append(last_name)
@@ -123,7 +125,7 @@ def gen_contaverde_users(num_events):
         birth_day.append(genRandDate(start_date2, end_date2))
         
     users = pd.DataFrame({'user_id': user_id, 'name': names, 'last_name': last_names, 'address': address, 'registar_day': register_day, 'birth_day': birth_day})
-    return users
+    users.to_csv('users.txt')
 
 def gen_contaverde_products(num_events):
 
@@ -271,11 +273,11 @@ def gen_contaverde_products(num_events):
         price.append(product_price[id-1001])
         
     product = pd.DataFrame({'product_id': product_id, 'name': product_name, 'picutre': product_picture, 'discription': description, 'price': price})
-    return product
+    product.to_csv('products.txt')
 
 def gen_contaverde_stock():
     stocks = pd.DataFrame({'product_id': product.keys(), 'available_quantity': product_stock})
-    return stocks
+    stocks.to_csv('stock.txt')
 
 def gen_purchase_order(num_events):
     df_audit = gen_logaudit(num_events)
@@ -300,4 +302,4 @@ def gen_purchase_order(num_events):
         payment_date.append(genRandDate(start_date2, end_date2))
         deliver_date.append(genRandDate(start_date3, end_date3))
     purchase_orders = pd.DataFrame({'user_id': user_id, 'product_id': product_id, 'quantity': quantity, 'creation_date': creation_date, 'payment_date': payment_date, 'deliver_date': deliver_date})
-    return purchase_orders        
+    purchase_orders.to_csv('purchase_orders.txt')       

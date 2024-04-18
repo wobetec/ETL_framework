@@ -1,17 +1,19 @@
 import random
 import pandas as pd
+from names_generator import generate_name
 from random import randrange
 from datetime import timedelta
 from datetime import datetime
+from data_generator import id_names, list_ids
+
+#id_names = {f'{i}': generate_name(style='capital')  for i in range(1000, 6000)}
+#list_ids = list(id_names.keys())
 
 def genRandDate(start, end):
     delta = end - start
     int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
     random_second = randrange(int_delta)
     return start + timedelta(seconds=random_second)
-
-def genUserId():
-    return random.randint(1000000, 9999999)
 
 def genStimulus():
     stimuli = ['Click', 'Hover', 'Type', 'Scroll', 'Swipe']
@@ -28,7 +30,7 @@ def gen_cadeanalytics(num_events):
     simulated_data = []
     for _ in range(num_events):
         notification_date = genRandDate(start_date, end_date)
-        user_id = genUserId()
+        user_id = random.choice(list_ids)
         stimulus = genStimulus()
         target_component = genTargetComp()
         
@@ -36,4 +38,4 @@ def gen_cadeanalytics(num_events):
         
         simulated_data.append(event_data.values())
         df = pd.DataFrame(data = simulated_data, columns = event_data.keys())
-    return df
+        df.to_csv('cade_analytics.txt')

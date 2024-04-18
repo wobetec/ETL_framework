@@ -1,0 +1,4 @@
+from datacat_generator import gen_randomlog
+
+from cadeanalytics_generator import gen_cadeanalytics
+
