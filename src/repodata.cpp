@@ -52,30 +52,30 @@ void ExtractorCSV::loadData() {
 }
 
 void ExtractorCSV::readCSV() {
-    std::fstream fin; 
-  
-    // Open an existing file 
-    fin.open(path_, std::ios::in);
+    std::fstream file;
 
-    // Read the Data from the file
-    std::string line, word;
-    std::vector<std::string> row;
+    file.open(path_, std::ios::in);
+    if (!file.is_open()) {
+         std::cerr << "Error opening file" << std::endl;
+         return;
+    }
 
-    while (fin >> word) {
-        row.clear();
+    std::string line;
 
-        getline(fin, line);
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string token;
+        std::vector<std::string> row;
 
-        std::stringstream s(line);
-
-        while (getline(s, word, ',')) {
-            row.push_back(word);
+        while (std::getline(ss, token, ',')) {
+            row.push_back(token);
+            std::cout << token << std::endl;
         }
 
-        // print the data of the row
-        for (std::string data : row) {
-            std::cout << data << "\t";
+        for (auto& field : row) {
+            //std::cout << field << "\n";
         }
+        std::cout << std::endl;
     }
 }
 
