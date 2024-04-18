@@ -12,6 +12,9 @@ class Series {
     public:
         Series() {}
         Series(std::vector<T> data) : data(data) {};
+        ~Series() {
+            data.clear();
+        }
 
         void append(T value) {
             data.push_back(value);
