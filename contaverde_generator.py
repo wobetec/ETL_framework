@@ -51,46 +51,46 @@ product = {
 }
 
 product_stock = [
-    50,  # Laptop
-    100,  # Smartphone
-    200,  # Headphones
-    150,  # Tablet
-    120,  # Smartwatch
-    80,  # Camera
-    100,  # Printer
-    150,  # External Hard Drive
-    200,  # Wireless Mouse
-    180,  # Keyboard
-    90,  # Monitor
-    60,  # Gaming Console
-    150,  # Fitness Tracker
-    200,  # Bluetooth Speaker
-    300,  # Power Bank
-    70,  # Drone
-    80,  # Virtual Reality Headset
-    100,  # Digital Camera
-    150,  # Soundbar
-    200,  # Router
-    150,  # External SSD
-    70,  # Action Camera
-    200,  # Gaming Mouse
-    180,  # Gaming Keyboard
-    80,  # Graphics Card
-    150,  # Fitness Watch
-    200,  # Bluetooth Earbuds
-    120,  # Wireless Headphones
-    150,  # Smart Home Speaker
-    50,  # Portable Projector
-    200,  # Computer Case
-    60,  # Gaming Chair
-    180,  # Mechanical Keyboard
-    90,  # Gaming Monitor
-    40,  # Gaming Laptop
-    150,  # SSD Drive
-    180,  # Wireless Router
-    200,  # Fitness Band
-    150,  # Gaming Headset
-    100  # Portable SSD
+    5000,  # Laptop
+    10000,  # Smartphone
+    20000,  # Headphones
+    15000,  # Tablet
+    12000,  # Smartwatch
+    8000,  # Camera
+    1000,  # Printer
+    1500,  # External Hard Drive
+    20000,  # Wireless Mouse
+    18000,  # Keyboard
+    9000,  # Monitor
+    6000,  # Gaming Console
+    1500,  # Fitness Tracker
+    2000,  # Bluetooth Speaker
+    3000,  # Power Bank
+    700,  # Drone
+    800,  # Virtual Reality Headset
+    1000,  # Digital Camera
+    1500,  # Soundbar
+    2000,  # Router
+    15000,  # External SSD
+    7000,  # Action Camera
+    2000,  # Gaming Mouse
+    1800,  # Gaming Keyboard
+    800,  # Graphics Card
+    1500,  # Fitness Watch
+    2000,  # Bluetooth Earbuds
+    1200,  # Wireless Headphones
+    1500,  # Smart Home Speaker
+    5000,  # Portable Projector
+    2000,  # Computer Case
+    6000,  # Gaming Chair
+    1800,  # Mechanical Keyboard
+    9000,  # Gaming Monitor
+    4000,  # Gaming Laptop
+    15000,  # SSD Drive
+    1800,  # Wireless Router
+    2000,  # Fitness Band
+    1500,  # Gaming Headset
+    1000  # Portable SSD
 ]
 
 product_dict = dict(zip(list(product.values()), product_stock))
@@ -277,7 +277,9 @@ def gen_contaverde_products(num_events):
 
 def gen_contaverde_stock():
     stocks = pd.DataFrame({'product_id': product.keys(), 'available_quantity': product_stock})
+    stock_df = stocks
     stocks.to_csv('stock.txt')
+    return stock_df
 
 def gen_purchase_order(num_events):
     df_audit = gen_logaudit(num_events)
@@ -302,4 +304,17 @@ def gen_purchase_order(num_events):
         payment_date.append(genRandDate(start_date2, end_date2))
         deliver_date.append(genRandDate(start_date3, end_date3))
     purchase_orders = pd.DataFrame({'user_id': user_id, 'product_id': product_id, 'quantity': quantity, 'creation_date': creation_date, 'payment_date': payment_date, 'deliver_date': deliver_date})
-    purchase_orders.to_csv('purchase_orders.txt')       
+    purchase_orders_df = purchase_orders
+    purchase_orders.to_csv('purchase_orders.txt')   
+    return purchase_orders_df
+
+def update_stock(orders, stock=gen_contaverde_stock()):
+    for index, order in orders.iterrows():
+        product_id = order['product_id']
+        quantity = order['quantity']
+        stock_index = stock[stock['product_id'] == product_id].index[0]
+        stock.loc[stock_index, 'available_quantity'] -= quantity
+    #date = datetime.now()
+    #file_name = f"stock_updated_{date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
+    #stock.to_csv(file_name, index=False, sep=',')
+    return stock

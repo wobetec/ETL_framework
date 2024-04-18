@@ -38,4 +38,6 @@ def gen_cadeanalytics(num_events):
         
         simulated_data.append(event_data.values())
         df = pd.DataFrame(data = simulated_data, columns = event_data.keys())
-        df.to_csv('cade_analytics.txt')
+        date = datetime.now()
+        file_name = f"{date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
+        df.to_csv('file_name.txt')

@@ -2,6 +2,8 @@ import random
 import time
 import numpy as np
 import pandas as pd
+import datetime
+from random import randrange
 from names_generator import generate_name
 from random import randrange
 from datetime import timedelta
@@ -175,11 +177,11 @@ def genBehaviorMessage(stimulus, name):
         return phrases.format(username = name)
 
 
-def gen_logaudit(num_events, interval_minutes=5):
+def gen_logaudit(num_events, interval_minutes=30):
     start_date = datetime.now()
-    end_date = start_date+timedelta(minutes=interval_minutes)
+    end_date = start_date+timedelta(seconds=interval_minutes)
     interval_start = start_date
-    interval_end = start_date + timedelta(minutes=interval_minutes)
+    interval_end = start_date + timedelta(seconds=interval_minutes)
     #print(interval_end)
     
     simulated_data = []
@@ -205,19 +207,19 @@ def gen_logaudit(num_events, interval_minutes=5):
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             #print(1)
             df.to_csv(file_name, index=False, sep=',')
-            return 
+            return df
         elif k==num_events-1: 
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             #print(1)
             df.to_csv(file_name, index=False, sep=',')
-            return
+            return df
     #return simulated_data
 
-def gen_logbehavior(num_events, interval_minutes=5):
+def gen_logbehavior(num_events, interval_minutes=30):
     start_date = datetime.now()
-    end_date = start_date+timedelta(minutes=interval_minutes)
+    end_date = start_date+timedelta(seconds=interval_minutes)
     interval_start = start_date
-    interval_end = start_date + timedelta(minutes=interval_minutes)
+    interval_end = start_date + timedelta(seconds=interval_minutes)
     #print(interval_end)
     
     simulated_data = []
@@ -248,14 +250,14 @@ def gen_logbehavior(num_events, interval_minutes=5):
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             #print(1)
             df.to_csv(file_name, index=False, sep=',')
-    #return df
+    return df
     #return simulated_data
 
-def gen_logfailings(num_events, interval_minutes=5):
+def gen_logfailings(num_events, interval_minutes=30):
     start_date = datetime.now()
-    end_date = start_date+timedelta(minutes=interval_minutes)
+    end_date = start_date+timedelta(seconds=interval_minutes)
     interval_start = start_date
-    interval_end = start_date + timedelta(minutes=interval_minutes)
+    interval_end = start_date + timedelta(seconds=interval_minutes)
     #print(interval_end)
     
     simulated_data = []
@@ -287,7 +289,7 @@ def gen_logfailings(num_events, interval_minutes=5):
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             #print(1)
             df.to_csv(file_name, index=False, sep=',')
-    #return df
+    return df
     #return simulated_data
 
 def gen_randomlog(num_events):
