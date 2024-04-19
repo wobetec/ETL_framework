@@ -119,8 +119,9 @@ def gen_contaverde_users(num_events):
         name, last_name = full_name.split()
         names.append(name)
         last_names.append(last_name)
-        addresses = real_random_address()
-        address.append(random.choice(addresses.values()))
+        addresses_dict = real_random_address()
+        addresses = [addresses_dict['address1'], addresses_dict['address2'], addresses_dict['city'], addresses_dict['state']]
+        address.append(random.choice(addresses))
         register_day.append(genRandDate(start_date1, end_date1))
         birth_day.append(genRandDate(start_date2, end_date2))
         
