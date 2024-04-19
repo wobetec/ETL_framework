@@ -1,23 +1,54 @@
-#ifndef QUEUE_H
-#define QUEUE_H
-#include <iostream>
-#include <string>
-#include <thread>
-#include <set>
-#include <vector>
+#pragma once
+
 #include <mutex>
+#include <queue>
+#include <condition_variable>
+#include <stdexcept>
 
-using namespace std;
-
-class queueT {
+template <typename U, typename V>
+class Queue {
+    /**
+     * @brief Implement the queue data structure. 
+     * 
+     * Have the responsability to control the access to 
+     * the queue and handle concurrency problems.
+     */
     public:
-        vector<pair<string, string>> queue;
-        int size = 0;
-        int capacity = 1000;
-        mutex Mutex;
-        void enQueue(pair<string, string> data);
-        pair<string, string> deQueue();
-        void printQueue();
-};
+        Queue(int capacity) : capacity(capacity) {}
+        ~Queue() {
+            queue_mutex.lock();
+            while(queue.size() > 0) {
+                queue.pop();
+            }
+            queue_mutex.unlock();
+        }
 
-#endif
+        void enQueue(std::pair<U, V> item) {
+            std::unique_lock<std::mutex> lock(queue_mutex);
+            cv.wait(lock, [this] { return queue.size() < capacity; });
+
+            queue.push(item);
+
+            lock.unlock();
+            cv.notify_all();
+        }
+
+        std::pair<U, V> deQueue(){
+            std::unique_lock<std::mutex> lock(queue_mutex);
+            cv.wait(lock, [this] { return queue.size() > 0; });
+
+            std::pair<U, V> pop = queue.front();
+            queue.pop();
+
+            lock.unlock();
+            cv.notify_all();
+
+            return pop;
+        }
+
+    private:
+        std::mutex queue_mutex;
+        std::condition_variable cv;
+        int capacity;
+        std::queue<std::pair<U, V>> queue;
+};
