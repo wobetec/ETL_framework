@@ -651,8 +651,7 @@ def update_stock(orders, stock=gen_contaverde_stock()):
         stock_index = stock[stock['product_id'] == product_id].index[0]
         stock.loc[stock_index, 'available_quantity'] -= quantity
     #date = datetime.now()
-    #file_name = f"stock_updated_{date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-    #stock.to_csv(file_name, index=False, sep=',')
+    stock.to_csv('stock.txt')
     return stock
 
 while True:
