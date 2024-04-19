@@ -3,7 +3,7 @@
 */obj
 
 # vscode
-.vscode
+*/.vscode
 
 # python 
 .ipynb_checkpoints

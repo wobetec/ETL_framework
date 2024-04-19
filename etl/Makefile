@@ -10,5 +10,13 @@ build:
 build_framework:
 	make -f ../src/Makefile build
 
-all: build build_framework 
-	g++ $(MAKEFILE_DIR)/main.cpp $(MAKEFILE_DIR)/etl.o ../src/framework.o -o $(MAKEFILE_DIR)/main.out
+main:
+	g++ \
+		main.cpp \
+
+		-L../src/lib \
+		-l:framework.a \
+		
+		-o \
+			test.out \
+
