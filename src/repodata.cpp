@@ -43,45 +43,25 @@ void RepoData::loadData() {
 // ExtractorCSV
 void ExtractorCSV::extractData() {
     std::cout << "Extracting data from CSV file" << std::endl;
-    readCSV();
+    readTextFile(",");
 }
 
 void ExtractorCSV::loadData() {
     std::cout << "Loading data from CSV file" << std::endl;
 }
 
-void ExtractorCSV::readCSV() {
-    std::fstream file;
-
-    file.open(path_, std::ios::in);
-    if (!file.is_open()) {
-         std::cerr << "Error opening file" << std::endl;
-         return;
-    }
-
-    std::string line;
-    while (std::getline(file, line)) {
-        std::stringstream ss(line);
-        std::string cell;
-        std::vector<std::string> row;
-        while (std::getline(ss, cell, ',')) {
-            row.push_back(cell);
-        }
-        // std::cout << row[0] << std::endl;
-    }
-}
 
 // ExtractorTXT
 void ExtractorTXT::extractData() {
     std::cout << "Extracting data from TXT file" << std::endl;
-    readTXT();
+    readTextFile(" ");
 }
 
 void ExtractorTXT::loadData() {
     std::cout << "Loading data from TXT file" << std::endl;
 }
 
-void ExtractorTXT::readTXT() {
+void ExtractorEstrategy::readTextFile(std::string sep) {
     std::fstream file;
 
     file.open(path_, std::ios::in);
@@ -95,7 +75,7 @@ void ExtractorTXT::readTXT() {
         std::stringstream ss(line);
         std::string cell;
         std::vector<std::string> data;
-        while (std::getline(ss, cell, ' ')) {
+        while (std::getline(ss, cell, sep[0])) {
             data.push_back(cell);
         }
         // std::cout << data[0] << std::endl;
@@ -114,16 +94,16 @@ void ExtractorSQL::loadData() {
 }
 
 void ExtractorSQL::doQuery(std::string query) {
-    sqlite3_stmt* stmt;
-    exit_ = sqlite3_prepare_v2(db_, query.c_str(), -1, &stmt, nullptr);
-    if (exit_ != SQLITE_OK) {
-        std::cerr << "Error preparing statement" << std::endl;
-        return;
-    }
+    // sqlite3_stmt* stmt;
+    // exit_ = sqlite3_prepare_v2(db_, query.c_str(), -1, &stmt, nullptr);
+    // if (exit_ != SQLITE_OK) {
+    //     std::cerr << "Error preparing statement" << std::endl;
+    //     return;
+    // }
 
-    while ((exit_ = sqlite3_step(stmt)) == SQLITE_ROW) {
-        std::cout << sqlite3_column_text(stmt, 0) << std::endl;
-    }
+    // while ((exit_ = sqlite3_step(stmt)) == SQLITE_ROW) {
+    //     std::cout << sqlite3_column_text(stmt, 0) << std::endl;
+    // }
 
-    sqlite3_finalize(stmt);
+    // sqlite3_finalize(stmt);
 }

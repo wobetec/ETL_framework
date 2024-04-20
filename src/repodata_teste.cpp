@@ -2,7 +2,7 @@
 
 int main() {
     RepoData repoData;
-    repoData.setStrategy(RepoData::ExtractorTXTType, "teste.txt", "", "", nullptr, 0);
+    repoData.setStrategy(RepoData::ExtractorTXTType, "teste.txt", "", "");
     repoData.extractData();
 
     return 0;

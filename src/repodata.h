@@ -37,6 +37,7 @@ public:
     int size_;
     virtual void extractData() = 0;
     virtual void loadData() = 0;
+    void readTextFile(std::string sep);
 };
 
 class ExtractorCSV : public ExtractorEstrategy {
@@ -46,7 +47,6 @@ public:
     };
     void extractData() override;
     void loadData() override;
-    void readCSV();
 };
 
 class ExtractorTXT : public ExtractorEstrategy {
@@ -56,7 +56,6 @@ public:
     };
     void extractData() override;
     void loadData() override;
-    void readTXT();
 };
 
 class ExtractorSQL : public ExtractorEstrategy {
@@ -65,7 +64,7 @@ public:
     int exit_ = 0;
     ExtractorSQL(std::string dbAdress, std::string query){
         dbAdress_ = dbAdress;
-        exit_ = sqlite3_open(dbAdress.c_str(), &db_);
+        // exit_ = sqlite3_open(dbAdress.c_str(), &db_);
         query_ = query;
     };
     void extractData() override;
