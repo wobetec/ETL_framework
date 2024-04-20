@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include "dataframe.h"
+#include "sqlite3.h"
 
 // Forward declaration of ExtractorEstrategy
 class ExtractorEstrategy;
@@ -14,12 +16,11 @@ public:
     enum ExtractorEstrategyType {
         ExtractorCSVType,
         ExtractorTXTType,
-        ExtractorMemoryType,
         ExtractorSQLType
     };
     RepoData();
     void setStrategy(int type, std::string path = "", std::string dbAdress = "",
-                     std::string query = "", int* pointer = nullptr, int size = 0);
+                     std::string query = "");
     void extractData();
     void loadData();
     ExtractorEstrategy* strategy_ = nullptr;
@@ -55,26 +56,21 @@ public:
     };
     void extractData() override;
     void loadData() override;
-};
-
-class ExtractorMemory : public ExtractorEstrategy {
-public:
-    ExtractorMemory(int* pointer, int size){
-        pointer_ = pointer;
-        size_ = size;
-    };
-    void extractData() override;
-    void loadData() override;
+    void readTXT();
 };
 
 class ExtractorSQL : public ExtractorEstrategy {
 public:
+    sqlite3* db_;
+    int exit_ = 0;
     ExtractorSQL(std::string dbAdress, std::string query){
         dbAdress_ = dbAdress;
+        exit_ = sqlite3_open(dbAdress.c_str(), &db_);
         query_ = query;
     };
     void extractData() override;
     void loadData() override;
+    void doQuery(std::string query);
 };
 
 #endif // REPDATA_H
