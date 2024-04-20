@@ -7,6 +7,7 @@
 #include <fstream>
 #include "dataframe.h"
 #include "sqlite3.h"
+#include "default_object.h"
 
 // Forward declaration of ExtractorEstrategy
 class ExtractorEstrategy;
@@ -21,8 +22,8 @@ public:
     RepoData();
     void setStrategy(int type, std::string path = "", std::string dbAdress = "",
                      std::string query = "");
-    void extractData();
-    void loadData();
+    DataFrame<DefaultObject> extractData();
+    void loadData(DataFrame<DefaultObject> *df);
     ExtractorEstrategy* strategy_ = nullptr;
 
 private:
@@ -35,9 +36,9 @@ public:
     std::string query_;
     int* pointer_;
     int size_;
-    virtual void extractData() = 0;
+    virtual DataFrame<DefaultObject> extractData() = 0;
     virtual void loadData() = 0;
-    void readTextFile(std::string sep);
+    std::vector<std::vector<std::string>> readTextFile(std::string sep);
 };
 
 class ExtractorCSV : public ExtractorEstrategy {
@@ -45,7 +46,7 @@ public:
     ExtractorCSV(std::string path){
         path_ = path;
     };
-    void extractData() override;
+    DataFrame<DefaultObject> extractData() override;
     void loadData() override;
 };
 
@@ -54,7 +55,7 @@ public:
     ExtractorTXT(std::string path){
         path_ = path;
     };
-    void extractData() override;
+    DataFrame<DefaultObject> extractData() override;
     void loadData() override;
 };
 
@@ -64,10 +65,10 @@ public:
     int exit_ = 0;
     ExtractorSQL(std::string dbAdress, std::string query){
         dbAdress_ = dbAdress;
-        // exit_ = sqlite3_open(dbAdress.c_str(), &db_);
+        exit_ = sqlite3_open(dbAdress.c_str(), &db_);
         query_ = query;
     };
-    void extractData() override;
+    DataFrame<DefaultObject> extractData() override;
     void loadData() override;
     void doQuery(std::string query);
 };
