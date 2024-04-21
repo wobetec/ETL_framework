@@ -1,37 +1,31 @@
-#ifndef CACHE_H
-#define CACHE_H
+#pragma once
 
-#include <queue>
-#include <thread>
 #include <mutex>
-#include <condition_variable>
-// #include "DataFrame.h"
-
-class DataFrame;
+#include <map>
+#include "dataframe.h"
 
 template <typename T>
 class Cache {
-public:
-    Cache();
-    ~Cache();
+    public:
+        Cache() {};
+        ~Cache() {
+            cache.clear();
+            mutex_cache.clear();
+        };
 
-    void start();
-    void addData(const T& data);
-    T getData();
+        void save(std::string table, DataFrame<T> data) {
+            cache[table] = data;
+        }
 
-private:
-    void processCacheEntries();
+        DataFrame<T> read(std::string table) {
+            return cache[table];
+        }
 
-    std::queue<T> inQueue_;
-    std::queue<T> outQueue_;
-    std::thread thread_;
-    std::mutex inMutex_;
-    std::mutex outMutex_;
-    std::condition_variable inCv_;
-    std::condition_variable outCv_;
-    bool terminate_ = false;
+        std::unique_lock<std::mutex> getLock(std::string table) {
+            return std::unique_lock<std::mutex>(mutex_cache[table]);
+        }
+
+    private:
+        std::map<std::string, DataFrame<T>> cache;
+        std::map<std::string, std::mutex> mutex_cache;
 };
-
-#include "cache.cpp"
-
-#endif
