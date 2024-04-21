@@ -51,6 +51,10 @@ class HandlerCDatacat : public Handler<Object> {
 
                 std::cout << "HandlerCDatacat: " << item.first << std::endl;
 
+                DataFrame<Object> df = item.second;
+
+                
+
                 outQueues["s_vis"]->enQueue(item);
             }
         }

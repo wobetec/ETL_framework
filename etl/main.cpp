@@ -3,6 +3,7 @@
 #include "../src/framework.h"
 #include "handlers.h"
 #include "object.h"
+#include "extractors.h"
 
 #define DEFAULT_QUEUE_SIZE 5
 
@@ -10,8 +11,36 @@ using namespace std;
 
 int main(){
 
+    // Triggers
     // Extract
+    Queue<string, string> q_trigger(DEFAULT_QUEUE_SIZE);
     Queue<string, DataFrame<Object>> q_extract(DEFAULT_QUEUE_SIZE);
+
+    TimeTrigger tg_datacat(q_trigger, 1000, "datacat", "extract");
+    TimeTrigger tg_produtos(q_trigger, 1000, "produtos", "extract");
+    TimeTrigger tg_estoque(q_trigger, 1000, "estoque", "extract");
+    TimeTrigger tg_compras(q_trigger, 1000, "compras", "extract");
+    RequestTrigger tg_cade(q_trigger, "cade", "extract");
+
+    tg_datacat.start();
+    tg_produtos.start();
+    tg_estoque.start();
+    tg_compras.start();
+
+    MapMutex<string> map_mutex;
+
+    ExtractThread t_extract_1(q_trigger, q_extract, map_mutex);
+    t_extract_1.start();
+
+    ExtractThread t_extract_2(q_trigger, q_extract, map_mutex);
+    t_extract_2.start();
+
+    ExtractThread t_extract_3(q_trigger, q_extract, map_mutex);
+    t_extract_3.start();
+
+    ExtractThread t_extract_4(q_trigger, q_extract, map_mutex);
+    t_extract_4.start();
+
 
     // Spliter
     Queue<string, DataFrame<Object>> q_datacat(DEFAULT_QUEUE_SIZE);
@@ -28,19 +57,6 @@ int main(){
         {"compras", &q_compras}
     });
     t_spliter.start();
-
-    DataFrame<Object> df1;
-    df1.append({{"id", "1"}, {"firstName", "datacat"}, {"lastName", "datacat"}});
-    df1.append({{"id", "2"}, {"firstName", "datacat"}, {"lastName", "datacat"}});
-    df1.append({{"id", "3"}, {"firstName", "datacat"}, {"lastName", "datacat"}});
-    df1.append({{"id", "4"}, {"firstName", "datacat"}, {"lastName", "datacat"}});
-    df1.append({{"id", "5"}, {"firstName", "datacat"}, {"lastName", "datacat"}});
-    df1.append({{"id", "6"}, {"firstName", "datacat"}, {"lastName", "datacat"}});
-    q_extract.enQueue({"datacat", df1});
-    q_extract.enQueue({"cade", df1});
-    q_extract.enQueue({"produtos", df1});
-    q_extract.enQueue({"estoque", df1});
-    q_extract.enQueue({"compras", df1});
     
     // Preprocessor
     Queue<string, DataFrame<Object>> q_s_vis(DEFAULT_QUEUE_SIZE);
@@ -110,6 +126,24 @@ int main(){
 
     HandlerA7 t_a7(q_t_7, {{"load", &q_load}}, cache);
     t_a7.start();
+
+
+    // Simulate
+
+    while(true){
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        tg_cade.run();
+    }
+
+    t_extract_1.join();
+    t_extract_2.join();
+    t_extract_3.join();
+    t_extract_4.join();
+
+    tg_datacat.join();
+    tg_produtos.join();
+    tg_estoque.join();
+    tg_compras.join();
 
     t_spliter.join();
     t_datacat.join();

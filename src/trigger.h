@@ -7,13 +7,10 @@
 #include <chrono>
 #include "queue.h"
 
-namespace fs = filesystem;
-
-typedef Queue<std::string, std::string> QueueTrigger;
 
 class Trigger {
     public:
-        Trigger(QueueTrigger &outQueue, std::string first, std::string second) : outQueue(outQueue), first(first), second(second) {}
+        Trigger(Queue<std::string, std::string> &outQueue, std::string first, std::string second) : outQueue(outQueue), first(first), second(second) {}
         ~Trigger() { 
             running = false;
             join(); 
@@ -35,7 +32,7 @@ class Trigger {
             outQueue.enQueue(std::make_pair(first, second));
         }
 
-        Queue &outQueue;
+        Queue<std::string, std::string> &outQueue;
         bool running = true;
         std::string first;
         std::string second;
@@ -46,11 +43,12 @@ class Trigger {
 
 class TimeTrigger : public Trigger {
     public:
-        TimeTrigger(QueueTrigger outQueue, int interval, std::string first, std::string second) : Trigger(outQueue, first, second), interval(interval) {}
+        TimeTrigger(Queue<std::string, std::string> &outQueue, int interval, std::string first, std::string second) : Trigger(outQueue, first, second), interval(interval) {}
 
-        void run() {
+        void run() override {
             while(running) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(interval));
+                addToQueue();
             }
         }
 
@@ -60,10 +58,11 @@ class TimeTrigger : public Trigger {
 
 class RequestTrigger : public Trigger {
     public:
-        RequestTrigger(QueueTrigger outQueue, std::string first, std::string second) : Trigger(outQueue, first, second) {}
+        RequestTrigger(Queue<std::string, std::string> &outQueue, std::string first, std::string second) : Trigger(outQueue, first, second) {}
 
-        void request() {
+        void run() override {
             addToQueue();
         }
+
     private:
 };
