@@ -435,6 +435,34 @@ class DataFrame {
             return result;
         }
 
+        DataFrame<T> count(std::string columnName) {
+            /**
+             * @brief Count the number of occurrences of each value in a column
+             * 
+             * @param columnName The column to count
+             * @return DataFrame<T> The counted DataFrame
+             */
+            int columnId = column_id(columnName);
+
+            if (columnId == -1) {
+                throw std::invalid_argument("Column does not exist");
+            }
+
+            std::map<T, int> counts;
+
+            for (int i = 0; i < shape.first; i++) {
+                counts[series[columnId][i]]++;
+            }
+
+            DataFrame<T> result;
+
+            for (auto const& [key, val] : counts) {
+                result.append({{columnName, key}, {"count", val}});
+            }
+
+            return result;
+        }
+
     private:
         std::vector<Series<T>> series;
         std::vector<std::string> columns;
