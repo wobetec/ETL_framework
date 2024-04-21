@@ -3,9 +3,12 @@
 #include <sstream>   // For string stream operations
 #include <string>    // For string handling
 #include <vector>    // For dynamic arrays
+#include <cstring>
 #include "repodata.h"
 #include "dataframe.h"
 #include "sqlite3.h"
+#include "series.h"
+
 
 // Constructor
 RepoData::RepoData() {
@@ -42,7 +45,7 @@ void RepoData::loadData(DataFrame<DefaultObject> *df) {
 }
 
 std::vector<std::vector<std::string>> ExtractorEstrategy::readTextFile(std::string sep) {
-    std::fstream file;
+    std::ifstream file;
 
     file.open(path_, std::ios::in);
     if (!file.is_open()) {
@@ -62,6 +65,7 @@ std::vector<std::vector<std::string>> ExtractorEstrategy::readTextFile(std::stri
         }
         allData.push_back(data);
     }
+
     return allData;
 }
 
@@ -69,25 +73,43 @@ std::vector<std::vector<std::string>> ExtractorEstrategy::readTextFile(std::stri
 DataFrame<DefaultObject> ExtractorCSV::extractData() {
     std::cout << "Extracting data from CSV file" << std::endl;
     std::vector<std::vector<std::string>> data = readTextFile(",");
-    return DataFrame<DefaultObject>();
+    std::vector<std::string> columns = data[0];
+    DataFrame<DefaultObject> df;
+    data.erase(data.begin());
+    for (auto row : data) {
+        std::map<std::string, DefaultObject> rowMap;
+        for (int i = 0; i < columns.size(); i++) {
+            rowMap[columns[i]] = row[i];
+        }
+        df.append(rowMap);
+    }
+    return df;
 }
 
 void ExtractorCSV::loadData() {
     std::cout << "Loading data from CSV file" << std::endl;
 }
 
-
 // ExtractorTXT
 DataFrame<DefaultObject> ExtractorTXT::extractData() {
     std::cout << "Extracting data from TXT file" << std::endl;
     std::vector<std::vector<std::string>> data = readTextFile(" ");
-    return DataFrame<DefaultObject>();
+    std::vector<std::string> columns = data[0];
+    DataFrame<DefaultObject> df;
+    data.erase(data.begin());
+    for (auto row : data) {
+        std::map<std::string, DefaultObject> rowMap;
+        for (int i = 0; i < columns.size(); i++) {
+            rowMap[columns[i]] = row[i];
+        }
+        df.append(rowMap);
+    }
+    return df;
 }
 
 void ExtractorTXT::loadData() {
     std::cout << "Loading data from TXT file" << std::endl;
 }
-
 
 // ExtractorSQL
 DataFrame<DefaultObject> ExtractorSQL::extractData() {

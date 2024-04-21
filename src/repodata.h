@@ -8,6 +8,7 @@
 #include "dataframe.h"
 #include "sqlite3.h"
 #include "default_object.h"
+#include "series.h"
 
 // Forward declaration of ExtractorEstrategy
 class ExtractorEstrategy;
@@ -39,6 +40,7 @@ public:
     virtual DataFrame<DefaultObject> extractData() = 0;
     virtual void loadData() = 0;
     std::vector<std::vector<std::string>> readTextFile(std::string sep);
+    // std::vector<Series<DefaultObject>> createSeries(std::vector<std::vector<std::string>>* data);
 };
 
 class ExtractorCSV : public ExtractorEstrategy {

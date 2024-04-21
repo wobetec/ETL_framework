@@ -434,10 +434,11 @@ class DataFrame {
 
             return result;
         }
+                std::vector<std::string> columns;
+
 
     private:
         std::vector<Series<T>> series;
-        std::vector<std::string> columns;
         std::pair<int, int> shape;
 
         int column_id(std::string columnName) {
