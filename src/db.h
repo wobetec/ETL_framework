@@ -40,7 +40,7 @@ class DB {
         }
 
         void insertData(std::string table, std::string column1, float column2){
-            std::string sql = "INSERT INTO " + table + " (datetime, count) VALUES ('" + column1 + "', " + std::to_string(column2) + ");";
+            std::string sql = "BEGIN TRANSACTION; INSERT OR REPLACE INTO " + table + " (datetime, count) VALUES ('" + column1 + "', " + std::to_string(column2) + "); COMMIT;";
             char *errMsg = 0;
             sqlite3_exec(db, sql.c_str(), NULL, 0, &errMsg);
         }

@@ -1,4 +1,6 @@
-product_id,name,picture,discription,price
-1004,Tablet,Tablet.jpg,minha_descricao,500
-1034,Gaming Monitor,Gaming Monitor.jpg,minha_descricao,500
-1038,Fitness Band,Fitness Band.jpg,minha_descricao,100
+datetime,count
+6,7
+11,12
+16,17
+21,22
+26,27

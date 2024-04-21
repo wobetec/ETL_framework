@@ -20,16 +20,7 @@ int main() {
 
 
     DB db("new.db");
-    sqlite3_stmt *stmt;
-    const char *sql;
-    sql = "SELECT * FROM T1;";
-    sqlite3_prepare_v2(db.db, sql, -1, &stmt, NULL);
-    while (sqlite3_step(stmt) == SQLITE_ROW) {
-        std::cout << sqlite3_column_text(stmt, 0) << " " << sqlite3_column_double(stmt, 1) << std::endl;
-    }
-
-    //destry db
-    sqlite3_finalize(stmt);
+    
     df.addColumn("count", df["count"].astype<std::string, int>());
 
     RepoData loader;
@@ -38,8 +29,23 @@ int main() {
 
     db.insertData("T1", "2020-01-01 00:00:01", 20.0);
     db.insertData("T1", "2020-01-01 00:00:02", 30.0);
+    db.insertData("T1", "2020-01-01 00:00:02", 40.0);
+    db.insertData("T1", "6", 10);
+    db.insertData("T1", "11", 20);
+    db.insertData("T1", "16", 30);
+    db.insertData("T1", "29", 40);
 
     // print all t1
+
+    sqlite3_stmt *stmt;
+    const char *sql;
+    sql = "SELECT * FROM T1;";
+    sqlite3_prepare_v2(db.db, sql, -1, &stmt, NULL);
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        std::cout << sqlite3_column_text(stmt, 0) << " " << sqlite3_column_double(stmt, 1) << std::endl;
+    }
+
+    
    
     return 0;
 }
