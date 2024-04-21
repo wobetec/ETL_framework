@@ -12,7 +12,7 @@ class Handler {
     public:
         Handler(
             Queue<std::string, DataFrame<T>> &inQueue,
-            std::map<std::string, Queue<std::string, DataFrame<T>> &> outQueues
+            std::map<std::string, Queue<std::string, DataFrame<T>> *> outQueues
         ) : inQueue(inQueue), outQueues(outQueues) {}
 
         ~Handler() { join(); }
@@ -30,7 +30,7 @@ class Handler {
         }
 
         Queue<std::string, DataFrame<T>> &inQueue;
-        std::map<std::string, Queue<std::string, DataFrame<T>>&> outQueues;
+        std::map<std::string, Queue<std::string, DataFrame<T>>*> outQueues;
 
         std::thread handler_thread;
         bool running;
