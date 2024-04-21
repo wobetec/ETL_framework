@@ -502,11 +502,11 @@ class DataFrame {
             return result;
 
         }
-
-    private:
         std::vector<Series<T>> series;
         std::vector<std::string> columns;
         std::pair<int, int> shape;
+    private:
+
 
         int column_id(std::string columnName) {
             for (int i = 0; i < columns.size(); i++) {

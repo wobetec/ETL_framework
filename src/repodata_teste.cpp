@@ -2,6 +2,7 @@
 #include "dataframe.h"
 #include "db.h"
 #include "sqlite3.h"
+#include "series.h"
 
 int main() {
     RepoData repoData;
@@ -15,19 +16,10 @@ int main() {
         std::cout << std::endl;
     }
 
-    DB db("new.db");
-
-    df.addColumn("count", df["count"].astype<float>);
-
-    RepoData loader;
-    loader.setStrategy(RepoData::ExtractorSQLType, "", &db, "T1");
-    loader.loadData(&df);
     df.print();
 
-    db.insertData("T1", "2020-01-01 00:00:01", 20.0);
-    db.insertData("T1", "2020-01-01 00:00:02", 30.0);
 
-    // print all t1
+    DB db("new.db");
     sqlite3_stmt *stmt;
     const char *sql;
     sql = "SELECT * FROM T1;";
@@ -38,5 +30,16 @@ int main() {
 
     //destry db
     sqlite3_finalize(stmt);
+    df.addColumn("count", df["count"].astype<std::string, int>());
+
+    RepoData loader;
+    loader.setStrategy(RepoData::ExtractorSQLType, "", &db, "T1");
+    loader.loadData(&df);
+
+    db.insertData("T1", "2020-01-01 00:00:01", 20.0);
+    db.insertData("T1", "2020-01-01 00:00:02", 30.0);
+
+    // print all t1
+   
     return 0;
 }

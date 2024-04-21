@@ -99,7 +99,7 @@ void ExtractorEstrategy::saveTextFile(DataFrame<DefaultObject> *df, std::string 
 
 // ExtractorCSV
 DataFrame<DefaultObject> ExtractorCSV::extractData() {
-    std::cout << "Extracting data from CSV file" << std::endl;
+    std::cout << "  g data from CSV file" << std::endl;
     std::vector<std::vector<std::string>> data = readTextFile(",");
     std::vector<std::string> columns = data[0];
     DataFrame<DefaultObject> df;
@@ -144,7 +144,7 @@ void ExtractorTXT::loadData(DataFrame<DefaultObject> *df) {
 // ExtractorSQL
 DataFrame<DefaultObject> ExtractorSQL::extractData() {
     std::cout << "Extracting data from SQL database" << std::endl;
-    //doQuery(query_);
+
     return DataFrame<DefaultObject>();
 }
 
@@ -152,6 +152,8 @@ void ExtractorSQL::loadData(DataFrame<DefaultObject> *df) {
     std::cout << "Loading data from SQL database" << std::endl;
     std::pair<int, int> s = df->shape;
     for (int j = 0; j < s.first; j++) {
-        db_->insertData(table_, std::get<std::string>(df->series[j][0]), std::get<int>(df->series[j][1]));
+        int v = std::get<int>(df->series[0][j]);
+        std::string a = std::get<std::string>(df->series[1][j]);
+        db_->insertData(table_, a, v);
     }
 }
