@@ -11,13 +11,20 @@ import os
 
 main_folder = 'data'
 
-subfolders = ['datacat', 'cadeanalytics', 'contaverde']
+subfolders = ['datacat', 'datacat', 'datacat', 'cadeanalytics', 'contaverde']
+
+subsubfolders = ['audit', 'behaviour', 'failings']
 
 if not os.path.exists(main_folder):
     os.mkdir(main_folder)
 
 for folder in subfolders:
     folder_path = os.path.join(main_folder, folder)
+    if not os.path.exists(folder_path):
+        os.mkdir(folder_path)
+
+for folder in subsubfolders:
+    folder_path = os.path.join(main_folder, 'datacat', folder)
     if not os.path.exists(folder_path):
         os.mkdir(folder_path)
 
@@ -197,7 +204,7 @@ def gen_logaudit(num_events, interval_minutes=30):
     simulated_data = []
     for k in range(num_events):
         event_type = 'audit'
-        notification_date = genRandDate(start_date, end_date)
+        notification_date = datetime.now()
         user_id = random.choice(list_ids) #audit, behavior
         action = genAction() #audit
         product = random.choice(products)
@@ -211,13 +218,13 @@ def gen_logaudit(num_events, interval_minutes=30):
         time = datetime.now()
         if time > interval_end:
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-            csv_path = os.path.join('data', 'datacat', file_name)
-            df.to_csv(csv_path, index=False, sep=',')
+            csv_path = os.path.join('data', 'datacat/audit', file_name)
+            df.to_csv(csv_path, index=False, sep=' ')
             return df
         elif k==num_events-1: 
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-            csv_path = os.path.join('data', 'datacat', file_name)
-            df.to_csv(csv_path, index=False, sep=',')
+            csv_path = os.path.join('data', 'datacat/audit', file_name)
+            df.to_csv(csv_path, index=False, sep=' ')
             return df
 
 def gen_logbehavior(num_events, interval_minutes=30):
@@ -230,7 +237,7 @@ def gen_logbehavior(num_events, interval_minutes=30):
     simulated_data = []
     for k in range(num_events):
         event_type = 'behavior'
-        notification_date = genRandDate(start_date, end_date)
+        notification_date = datetime.now()
         user_id = random.choice(list_ids) #audit, behavior
         stimulus = genStimulus() #behavior
         target_component = genTargetComp() #behavior, failings
@@ -244,13 +251,13 @@ def gen_logbehavior(num_events, interval_minutes=30):
         time = datetime.now()
         if time > interval_end:
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-            csv_path = os.path.join('data', 'datacat', file_name)
-            df.to_csv(csv_path, index=False, sep=',')
+            csv_path = os.path.join('data', 'datacat/behaviour', file_name)
+            df.to_csv(csv_path, index=False, sep=' ')
             return df
         elif k==num_events-1: 
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-            csv_path = os.path.join('data', 'datacat', file_name)
-            df.to_csv(csv_path, index=False, sep=',')
+            csv_path = os.path.join('data', 'datacat/behaviour', file_name)
+            df.to_csv(csv_path, index=False, sep=' ')
     return df
 
 def gen_logfailings(num_events, interval_minutes=30):
@@ -262,7 +269,7 @@ def gen_logfailings(num_events, interval_minutes=30):
     simulated_data = []
     for k in range(num_events):
         event_type = 'failure'
-        notification_date = genRandDate(start_date, end_date)
+        notification_date = datetime.now()
         target_component = genTargetComp() #behavior, failings
         linecode = genLineCode() #failings
         severity = genSeverity() #failings
@@ -279,13 +286,13 @@ def gen_logfailings(num_events, interval_minutes=30):
         time = datetime.now()
         if time > interval_end:
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-            csv_path = os.path.join('data', 'datacat', file_name)
-            df.to_csv(csv_path, index=False, sep=',')
+            csv_path = os.path.join('data', 'datacat/failings', file_name)
+            df.to_csv(csv_path, index=False, sep=' ')
             return df
         elif k==num_events-1: 
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-            csv_path = os.path.join('data', 'datacat', file_name)
-            df.to_csv(csv_path, index=False, sep=',')
+            csv_path = os.path.join('data', 'datacat/failings', file_name)
+            df.to_csv(csv_path, index=False, sep=' ')
     return df
 
 def gen_randomlog(num_events):
@@ -307,11 +314,11 @@ def genTargetComp():
 
 def gen_cadeanalytics(num_events):
     start_date = datetime(2020, 1, 1)
-    end_date = datetime(2024, 4, 22)
+    end_date = datetime(2020, 4, 22)
     
     simulated_data = []
     for _ in range(num_events):
-        notification_date = genRandDate(start_date, end_date)
+        notification_date = datetime.now()
         user_id = random.choice(list_ids)
         stimulus = genStimulus()
         target_component = genTargetComp()
@@ -321,9 +328,9 @@ def gen_cadeanalytics(num_events):
         simulated_data.append(event_data.values())
         df = pd.DataFrame(data = simulated_data, columns = event_data.keys())
         date = datetime.now()
-        file_name = f"cade_analytics_{date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
+        file_name = "cade_analytics.txt"
         csv_path = os.path.join('data', 'cadeanalytics', file_name)
-        df.to_csv(csv_path, index=False, sep=',')
+        df.to_csv(csv_path, index=False, sep=' ')
 
 
 #CONTAVERDE        
@@ -436,11 +443,11 @@ def gen_contaverde_users(num_events):
         addresses_dict = real_random_address()
         addresses = [addresses_dict['address1']]
         address.append(random.choice(addresses))
-        register_day.append(genRandDate(start_date1, end_date1))
-        birth_day.append(genRandDate(start_date2, end_date2))
+        register_day.append(datetime.now())
+        birth_day.append(datetime.now())
         
     users = pd.DataFrame({'user_id': user_id, 'name': names, 'last_name': last_names, 'address': address, 'registar_day': register_day, 'birth_day': birth_day})
-    file_name = 'users.txt'
+    file_name = 'users.csv'
     csv_path = os.path.join('data', 'contaverde', file_name)
     users.to_csv(csv_path, index=False, sep=',')
 
@@ -590,14 +597,14 @@ def gen_contaverde_products(num_events, prod=product):
         price.append(product_price[id-1001])
         
     product_pd = pd.DataFrame({'product_id': product_id, 'name': product_name, 'picutre': product_picture, 'discription': description, 'price': price})
-    file_name = 'products.txt'
+    file_name = 'products.csv'
     csv_path = os.path.join('data', 'contaverde', file_name)
     product_pd.to_csv(csv_path, index=False, sep=',')
 
 def gen_contaverde_stock():
     stocks = pd.DataFrame({'product_id': product.keys(), 'available_quantity': product_stock})
     stock_df = stocks
-    file_name = 'stock.txt'
+    file_name = 'stock.csv'
     csv_path = os.path.join('data', 'contaverde', file_name)
     stocks.to_csv(csv_path, index=False, sep=',')
     return stock_df
@@ -621,12 +628,12 @@ def gen_purchase_order(num_events):
         id = random.choice(list(product.keys()))
         product_id.append(id)
         quantity.append(random.randint(1,8))
-        creation_date.append(genRandDate(start_date1, end_date1))
-        payment_date.append(genRandDate(start_date2, end_date2))
-        deliver_date.append(genRandDate(start_date3, end_date3))
+        creation_date.append(datetime.now())
+        payment_date.append(datetime.now())
+        deliver_date.append(datetime.now())
     purchase_orders = pd.DataFrame({'user_id': user_id, 'product_id': product_id, 'quantity': quantity, 'creation_date': creation_date, 'payment_date': payment_date, 'deliver_date': deliver_date})
     purchase_orders_df = purchase_orders
-    file_name = 'purchase_orders.txt'
+    file_name = 'purchase_orders.csv'
     csv_path = os.path.join('data', 'contaverde', file_name)
     purchase_orders.to_csv(csv_path, index=False, sep=',')
     return purchase_orders_df
@@ -637,13 +644,12 @@ def update_stock(orders, stock=gen_contaverde_stock()):
         quantity = order['quantity']
         stock_index = stock[stock['product_id'] == product_id].index[0]
         stock.loc[stock_index, 'available_quantity'] -= quantity
-    file_name = 'stock.txt'
+    file_name = 'stock.csv'
     csv_path = os.path.join('data', 'contaverde', file_name)
     stock.to_csv(csv_path, index=False, sep=',')
     return stock
 
 while True:
-  
     num_events = random.randint(100,1000)
     gen_contaverde_users(num_events)
     gen_contaverde_products(num_events, prod=product)
@@ -652,4 +658,4 @@ while True:
     update_stock(orders=orders, stock=stock)
     gen_cadeanalytics(num_events)
     gen_randomlog(num_events)
-    time.sleep(30)
+    time.sleep(45)
