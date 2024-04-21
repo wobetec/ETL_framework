@@ -14,7 +14,7 @@ class HandlerSpliter : public Handler<Object> {
         ) : Handler(inQueue, outQueues) {}
 
         void run() {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running Spliter" << std::endl;
 
                 QueueItem item = inQueue.deQueue();
@@ -44,7 +44,7 @@ class HandlerCDatacat : public Handler<Object> {
         ) : Handler(inQueue, outQueues) {}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running CDatacat" << std::endl;
                 
                 QueueItem item = inQueue.deQueue();
@@ -64,7 +64,7 @@ class HandlerCCade : public Handler<Object> {
         ) : Handler(inQueue, outQueues) {}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running CCade" << std::endl;
 
                 QueueItem item = inQueue.deQueue();
@@ -85,7 +85,7 @@ class HandlerSVis : public Handler<Object> {
         ) : Handler(inQueue, outQueues), cache(cache) {}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running SVis" << std::endl;
 
                 QueueItem item = inQueue.deQueue();
@@ -122,7 +122,7 @@ class HandlerSProdutos : public Handler<Object> {
         ) : Handler(inQueue, outQueues), cache(cache) {}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running SProdutos" << std::endl;
                 
                 QueueItem item = inQueue.deQueue();
@@ -155,7 +155,7 @@ class HandlerSEstoque : public Handler<Object> {
         ) : Handler(inQueue, outQueues), cache(cache) {}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running SEstoque" << std::endl;
                 
                 QueueItem item = inQueue.deQueue();
@@ -188,7 +188,7 @@ class HandlerSCompras : public Handler<Object> {
         ) : Handler(inQueue, outQueues), cache(cache) {}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running SCompras" << std::endl;
                 
                 QueueItem item = inQueue.deQueue();
@@ -223,7 +223,7 @@ class HandlerA1 : public Handler<Object> {
         ) : Handler(inQueue, outQueues){}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running A1" << std::endl;
 
                 QueueItem item = inQueue.deQueue();
@@ -246,7 +246,7 @@ class HandlerA2 : public Handler<Object> {
         ) : Handler(inQueue, outQueues), cache(cache) {}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running A2" << std::endl;
 
                 QueueItem item = inQueue.deQueue();
@@ -280,7 +280,7 @@ class HandlerA3 : public Handler<Object> {
         ) : Handler(inQueue, outQueues){}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running A3" << std::endl;
 
                 QueueItem item = inQueue.deQueue();
@@ -304,7 +304,7 @@ class HandlerA4 : public Handler<Object> {
         ) : Handler(inQueue, outQueues), cache(cache) {}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running A4" << std::endl;
 
                 QueueItem item = inQueue.deQueue();
@@ -334,7 +334,7 @@ class HandlerA5 : public Handler<Object> {
         ) : Handler(inQueue, outQueues){}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running A5" << std::endl;
                 QueueItem item = inQueue.deQueue();
                 DataFrame<Object> df_in = item.second;
@@ -357,7 +357,7 @@ class HandlerA6 : public Handler<Object> {
         ) : Handler(inQueue, outQueues), cache(cache) {}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running A6" << std::endl;
 
                 QueueItem item = inQueue.deQueue();
@@ -388,7 +388,7 @@ class HandlerA7 : public Handler<Object> {
         ) : Handler(inQueue, outQueues), cache(cache) {}
 
         void run() override {
-            while (true) {
+            while (running) {
                 std::cout << "Handler running A7" << std::endl;
 
                 QueueItem item = inQueue.deQueue();
