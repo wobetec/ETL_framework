@@ -508,6 +508,7 @@ class DataFrame {
         std::pair<int, int> shape;
     private:
 
+    private:
         int column_id(std::string columnName) {
             for (int i = 0; i < columns.size(); i++) {
                 if (columns[i] == columnName) {

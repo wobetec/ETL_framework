@@ -3,10 +3,13 @@
 #include <sstream>   // For string stream operations
 #include <string>    // For string handling
 #include <vector>    // For dynamic arrays
+#include <cstring>
 #include "repodata.h"
 #include "dataframe.h"
 #include "default_object.h"
 #include "sqlite3.h"
+#include "series.h"
+
 
 // Constructor
 RepoData::RepoData() {
@@ -39,11 +42,11 @@ DataFrame<DefaultObject> RepoData::extractData() {
 }
 
 void RepoData::loadData(DataFrame<DefaultObject> *df) {
-    strategy_->loadData();
+    strategy_->loadData(df);
 }
 
 std::vector<std::vector<std::string>> ExtractorEstrategy::readTextFile(std::string sep) {
-    std::fstream file;
+    std::ifstream file;
 
     file.open(path_, std::ios::in);
     if (!file.is_open()) {
@@ -63,32 +66,82 @@ std::vector<std::vector<std::string>> ExtractorEstrategy::readTextFile(std::stri
         }
         allData.push_back(data);
     }
+
     return allData;
+}
+
+void ExtractorEstrategy::saveTextFile(DataFrame<DefaultObject> *df, std::string sep) {
+    std::ofstream file;
+    file.open(path_, std::ios::out);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file" << std::endl;
+        return;
+    }
+
+    // get size
+    std::pair<int, int> s = df->shape;
+
+    SavetoFile saver(file);
+
+    for (auto column : df->columns) {
+        file << column << sep;
+    }
+    file << std::endl;
+
+    for (int i = 0; i < s.first; i++) {
+        for (int j = 0; j < s.second; j++) {
+            std::visit(saver, df->series[i][j]);
+            file << sep;
+        }
+        file << std::endl;
+    }
+
+    file.close();
 }
 
 // ExtractorCSV
 DataFrame<DefaultObject> ExtractorCSV::extractData() {
     std::cout << "Extracting data from CSV file" << std::endl;
     std::vector<std::vector<std::string>> data = readTextFile(",");
-    return DataFrame<DefaultObject>();
+    std::vector<std::string> columns = data[0];
+    DataFrame<DefaultObject> df;
+    data.erase(data.begin());
+    for (auto row : data) {
+        std::map<std::string, DefaultObject> rowMap;
+        for (int i = 0; i < columns.size(); i++) {
+            rowMap[columns[i]] = row[i];
+        }
+        df.append(rowMap);
+    }
+    return df;
 }
 
-void ExtractorCSV::loadData() {
+void ExtractorCSV::loadData(DataFrame<DefaultObject> *df) {
     std::cout << "Loading data from CSV file" << std::endl;
+    saveTextFile(df, ",");
 }
-
 
 // ExtractorTXT
 DataFrame<DefaultObject> ExtractorTXT::extractData() {
     std::cout << "Extracting data from TXT file" << std::endl;
     std::vector<std::vector<std::string>> data = readTextFile(" ");
-    return DataFrame<DefaultObject>();
+    std::vector<std::string> columns = data[0];
+    DataFrame<DefaultObject> df;
+    data.erase(data.begin());
+    for (auto row : data) {
+        std::map<std::string, DefaultObject> rowMap;
+        for (int i = 0; i < columns.size(); i++) {
+            rowMap[columns[i]] = row[i];
+        }
+        df.append(rowMap);
+    }
+    return df;
 }
 
-void ExtractorTXT::loadData() {
+void ExtractorTXT::loadData(DataFrame<DefaultObject> *df) {
     std::cout << "Loading data from TXT file" << std::endl;
+    saveTextFile(df, " ");
 }
-
 
 // ExtractorSQL
 // DataFrame<DefaultObject> ExtractorSQL::extractData() {
@@ -97,10 +150,10 @@ void ExtractorTXT::loadData() {
 //     return DataFrame<DefaultObject>();
 // }
 
-// void ExtractorSQL::loadData() {
-//     std::cout << "Loading data from SQL database" << std::endl;
-//     doQuery(query_);
-// }
+void ExtractorSQL::loadData() {
+    std::cout << "Loading data from SQL database" << std::endl;
+    doQuery(query_);
+}
 
 // void ExtractorSQL::doQuery(std::string query) {
 //     sqlite3_stmt* stmt;
