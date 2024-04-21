@@ -17,7 +17,7 @@ public:
     enum ExtractorEstrategyType {
         ExtractorCSVType,
         ExtractorTXTType,
-        ExtractorSQLType
+        // ExtractorSQLType
     };
     RepoData();
     void setStrategy(int type, std::string path = "", std::string dbAdress = "",
@@ -59,18 +59,18 @@ public:
     void loadData() override;
 };
 
-class ExtractorSQL : public ExtractorEstrategy {
-public:
-    sqlite3* db_;
-    int exit_ = 0;
-    ExtractorSQL(std::string dbAdress, std::string query){
-        dbAdress_ = dbAdress;
-        exit_ = sqlite3_open(dbAdress.c_str(), &db_);
-        query_ = query;
-    };
-    DataFrame<DefaultObject> extractData() override;
-    void loadData() override;
-    void doQuery(std::string query);
-};
+// class ExtractorSQL : public ExtractorEstrategy {
+// public:
+//     sqlite3* db_;
+//     int exit_ = 0;
+//     ExtractorSQL(std::string dbAdress, std::string query){
+//         dbAdress_ = dbAdress;
+//         exit_ = sqlite3_open(dbAdress.c_str(), &db_);
+//         query_ = query;
+//     };
+//     DataFrame<DefaultObject> extractData() override;
+//     void loadData() override;
+//     void doQuery(std::string query);
+// };
 
 #endif // REPDATA_H

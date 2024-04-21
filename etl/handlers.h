@@ -51,6 +51,10 @@ class HandlerCDatacat : public Handler<Object> {
 
                 std::cout << "HandlerCDatacat: " << item.first << std::endl;
 
+                DataFrame<Object> df = item.second;
+
+                
+
                 outQueues["s_vis"]->enQueue(item);
             }
         }
@@ -128,7 +132,14 @@ class HandlerSProdutos : public Handler<Object> {
                 QueueItem item = inQueue.deQueue();
                 DataFrame<Object> df_in = item.second;
 
-                std::cout << "HandlerSProdutos: " << item.first << std::endl;
+                df_in.print();
+                std::cout << df_in.shape.first << std::endl;
+
+                df_in.dropColumn("picture");
+                df_in.dropColumn("discription");
+                df_in.dropColumn("price");
+
+                df_in.print();
 
                 std::unique_lock<std::mutex> lock = cache.getLock("produtos");
 

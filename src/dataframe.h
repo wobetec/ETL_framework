@@ -122,7 +122,7 @@ class DataFrame {
             int column = column_id(columnName);
 
             if (column == -1) {
-                throw std::invalid_argument("Column does not exist");
+                throw std::invalid_argument("Column does not exist" + columnName);
             }
 
             columns.erase(columns.begin() + column);
@@ -190,7 +190,7 @@ class DataFrame {
             int column = column_id(columnName);
 
             if (column == -1) {
-                throw std::invalid_argument("Column does not exist");
+                throw std::invalid_argument("Column does not exist" + columnName);
             }
 
             DataFrame<T> result;
@@ -267,7 +267,7 @@ class DataFrame {
             int column = column_id(columnName);
 
             if (column == -1) {
-                throw std::invalid_argument("Column does not exist");
+                throw std::invalid_argument("Column does not exist" + columnName);
             }
 
             DataFrame<T> result;
@@ -352,14 +352,14 @@ class DataFrame {
             int columnId = column_id(columnName);
 
             if (columnId == -1) {
-                throw std::invalid_argument("Column does not exist");
+                throw std::invalid_argument("Column does not exist" + columnName);
             }
             
             std::vector<int> columnsToAggregateIds;
             for (std::string column : columnsToAggregate) {
                 int aggColumnId = column_id(column);
                 if (aggColumnId == -1) {
-                    throw std::invalid_argument("Column does not exist");
+                    throw std::invalid_argument("Column does not exist" + columnName);
                 }
                 columnsToAggregateIds.push_back(aggColumnId);
             }
@@ -446,7 +446,7 @@ class DataFrame {
             int columnId = column_id(columnName);
 
             if (columnId == -1) {
-                throw std::invalid_argument("Column does not exist");
+                throw std::invalid_argument("Column does not exist" + columnName);
             }
 
             std::map<U, int> counts;
@@ -503,10 +503,10 @@ class DataFrame {
 
         }
 
-    private:
         std::vector<Series<T>> series;
         std::vector<std::string> columns;
         std::pair<int, int> shape;
+    private:
 
         int column_id(std::string columnName) {
             for (int i = 0; i < columns.size(); i++) {
