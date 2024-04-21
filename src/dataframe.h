@@ -434,13 +434,11 @@ class DataFrame {
 
             return result;
         }
-                std::vector<std::string> columns;
-
+        std::vector<std::string> columns;
+        std::pair<int, int> shape;
+        std::vector<Series<T>> series;
 
     private:
-        std::vector<Series<T>> series;
-        std::pair<int, int> shape;
-
         int column_id(std::string columnName) {
             for (int i = 0; i < columns.size(); i++) {
                 if (columns[i] == columnName) {

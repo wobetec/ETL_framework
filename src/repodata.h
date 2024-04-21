@@ -38,9 +38,9 @@ public:
     int* pointer_;
     int size_;
     virtual DataFrame<DefaultObject> extractData() = 0;
-    virtual void loadData() = 0;
+    virtual void loadData(DataFrame<DefaultObject> *df) = 0;
     std::vector<std::vector<std::string>> readTextFile(std::string sep);
-    // std::vector<Series<DefaultObject>> createSeries(std::vector<std::vector<std::string>>* data);
+    void saveTextFile(DataFrame<DefaultObject> *df, std::string sep);
 };
 
 class ExtractorCSV : public ExtractorEstrategy {
@@ -49,7 +49,7 @@ public:
         path_ = path;
     };
     DataFrame<DefaultObject> extractData() override;
-    void loadData() override;
+    void loadData(DataFrame<DefaultObject> *df) override;
 };
 
 class ExtractorTXT : public ExtractorEstrategy {
@@ -58,7 +58,7 @@ public:
         path_ = path;
     };
     DataFrame<DefaultObject> extractData() override;
-    void loadData() override;
+    void loadData(DataFrame<DefaultObject> *df) override;
 };
 
 class ExtractorSQL : public ExtractorEstrategy {
@@ -71,7 +71,7 @@ public:
         query_ = query;
     };
     DataFrame<DefaultObject> extractData() override;
-    void loadData() override;
+    void loadData(DataFrame<DefaultObject> *df) override;
     void doQuery(std::string query);
 };
 

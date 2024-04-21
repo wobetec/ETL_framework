@@ -13,6 +13,10 @@ int main() {
         std::cout << std::endl;
     }
 
+    RepoData loader;
+    loader.setStrategy(RepoData::ExtractorTXTType, "zuzu.txt", "", "");
+    loader.loadData(&df);
+
     df.print();
     return 0;
 }

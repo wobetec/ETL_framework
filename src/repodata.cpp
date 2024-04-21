@@ -41,7 +41,7 @@ DataFrame<DefaultObject> RepoData::extractData() {
 }
 
 void RepoData::loadData(DataFrame<DefaultObject> *df) {
-    strategy_->loadData();
+    strategy_->loadData(df);
 }
 
 std::vector<std::vector<std::string>> ExtractorEstrategy::readTextFile(std::string sep) {
@@ -69,6 +69,35 @@ std::vector<std::vector<std::string>> ExtractorEstrategy::readTextFile(std::stri
     return allData;
 }
 
+void ExtractorEstrategy::saveTextFile(DataFrame<DefaultObject> *df, std::string sep) {
+    std::ofstream file;
+    file.open(path_, std::ios::out);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file" << std::endl;
+        return;
+    }
+
+    // get size
+    std::pair<int, int> s = df->shape;
+
+    SavetoFile saver(file);
+
+    for (auto column : df->columns) {
+        file << column << sep;
+    }
+    file << std::endl;
+
+    for (int i = 0; i < s.first; i++) {
+        for (int j = 0; j < s.second; j++) {
+            std::visit(saver, df->series[i][j]);
+            file << sep;
+        }
+        file << std::endl;
+    }
+
+    file.close();
+}
+
 // ExtractorCSV
 DataFrame<DefaultObject> ExtractorCSV::extractData() {
     std::cout << "Extracting data from CSV file" << std::endl;
@@ -86,8 +115,9 @@ DataFrame<DefaultObject> ExtractorCSV::extractData() {
     return df;
 }
 
-void ExtractorCSV::loadData() {
+void ExtractorCSV::loadData(DataFrame<DefaultObject> *df) {
     std::cout << "Loading data from CSV file" << std::endl;
+    saveTextFile(df, ",");
 }
 
 // ExtractorTXT
@@ -107,8 +137,9 @@ DataFrame<DefaultObject> ExtractorTXT::extractData() {
     return df;
 }
 
-void ExtractorTXT::loadData() {
+void ExtractorTXT::loadData(DataFrame<DefaultObject> *df) {
     std::cout << "Loading data from TXT file" << std::endl;
+    saveTextFile(df, " ");
 }
 
 // ExtractorSQL
@@ -118,7 +149,7 @@ DataFrame<DefaultObject> ExtractorSQL::extractData() {
     return DataFrame<DefaultObject>();
 }
 
-void ExtractorSQL::loadData() {
+void ExtractorSQL::loadData(DataFrame<DefaultObject> *df) {
     std::cout << "Loading data from SQL database" << std::endl;
     doQuery(query_);
 }
