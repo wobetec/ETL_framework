@@ -124,7 +124,7 @@ void ExtractorCSV::loadData(DataFrame<DefaultObject> *df) {
 // ExtractorTXT
 DataFrame<DefaultObject> ExtractorTXT::extractData() {
     std::cout << "Extracting data from TXT file" << std::endl;
-    std::vector<std::vector<std::string>> data = readTextFile(" ");
+    std::vector<std::vector<std::string>> data = readTextFile(";");
     std::vector<std::string> columns = data[0];
     DataFrame<DefaultObject> df;
     data.erase(data.begin());
@@ -150,10 +150,10 @@ void ExtractorTXT::loadData(DataFrame<DefaultObject> *df) {
 //     return DataFrame<DefaultObject>();
 // }
 
-void ExtractorSQL::loadData() {
-    std::cout << "Loading data from SQL database" << std::endl;
-    doQuery(query_);
-}
+// void ExtractorSQL::loadData() {
+//     std::cout << "Loading data from SQL database" << std::endl;
+//     doQuery(query_);
+// }
 
 // void ExtractorSQL::doQuery(std::string query) {
 //     sqlite3_stmt* stmt;

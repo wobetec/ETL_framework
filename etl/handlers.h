@@ -63,7 +63,7 @@ class HandlerCDatacat : public Handler<Object> {
                 DataFrame<Object> df_out;
                 df_out.addColumn("product_id", product_id);
                 df_out.addColumn("user_id", df_in["user_id"]);
-                df_out.addColumn("notification_date", df_in["notification_date"].to_datetime());
+                df_out.addColumn("notification_date", df_in["notification_date"]);
 
                 outQueues["s_vis"]->enQueue(std::make_pair("s_vis", df_out));
             }
@@ -82,10 +82,32 @@ class HandlerCCade : public Handler<Object> {
                 std::cout << "Handler running CCade" << std::endl;
 
                 QueueItem item = inQueue.deQueue();
+                DataFrame<Object> df_in = item.second;
+                Series<Object> message = df_in["stimulus"];
 
-                std::cout << "HandlerCCade: " << item.first << std::endl;
+                std::vector<Object> visualized = {};
+                std::vector<Object> product_id = {};
+                for (int i = 0; i < message.data.size(); i++) {
+                    std::string m = std::get<std::string>(message[i]);
+                    int len = m.length();
+                    if (len >= 10 && m.substr(0, 10) == "Visualized") {
+                        visualized.push_back(true);
+                        product_id.push_back(m.substr(len - 6).substr(0, 4));
+                    } else {
+                        visualized.push_back(false);
+                        product_id.push_back("");
+                    }
+                }
+                df_in.addColumn("visualized", visualized);
+                df_in.addColumn("product_id", product_id);
+                df_in = df_in.filter<bool>("visualized", "==", true);
 
-                outQueues["s_vis"]->enQueue(item);
+                DataFrame<Object> df_out;
+                df_out.addColumn("product_id", df_in["product_id"]);
+                df_out.addColumn("user_id", df_in["user_id"]);
+                df_out.addColumn("notification_date", df_in["notification_date"]);
+
+                outQueues["s_vis"]->enQueue(std::make_pair("s_vis", df_out));
             }
         }
 };
@@ -103,17 +125,34 @@ class HandlerSVis : public Handler<Object> {
                 std::cout << "Handler running SVis" << std::endl;
 
                 QueueItem item = inQueue.deQueue();
-                DataFrame<Object> df = item.second;
-
-                std::cout << "HandlerSVis: " << item.first << std::endl;
+                DataFrame<Object> df_in = item.second;
+                // df_in.print();
 
                 std::unique_lock<std::mutex> lock = cache.getLock("visualizacoes");
 
                 DataFrame<Object> df_cache = cache.read("visualizacoes");
 
-                // do something with cache
+                DataFrame<Object> df_out = df_in.concat(df_cache);
+                
+                df_out = df_out.dropDuplicate({"product_id", "user_id", "notification_date"});
 
-                cache.save("visualizacoes", df);
+                std::vector<DefaultObject> filter = {};
+                DateTime now = DateTime();
+                for (int i = 0; i < df_out.shape.first; i++) {
+                    DateTime dt(std::get<std::string>(df_out["notification_date"][i]));
+                    dt.replace(dt.year(), dt.month(), dt.day(), dt.hour(), dt.minute(), 0);
+                    df_out["notification_date"][i] = Object(dt);
+                    
+                    if ((now - dt).seconds() > TimeDelta(60 * 60).seconds()) {
+                        filter.push_back(false);
+                    } else {
+                        filter.push_back(true);
+                    }
+                }
+
+                df_out = df_out.filter(Series<DefaultObject>(filter));
+
+                cache.save("visualizacoes", df_out);
 
                 lock.unlock();
 

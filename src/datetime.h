@@ -3,11 +3,13 @@
 #include <ctime>
 #include <string>
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 
 class TimeDelta {
     private:
-        time_t delta;
     public:
+        time_t delta;
         TimeDelta(int i_delta);
         
         int years();
@@ -22,12 +24,20 @@ class TimeDelta {
 
 class DateTime {
     private:
+    public:
         time_t time;
         struct tm *local;
-    public:
         DateTime();
         DateTime(int year, int month, int day, int hour=0, int minute=0, int second=0);
         DateTime(int i_time);
+        DateTime(const std::string& datetimeString) { 
+            const char* format = "%Y-%m-%d %H:%M:%S";
+            std::istringstream ss(datetimeString.substr(0, 18));
+            std::tm tm = {};
+            ss >> std::get_time(&tm, format);
+            time = std::mktime(&tm);
+            local = std::localtime(&time);
+        }
 
         int year();
         int month();
