@@ -4,6 +4,8 @@
 #include <string>    // For string handling
 #include <vector>    // For dynamic arrays
 #include "repodata.h"
+#include "dataframe.h"
+#include "sqlite3.h"
 
 // Constructor
 RepoData::RepoData() {
@@ -12,7 +14,7 @@ RepoData::RepoData() {
 
 // Set Strategy
 void RepoData::setStrategy(int type, std::string path, std::string dbAdress,
-                            std::string query, int* pointer, int size) {
+                            std::string query) {
     delete strategy_;
     switch (type) {
         case ExtractorCSVType:
@@ -20,9 +22,6 @@ void RepoData::setStrategy(int type, std::string path, std::string dbAdress,
             break;
         case ExtractorTXTType:
             strategy_ = new ExtractorTXT(path);
-            break;
-        case ExtractorMemoryType:
-            strategy_ = new ExtractorMemory(pointer, size);
             break;
         case ExtractorSQLType:
             strategy_ = new ExtractorSQL(dbAdress, query);
@@ -33,75 +32,86 @@ void RepoData::setStrategy(int type, std::string path, std::string dbAdress,
     }
 }
 
-void RepoData::extractData() {
-    strategy_->extractData();
+DataFrame<DefaultObject> RepoData::extractData() {
+    DataFrame<DefaultObject> df = strategy_->extractData();
+    return df;
 }
 
-void RepoData::loadData() {
+void RepoData::loadData(DataFrame<DefaultObject> *df) {
     strategy_->loadData();
 }
 
+std::vector<std::vector<std::string>> ExtractorEstrategy::readTextFile(std::string sep) {
+    std::fstream file;
+
+    file.open(path_, std::ios::in);
+    if (!file.is_open()) {
+         std::cerr << "Error opening file" << std::endl;
+         return std::vector<std::vector<std::string>>();
+    }
+
+    std::string line;
+    std::vector<std::vector<std::string>> allData = {};
+
+    while (std::getline(file, line, '\n')) {
+        std::stringstream ss(line);
+        std::string cell;
+        std::vector<std::string> data;
+        while (std::getline(ss, cell, sep[0])) {
+            data.push_back(cell);
+        }
+        allData.push_back(data);
+    }
+    return allData;
+}
+
 // ExtractorCSV
-void ExtractorCSV::extractData() {
+DataFrame<DefaultObject> ExtractorCSV::extractData() {
     std::cout << "Extracting data from CSV file" << std::endl;
-    readCSV();
+    std::vector<std::vector<std::string>> data = readTextFile(",");
+    return DataFrame<DefaultObject>();
 }
 
 void ExtractorCSV::loadData() {
     std::cout << "Loading data from CSV file" << std::endl;
 }
 
-void ExtractorCSV::readCSV() {
-    std::fstream file;
-
-    file.open(path_, std::ios::in);
-    if (!file.is_open()) {
-         std::cerr << "Error opening file" << std::endl;
-         return;
-    }
-
-    std::string line;
-
-    while (std::getline(file, line)) {
-        std::stringstream ss(line);
-        std::string token;
-        std::vector<std::string> row;
-
-        while (std::getline(ss, token, ',')) {
-            row.push_back(token);
-            std::cout << token << std::endl;
-        }
-
-        for (auto& field : row) {
-            //std::cout << field << "\n";
-        }
-        std::cout << std::endl;
-    }
-}
 
 // ExtractorTXT
-void ExtractorTXT::extractData() {
+DataFrame<DefaultObject> ExtractorTXT::extractData() {
     std::cout << "Extracting data from TXT file" << std::endl;
+    std::vector<std::vector<std::string>> data = readTextFile(" ");
+    return DataFrame<DefaultObject>();
 }
 
 void ExtractorTXT::loadData() {
     std::cout << "Loading data from TXT file" << std::endl;
 }
 
-// ExtractorMemory
-void ExtractorMemory::extractData() {
-    std::cout << "Extracting data from memory" << std::endl;
-}
-
-void ExtractorMemory::loadData() {
-    std::cout << "Loading data from memory" << std::endl;
-}
 
 // ExtractorSQL
-void ExtractorSQL::extractData() {
+DataFrame<DefaultObject> ExtractorSQL::extractData() {
     std::cout << "Extracting data from SQL database" << std::endl;
+    doQuery(query_);
+    return DataFrame<DefaultObject>();
 }
 
 void ExtractorSQL::loadData() {
     std::cout << "Loading data from SQL database" << std::endl;
+    doQuery(query_);
+}
+
+void ExtractorSQL::doQuery(std::string query) {
+    sqlite3_stmt* stmt;
+    exit_ = sqlite3_prepare_v2(db_, query.c_str(), -1, &stmt, nullptr);
+    if (exit_ != SQLITE_OK) {
+        std::cerr << "Error preparing statement" << std::endl;
+        return;
+    }
+
+    while ((exit_ = sqlite3_step(stmt)) == SQLITE_ROW) {
+        std::cout << sqlite3_column_text(stmt, 0) << std::endl;
+    }
+
+    sqlite3_finalize(stmt);
 }

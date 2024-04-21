@@ -5,6 +5,9 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include "dataframe.h"
+#include "sqlite3.h"
+#include "default_object.h"
 
 // Forward declaration of ExtractorEstrategy
 class ExtractorEstrategy;
@@ -14,14 +17,13 @@ public:
     enum ExtractorEstrategyType {
         ExtractorCSVType,
         ExtractorTXTType,
-        ExtractorMemoryType,
         ExtractorSQLType
     };
     RepoData();
     void setStrategy(int type, std::string path = "", std::string dbAdress = "",
-                     std::string query = "", int* pointer = nullptr, int size = 0);
-    void extractData();
-    void loadData();
+                     std::string query = "");
+    DataFrame<DefaultObject> extractData();
+    void loadData(DataFrame<DefaultObject> *df);
     ExtractorEstrategy* strategy_ = nullptr;
 
 private:
@@ -34,8 +36,9 @@ public:
     std::string query_;
     int* pointer_;
     int size_;
-    virtual void extractData() = 0;
+    virtual DataFrame<DefaultObject> extractData() = 0;
     virtual void loadData() = 0;
+    std::vector<std::vector<std::string>> readTextFile(std::string sep);
 };
 
 class ExtractorCSV : public ExtractorEstrategy {
@@ -43,9 +46,8 @@ public:
     ExtractorCSV(std::string path){
         path_ = path;
     };
-    void extractData() override;
+    DataFrame<DefaultObject> extractData() override;
     void loadData() override;
-    void readCSV();
 };
 
 class ExtractorTXT : public ExtractorEstrategy {
@@ -53,28 +55,22 @@ public:
     ExtractorTXT(std::string path){
         path_ = path;
     };
-    void extractData() override;
-    void loadData() override;
-};
-
-class ExtractorMemory : public ExtractorEstrategy {
-public:
-    ExtractorMemory(int* pointer, int size){
-        pointer_ = pointer;
-        size_ = size;
-    };
-    void extractData() override;
+    DataFrame<DefaultObject> extractData() override;
     void loadData() override;
 };
 
 class ExtractorSQL : public ExtractorEstrategy {
 public:
+    sqlite3* db_;
+    int exit_ = 0;
     ExtractorSQL(std::string dbAdress, std::string query){
         dbAdress_ = dbAdress;
+        exit_ = sqlite3_open(dbAdress.c_str(), &db_);
         query_ = query;
     };
-    void extractData() override;
+    DataFrame<DefaultObject> extractData() override;
     void loadData() override;
+    void doQuery(std::string query);
 };
 
 #endif // REPDATA_H
