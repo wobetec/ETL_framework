@@ -16,8 +16,7 @@ RepoData::RepoData() {
 }
 
 // Set Strategy
-void RepoData::setStrategy(int type, std::string path, std::string dbAdress,
-                            std::string query) {
+void RepoData::setStrategy(int type, std::string path, DB *db, std::string table) {
     delete strategy_;
     switch (type) {
         case ExtractorCSVType:
@@ -27,7 +26,7 @@ void RepoData::setStrategy(int type, std::string path, std::string dbAdress,
             strategy_ = new ExtractorTXT(path);
             break;
         case ExtractorSQLType:
-            strategy_ = new ExtractorSQL(dbAdress, query);
+            strategy_ = new ExtractorSQL(db, table);
             break;
         default:
             strategy_ = nullptr;
@@ -145,26 +144,14 @@ void ExtractorTXT::loadData(DataFrame<DefaultObject> *df) {
 // ExtractorSQL
 DataFrame<DefaultObject> ExtractorSQL::extractData() {
     std::cout << "Extracting data from SQL database" << std::endl;
-    doQuery(query_);
+    //doQuery(query_);
     return DataFrame<DefaultObject>();
 }
 
 void ExtractorSQL::loadData(DataFrame<DefaultObject> *df) {
     std::cout << "Loading data from SQL database" << std::endl;
-    doQuery(query_);
-}
-
-void ExtractorSQL::doQuery(std::string query) {
-    sqlite3_stmt* stmt;
-    exit_ = sqlite3_prepare_v2(db_, query.c_str(), -1, &stmt, nullptr);
-    if (exit_ != SQLITE_OK) {
-        std::cerr << "Error preparing statement" << std::endl;
-        return;
+    std::pair<int, int> s = df->shape;
+    for (int j = 0; j < s.first; j++) {
+        db_->insertData(table_, std::get<std::string>(df->series[j][0]), std::get<int>(df->series[j][1]));
     }
-
-    while ((exit_ = sqlite3_step(stmt)) == SQLITE_ROW) {
-        std::cout << sqlite3_column_text(stmt, 0) << std::endl;
-    }
-
-    sqlite3_finalize(stmt);
 }
