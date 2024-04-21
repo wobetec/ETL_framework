@@ -27,6 +27,15 @@ for folder in subsubfolders:
     folder_path = os.path.join(main_folder, 'datacat', folder)
     if not os.path.exists(folder_path):
         os.mkdir(folder_path)
+        
+def delete_old_files(folder_path, waiting_time):
+    current_time = time.time()
+    for root, dirs, files in os.walk(folder_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            creation_time = os.path.getctime(file_path)
+            if current_time - creation_time > waiting_time:
+                os.remove(file_path)
 
 id_names = {f'{i}': generate_name(style='capital')  for i in range(1000, 6000)}
 list_ids = list(id_names.keys())
@@ -81,14 +90,14 @@ def genEventType():
     return random.choice(eventType)
 
 def genAction():
-    actions = ['Login', 'Logout', 'Update', 'Delete', 'Add', 'Search', 'Purchase', 'Visualization']
+    actions = ['Login', 'Logout', 'Update', 'Delete', 'Add', 'Search', 'Purchase']
     return random.choice(actions)
 
 def genLineCode():
     return random.randint(1000, 9999)
 
 def genStimulus():
-    stimuli = ['Click', 'Hover', 'Type', 'Scroll', 'Swipe']
+    stimuli = ['Visualization', 'Click', 'Hover', 'Type', 'Scroll', 'Swipe']
     return random.choice(stimuli)
 
 def genSeverity():
@@ -146,9 +155,9 @@ def genAuditMessage(action, name, prod):
     elif action == 'Purchase':
         phrases = "User {username} purchased {Product}."
         return phrases.format(username=name, Product=prod)
-    elif action == 'Visualization':
-        phrases = "User {username} visualized {Product}."
-        return phrases.format(username=name, Product=prod)
+    #elif action == 'Visualization':
+    #    phrases = "User {username} visualized {Product}."
+    #    return phrases.format(username=name, Product=prod)
     else:
         phrases = "User {username} did not make any action after 15 seconds."
         #name = random.choice(id_names.values())
@@ -190,9 +199,12 @@ def genBehaviorMessage(stimulus, name):
     elif stimulus == 'Swipe':
         phrases = "{username} swiped {target}."
         return phrases.format(username = name, target = genTargetComp())
-    else:
-        phrases = "No behavior captured from {username} after 15 seconds."
-        return phrases.format(username = name)
+    elif stimulus == 'Visualization':
+        phrases = "User {username} visualized {prod}."
+        return phrases.format(username=name, prod= random.choice(products))
+    #else:
+    #    phrases = "No behavior captured from {username} after 15 seconds."
+    #    return phrases.format(username = name)
 
 
 def gen_logaudit(num_events, interval_minutes=30):
@@ -241,6 +253,7 @@ def gen_logbehavior(num_events, interval_minutes=30):
         user_id = random.choice(list_ids) #audit, behavior
         stimulus = genStimulus() #behavior
         target_component = genTargetComp() #behavior, failings
+        #product = random.choice(products)
         message = genBehaviorMessage(stimulus, id_names[user_id])
         
         event_data = {'notification_date': notification_date.strftime('%Y-%m-%d %H:%M:%S'), 'event_type': event_type, 'message': message, 'user_id': user_id, 'stimulus': stimulus, 'target_component': target_component}
@@ -305,7 +318,7 @@ def gen_randomlog(num_events):
 
 #CADEANALYTICS
 def genStimulus():
-    stimuli = ['Click', 'Hover', 'Type', 'Scroll', 'Swipe']
+    stimuli = ['Click', 'Hover', 'Type', 'Scroll', 'Swipe', 'Visualization']
     return random.choice(stimuli)
 
 def genTargetComp():
@@ -314,13 +327,16 @@ def genTargetComp():
 
 def gen_cadeanalytics(num_events):
     start_date = datetime(2020, 1, 1)
-    end_date = datetime(2020, 4, 22)
+    end_date = datetime(2024, 4, 22)
     
     simulated_data = []
     for _ in range(num_events):
         notification_date = datetime.now()
         user_id = random.choice(list_ids)
         stimulus = genStimulus()
+        if stimulus=='Visualization':
+            stimulus = 'Visualized {product}. '
+            stimulus = stimulus.format(product=random.choice(products))
         target_component = genTargetComp()
         
         event_data = {'notification_date': notification_date.strftime('%Y-%m-%d %H:%M:%S'), 'user_id': user_id, 'stimulus': stimulus, 'target_component': target_component}
@@ -658,4 +674,6 @@ while True:
     update_stock(orders=orders, stock=stock)
     gen_cadeanalytics(num_events)
     gen_randomlog(num_events)
+    folder_path = os.path.join('data', 'datacat')
+    delete_old_files(folder_path=folder_path, waiting_time=40)
     time.sleep(45)
