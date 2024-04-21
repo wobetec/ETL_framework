@@ -4,6 +4,8 @@
 #include <iostream>
 #include <iomanip>
 #include <variant>
+#include <type_traits>
+#include <stdexcept>
 
 #include "default_object.h"
 
@@ -135,60 +137,40 @@ class Series {
         }
 
         template <typename U>
-        Series<T> equal(U value) {
+        Series<T> compare(U value, std::string op) {
             std::vector<T> result;
 
             for (T v : data) {
-                result.push_back(std::get<U>(v) == value);
+                if (op == "==") {
+                    result.push_back(std::get<U>(v) == value);
+                } else if (op == ">=") {
+                    result.push_back(std::get<U>(v) >= value);
+                } else if (op == "<=") {
+                    result.push_back(std::get<U>(v) <= value);
+                } else if (op == ">") {
+                    result.push_back(std::get<U>(v) > value);
+                } else if (op == "<") {
+                    result.push_back(std::get<U>(v) < value);
+                } else {
+                    throw std::invalid_argument("Invalid operator");
+                }
             }
-        
-            return Series<T>(result);
         }
 
-        template <typename U>
-        Series<T> greater_equal(U value) {
+        template <typename U, typename V>
+        Series<T> astype() {
             std::vector<T> result;
-
+            V value;
             for (T v : data) {
-                result.push_back(std::get<U>(v) >= value);
+                if (std::is_same_v<U, std::string> && std::is_same_v<V, int>) {
+                    value = std::stoi(std::get<U>(v));
+                } else {
+                    throw std::invalid_argument("Invalid conversion");
+                }
+                result.push_back(value);
             }
-        
             return Series<T>(result);
         }
-
-        template <typename U>
-        Series<T> less_equal(U value) {
-            std::vector<T> result;
-
-            for (T v : data) {
-                result.push_back(std::get<U>(v) <= value);
-            }
-        
-            return Series<T>(result);
-        }
-
-        template <typename U>
-        Series<T> greater(U value) {
-            std::vector<T> result;
-
-            for (T v : data) {
-                result.push_back(std::get<U>(v) > value);
-            }
-        
-            return Series<T>(result);
-        }
-
-        template <typename U>
-        Series<T> less(U value) {
-            std::vector<T> result;
-
-            for (T v : data) {
-                result.push_back(std::get<U>(v) < value);
-            }
-        
-            return Series<T>(result);
-        }
-
 
     private:
         std::vector<T> data;
