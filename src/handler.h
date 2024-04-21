@@ -15,7 +15,10 @@ class Handler {
             std::map<std::string, Queue<std::string, DataFrame<T>> *> outQueues
         ) : inQueue(inQueue), outQueues(outQueues) {}
 
-        ~Handler() { join(); }
+        ~Handler() { 
+            running = false;
+            join(); 
+        }
         
         void join() {
             if (handler_thread.joinable()) {
@@ -32,8 +35,7 @@ class Handler {
         Queue<std::string, DataFrame<T>> &inQueue;
         std::map<std::string, Queue<std::string, DataFrame<T>>*> outQueues;
 
-        std::thread handler_thread;
-        bool running;
-
+        bool running = true;
     private:
+        std::thread handler_thread;
 };
