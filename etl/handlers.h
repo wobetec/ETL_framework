@@ -237,9 +237,12 @@ class HandlerA1 : public Handler<Object> {
                 DataFrame<Object> df = item.second;
 
                 std::cout << "HandlerA1: " << item.first << std::endl;
-
-                outQueues["load"]->enQueue(item);
-                outQueues["t_6"]->enQueue(item);
+                
+                
+                df = df.count<DateTime>("notification_date");
+           
+                outQueues["load"]->enQueue(std::make_pair("load", df));
+                outQueues["t_6"]->enQueue(std::make_pair("t_6", df));
             }
         }
 };
@@ -296,6 +299,8 @@ class HandlerA3 : public Handler<Object> {
                 std::cout << "HandlerA3: " << item.first << std::endl;
 
                 // do something with df_in
+                df_in = df_in.groupby()
+
 
                 outQueues["load"]->enQueue(item);
             }
