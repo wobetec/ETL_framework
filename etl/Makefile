@@ -10,7 +10,7 @@ build:
 build_framework:
 	make -f ../src/Makefile build
 
-main:
+main: build_framework
 	g++ \
 		main.cpp \
 
@@ -20,3 +20,5 @@ main:
 		-o \
 			test.out \
 
+test: 
+	g++ main.cpp ../src/datetime.cpp ../src/repodata.cpp -o main.out

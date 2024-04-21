@@ -1,9 +1,16 @@
+# python
+env
+
 # folders
 */lib
 */obj
 
+# simulation data
+/simulator/data
+
 # vscode
-*/.vscode
+/.vscode
+/__pycache__
 
 # python 
 .ipynb_checkpoints
