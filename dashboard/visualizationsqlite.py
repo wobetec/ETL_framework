@@ -59,7 +59,8 @@ def fetch_data_sold_out():
     conn.close()
     return df
 
-
+df_sold_out = fetch_data_sold_out()
+print(df_sold_out)
 
 
 
