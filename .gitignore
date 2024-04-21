@@ -1,3 +1,17 @@
+# folders
+*/lib
+*/obj
+
+# simulation data
+/simulator/data
+
+# vscode
+/.vscode
+
+# python 
+.ipynb_checkpoints
+*.ipynb
+
 # Prerequisites
 *.d
 
