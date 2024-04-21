@@ -201,7 +201,7 @@ def genBehaviorMessage(stimulus, name):
         return phrases.format(username = name, target = genTargetComp())
     elif stimulus == 'Visualization':
         phrases = "User {username} visualized {prod}."
-        return phrases.format(username=name, prod= random.choice(products))
+        return phrases.format(username=name, prod= random.choice(list(product.keys())))
     #else:
     #    phrases = "No behavior captured from {username} after 15 seconds."
     #    return phrases.format(username = name)
@@ -231,12 +231,12 @@ def gen_logaudit(num_events, interval_minutes=30):
         if time > interval_end:
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             csv_path = os.path.join('data', 'datacat/audit', file_name)
-            df.to_csv(csv_path, index=False, sep=' ')
+            df.to_csv(csv_path, index=False, sep=';')
             return df
         elif k==num_events-1: 
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             csv_path = os.path.join('data', 'datacat/audit', file_name)
-            df.to_csv(csv_path, index=False, sep=' ')
+            df.to_csv(csv_path, index=False, sep=';')
             return df
 
 def gen_logbehavior(num_events, interval_minutes=30):
@@ -265,12 +265,12 @@ def gen_logbehavior(num_events, interval_minutes=30):
         if time > interval_end:
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             csv_path = os.path.join('data', 'datacat/behaviour', file_name)
-            df.to_csv(csv_path, index=False, sep=' ')
+            df.to_csv(csv_path, index=False, sep=';')
             return df
         elif k==num_events-1: 
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             csv_path = os.path.join('data', 'datacat/behaviour', file_name)
-            df.to_csv(csv_path, index=False, sep=' ')
+            df.to_csv(csv_path, index=False, sep=';')
     return df
 
 def gen_logfailings(num_events, interval_minutes=30):
@@ -300,12 +300,12 @@ def gen_logfailings(num_events, interval_minutes=30):
         if time > interval_end:
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             csv_path = os.path.join('data', 'datacat/failings', file_name)
-            df.to_csv(csv_path, index=False, sep=' ')
+            df.to_csv(csv_path, index=False, sep=';')
             return df
         elif k==num_events-1: 
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
             csv_path = os.path.join('data', 'datacat/failings', file_name)
-            df.to_csv(csv_path, index=False, sep=' ')
+            df.to_csv(csv_path, index=False, sep=';')
     return df
 
 def gen_randomlog(num_events):
@@ -336,7 +336,7 @@ def gen_cadeanalytics(num_events):
         stimulus = genStimulus()
         if stimulus=='Visualization':
             stimulus = 'Visualized {product}. '
-            stimulus = stimulus.format(product=random.choice(products))
+            stimulus = stimulus.format(product=random.choice(list(product.keys())))
         target_component = genTargetComp()
         
         event_data = {'notification_date': notification_date.strftime('%Y-%m-%d %H:%M:%S'), 'user_id': user_id, 'stimulus': stimulus, 'target_component': target_component}
@@ -346,7 +346,7 @@ def gen_cadeanalytics(num_events):
         date = datetime.now()
         file_name = "cade_analytics.txt"
         csv_path = os.path.join('data', 'cadeanalytics', file_name)
-        df.to_csv(csv_path, index=False, sep=' ')
+        df.to_csv(csv_path, index=False, sep=';')
 
 
 #CONTAVERDE        
