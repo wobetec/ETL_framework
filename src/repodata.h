@@ -8,6 +8,7 @@
 #include "dataframe.h"
 #include "sqlite3.h"
 #include "default_object.h"
+#include "series.h"
 
 // Forward declaration of ExtractorEstrategy
 class ExtractorEstrategy;
@@ -37,8 +38,9 @@ public:
     int* pointer_;
     int size_;
     virtual DataFrame<DefaultObject> extractData() = 0;
-    virtual void loadData() = 0;
+    virtual void loadData(DataFrame<DefaultObject> *df) = 0;
     std::vector<std::vector<std::string>> readTextFile(std::string sep);
+    void saveTextFile(DataFrame<DefaultObject> *df, std::string sep);
 };
 
 class ExtractorCSV : public ExtractorEstrategy {
@@ -47,7 +49,7 @@ public:
         path_ = path;
     };
     DataFrame<DefaultObject> extractData() override;
-    void loadData() override;
+    void loadData(DataFrame<DefaultObject> *df) override;
 };
 
 class ExtractorTXT : public ExtractorEstrategy {
@@ -56,7 +58,7 @@ public:
         path_ = path;
     };
     DataFrame<DefaultObject> extractData() override;
-    void loadData() override;
+    void loadData(DataFrame<DefaultObject> *df) override;
 };
 
 // class ExtractorSQL : public ExtractorEstrategy {

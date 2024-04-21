@@ -48,14 +48,24 @@ class HandlerCDatacat : public Handler<Object> {
                 std::cout << "Handler running CDatacat" << std::endl;
                 
                 QueueItem item = inQueue.deQueue();
+                DataFrame<Object> df_in = item.second;
 
-                std::cout << "HandlerCDatacat: " << item.first << std::endl;
+                df_in = df_in.filter<std::string>("stimulus", "==", "Visualization");
 
-                DataFrame<Object> df = item.second;
+                Series<Object> message = df_in["message"];
+                std::vector<Object> product_id = {};
+                for (int i = 0; i < message.data.size(); i++) {
+                    std::string m = std::get<std::string>(message[i]);
+                    int len = m.length();
+                    product_id.push_back(m.substr(len-5).substr(0, 4));
+                }
 
-                
+                DataFrame<Object> df_out;
+                df_out.addColumn("product_id", product_id);
+                df_out.addColumn("user_id", df_in["user_id"]);
+                df_out.addColumn("notification_date", df_in["notification_date"].to_datetime());
 
-                outQueues["s_vis"]->enQueue(item);
+                outQueues["s_vis"]->enQueue(std::make_pair("s_vis", df_out));
             }
         }
 };
@@ -132,20 +142,11 @@ class HandlerSProdutos : public Handler<Object> {
                 QueueItem item = inQueue.deQueue();
                 DataFrame<Object> df_in = item.second;
 
-                df_in.print();
-                std::cout << df_in.shape.first << std::endl;
-
-                df_in.dropColumn("picture");
-                df_in.dropColumn("discription");
-                df_in.dropColumn("price");
-
-                df_in.print();
+                DataFrame<Object> df_out;
+                df_out.addColumn("product_id", df_in["product_id"]);
+                df_out.addColumn("name", df_in["name"]);
 
                 std::unique_lock<std::mutex> lock = cache.getLock("produtos");
-
-                DataFrame<Object> df_cache = cache.read("produtos");
-
-                // do something with cache
 
                 cache.save("produtos", df_in);
 
@@ -172,13 +173,9 @@ class HandlerSEstoque : public Handler<Object> {
                 QueueItem item = inQueue.deQueue();
                 DataFrame<Object> df_in = item.second;
 
-                std::cout << "HandlerSEstoque: " << item.first << std::endl;
+                df_in.addColumn("available_quantity", df_in["available_quantity"].astype<std::string, int>());
 
                 std::unique_lock<std::mutex> lock = cache.getLock("estoque");
-
-                DataFrame<Object> df_cache = cache.read("estoque");
-
-                // do something with cache
 
                 cache.save("estoque", df_in);
 
@@ -205,7 +202,6 @@ class HandlerSCompras : public Handler<Object> {
                 QueueItem item = inQueue.deQueue();
                 DataFrame<Object> df_in = item.second;
 
-                std::cout << "HandlerSCompras: " << item.first << std::endl;
 
                 std::unique_lock<std::mutex> lock = cache.getLock("compras");
 

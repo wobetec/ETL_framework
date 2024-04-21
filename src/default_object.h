@@ -25,6 +25,18 @@ struct PrintVisitor{
     }
 };
 
+struct SavetoFile {
+    SavetoFile(std::ofstream& outStream) : outStream(outStream) {}
+
+    template<typename T>
+    void operator()(const T& value) const {
+        (outStream << value);
+    }
+
+    private:
+    std::ofstream& outStream;
+};
+
 template <typename Op_T>
 struct AddVisitor {
     template<typename T, typename U>
