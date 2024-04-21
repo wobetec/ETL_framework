@@ -3,6 +3,7 @@
 #include <string>
 #include "../src/framework.h"
 #include "object.h"
+#include <chrono>
 
 typedef std::pair<std::string, DataFrame<Object>> QueueItem;
 
@@ -17,7 +18,7 @@ class HandlerSpliter : public Handler<Object> {
             while (running) {
                 std::cout << "Handler running Spliter" << std::endl;
                 QueueItem item = inQueue.deQueue();
-                std::time_t now = std::time(0);
+                auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
                 std::string key = item.first;
                 item.first = std::to_string(now);
                 outQueues[key]->enQueue(item);
