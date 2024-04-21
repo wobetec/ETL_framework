@@ -43,9 +43,9 @@ class ExtractThread : public ThreadWrapper<Queue<std::string, std::string>, Queu
                 } else if (key == "datacat") {
                     auto lock = map_mutex.getLock("datacat");
 
-                    std::string last_path = map_mutex.get("datacat_behavior");
+                    std::string last_path = map_mutex.get("datacat_behaviour");
                     std::string max_path = last_path;
-                    std::string base_path = "../simulator/data/datacat/behavior/";
+                    std::string base_path = "../simulator/data/datacat/behaviour";
                     for (const auto & entry : std::filesystem::directory_iterator(base_path)) {
                         std::string filename = std::string(entry.path());
 
@@ -60,7 +60,7 @@ class ExtractThread : public ThreadWrapper<Queue<std::string, std::string>, Queu
                         }
                     }
 
-                    map_mutex.set("datacat_behavior", max_path);
+                    map_mutex.set("datacat_behaviour", max_path);
                     lock.unlock();
                 }
             }
