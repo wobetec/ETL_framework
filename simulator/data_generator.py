@@ -463,7 +463,7 @@ def gen_contaverde_users(num_events):
         birth_day.append(datetime.now())
         
     users = pd.DataFrame({'user_id': user_id, 'name': names, 'last_name': last_names, 'address': address, 'registar_day': register_day, 'birth_day': birth_day})
-    file_name = 'users.csv'
+    file_name = 'users.txt'
     csv_path = os.path.join('data', 'contaverde', file_name)
     users.to_csv(csv_path, index=False, sep=',')
 
@@ -614,14 +614,14 @@ def gen_contaverde_products(num_events, prod=product):
         price.append(product_price[id-1001])
         
     product_pd = pd.DataFrame({'product_id': product_id, 'name': product_name, 'picture': product_picture, 'discription': description, 'price': price})
-    file_name = 'products.csv'
+    file_name = 'products.txt'
     csv_path = os.path.join('data', 'contaverde', file_name)
-    product_pd.to_csv(csv_path, index=False, sep=',', encoding='ascii')
+    product_pd.to_csv(csv_path, index=False, sep=',')
 
 def gen_contaverde_stock():
     stocks = pd.DataFrame({'product_id': product.keys(), 'available_quantity': product_stock})
     stock_df = stocks
-    file_name = 'stock.csv'
+    file_name = 'stock.txt'
     csv_path = os.path.join('data', 'contaverde', file_name)
     stocks.to_csv(csv_path, index=False, sep=',')
     return stock_df
@@ -650,7 +650,7 @@ def gen_purchase_order(num_events):
         deliver_date.append(datetime.now())
     purchase_orders = pd.DataFrame({'user_id': user_id, 'product_id': product_id, 'quantity': quantity, 'creation_date': creation_date, 'payment_date': payment_date, 'deliver_date': deliver_date})
     purchase_orders_df = purchase_orders
-    file_name = 'purchase_orders.csv'
+    file_name = 'purchase_orders.txt'
     csv_path = os.path.join('data', 'contaverde', file_name)
     purchase_orders.to_csv(csv_path, index=False, sep=',')
     return purchase_orders_df
@@ -661,7 +661,7 @@ def update_stock(orders, stock=gen_contaverde_stock()):
         quantity = order['quantity']
         stock_index = stock[stock['product_id'] == product_id].index[0]
         stock.loc[stock_index, 'available_quantity'] -= quantity
-    file_name = 'stock.csv'
+    file_name = 'stock.txt'
     csv_path = os.path.join('data', 'contaverde', file_name)
     stock.to_csv(csv_path, index=False, sep=',')
     return stock
@@ -676,5 +676,5 @@ while True:
     gen_cadeanalytics(num_events)
     gen_randomlog(num_events)
     folder_path = os.path.join('data', 'datacat')
-    delete_old_files(folder_path=folder_path, waiting_time=40)
+    delete_old_files(folder_path=folder_path, waiting_time=120)
     time.sleep(45)

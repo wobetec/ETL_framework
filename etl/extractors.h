@@ -25,15 +25,15 @@ class ExtractThread : public ThreadWrapper<Queue<std::string, std::string>, Queu
                 DataFrame<Object> df;
 
                 if (key == "produtos") {
-                    repoData.setStrategy(RepoData::ExtractorCSVType, "../simulator/data/contaverde/produtos.csv", "", "");
+                    repoData.setStrategy(RepoData::ExtractorCSVType, "../simulator/data/contaverde/products.txt", "", "");
                     df = repoData.extractData();
                     outQueues.enQueue(std::make_pair(key, df));
                 } else if (key == "estoque") {
-                    repoData.setStrategy(RepoData::ExtractorCSVType, "../simulator/data/contaverde/estoque.csv", "", "");
+                    repoData.setStrategy(RepoData::ExtractorCSVType, "../simulator/data/contaverde/stock.txt", "", "");
                     df = repoData.extractData();
                     outQueues.enQueue(std::make_pair(key, df));
                 } else if (key == "compras") {
-                    repoData.setStrategy(RepoData::ExtractorCSVType, "../simulator/data/contaverde/compras.csv", "", "");
+                    repoData.setStrategy(RepoData::ExtractorCSVType, "../simulator/data/contaverde/purchase_orders.txt", "", "");
                     df = repoData.extractData();
                     outQueues.enQueue(std::make_pair(key, df));
                 } else if (key == "cade"){
@@ -45,12 +45,12 @@ class ExtractThread : public ThreadWrapper<Queue<std::string, std::string>, Queu
 
                     std::string last_path = map_mutex.get("datacat_behaviour");
                     std::string max_path = last_path;
-                    std::string base_path = "../simulator/data/datacat/behaviour";
+                    std::string base_path = "../simulator/data/datacat/behaviour/";
                     for (const auto & entry : std::filesystem::directory_iterator(base_path)) {
                         std::string filename = std::string(entry.path());
 
                         if (filename > last_path){
-                            repoData.setStrategy(RepoData::ExtractorTXTType, base_path + filename, "", "");
+                            repoData.setStrategy(RepoData::ExtractorTXTType, filename, "", "");
                             df = repoData.extractData();
                             outQueues.enQueue(std::make_pair(key, df));
 

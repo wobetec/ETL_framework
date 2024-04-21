@@ -172,6 +172,16 @@ class Series {
             return Series<T>(result);
         }
 
-    private:
+        Series<T> to_datetime() {
+            std::vector<T> result;
+            DateTime value;
+            for (T v : data) {
+                value = DateTime(std::get<std::string>(v));
+                result.push_back(value);
+            }
+            return Series<T>(result);
+        }
+
         std::vector<T> data;
+    private:
 };
