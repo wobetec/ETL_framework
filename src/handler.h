@@ -1,39 +1,35 @@
-// Handler.h
+#pragma once
 
-#ifndef HANDLER_H
-#define HANDLER_H
+#include <map>
+#include "dataframe.h"
+#include "queue.h"
 
-#include <queue>
-#include <thread>
-#include <mutex>
-#include <condition_variable>
-// #include "DataFrame.h"
-
-template <typename T>
-class DataFrame;
 template <typename T>
 class Handler {
-public:
-    Handler();
-    ~Handler();
+    public:
+        Handler(Queue<std::string, DataFrame<T>>& inQueue, std::map<std::string, Queue<std::string, DataFrame<T>>>& outQueues) : inQueue(inQueue), outQueues(outQueues) {
+            running = true;
+        }
 
-    void start();
-    void inQueue(DataFrame<T> df);
-    DataFrame<T> outQueue();
+        ~Handler() { join(); }
 
-private:
-    void run();
-    void __run();
-    DataFrame<T> processDataFrame(DataFrame<T>& df);
-    std::queue<DataFrame<T>> inQueue_;
-    std::queue<DataFrame<T>> outQueue_;
-    std::thread thread_;
-    std::mutex inMutex_;
-    std::mutex outMutex_;
-    std::condition_variable cv_;
-    bool terminate_ = false;
+        void start() {
+            handler_thread = std::thread(&Handler::run, this);
+        }
+
+        void join() {
+            if (handler_thread.joinable()) {
+                handler_thread.join();
+            }
+        }
+
+        virtual void run() = 0;
+    
+        Queue<std::string, DataFrame<T>>& inQueue;
+        std::map<std::string, Queue<std::string, DataFrame<T>>>& outQueues;
+
+        std::thread handler_thread;
+        bool running;
+
+    private:
 };
-
-#include "handler.cpp" 
-
-#endif
