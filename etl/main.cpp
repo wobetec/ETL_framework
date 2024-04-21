@@ -118,7 +118,7 @@ int main(){
     HandlerA4 t_a4(q_t_4, {{"load", &q_load}}, cache);
     t_a4.start();
 
-    HandlerA5 t_a5(q_t_5, {{"load", &q_load}});
+    HandlerA5 t_a5(q_t_5, {{"load", &q_load}}, cache);
     t_a5.start();
 
     HandlerA6 t_a6(q_t_6, {{"load", &q_load}}, cache);
@@ -129,7 +129,6 @@ int main(){
 
 
     // Simulate
-
     while(true){
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         tg_cade.run();

@@ -1,22 +1,20 @@
 #include "repodata.h"
 #include "dataframe.h"
 
+using namespace std;
+
 int main() {
     RepoData repoData;
-    repoData.setStrategy(RepoData::ExtractorCSVType, "teste.csv", "", "");
+    repoData.setStrategy(RepoData::ExtractorCSVType, "../simulator/data/contaverde/products.txt", "", "");
     DataFrame<DefaultObject> df = repoData.extractData();
 
-    for (auto column : df.columns) {
-        for (auto value : column) {
-            std::cout << value;
-        }
-        std::cout << std::endl;
+    df.print();
+
+    for(string s : df.columns){
+        cout << s << endl;
     }
 
-    RepoData loader;
-    loader.setStrategy(RepoData::ExtractorTXTType, "zuzu.txt", "", "");
-    loader.loadData(&df);
-
-    df.print();
+    cout << df.shape.first << " " << df.shape.second << endl;
+    // df["notification_date"].print();
     return 0;
 }

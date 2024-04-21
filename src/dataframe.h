@@ -364,7 +364,6 @@ class DataFrame {
                 columnsToAggregateIds.push_back(aggColumnId);
             }
 
-
             std::map<U, std::vector<int>> groups;
 
             for (int i = 0; i < shape.first; i++) {
