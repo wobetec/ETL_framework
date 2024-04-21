@@ -464,6 +464,45 @@ class DataFrame {
             return result;
         }
 
+        DataFrame<T> dropDuplicate(std::vector<std::string> subset) {
+            /**
+             * @brief Drop duplicate rows based on a subset of columns
+             * 
+             * @param subset The subset of columns to consider for duplicates
+             * @return DataFrame<T> The DataFrame without duplicates
+             */
+            std::vector<int> columnsToConsider;
+            for (std::string column : subset) {
+                int columnId = column_id(column);
+                if (columnId == -1) {
+                    throw std::invalid_argument("Column does not exist");
+                }
+                columnsToConsider.push_back(columnId);
+            }
+
+            std::map<std::string, int> uniqueRows;
+            for (int i = 0; i < shape.first; i++) {
+                std::string row;
+                for (int columnId : columnsToConsider) {
+                    row += std::get<std::string>(series[columnId][i]);
+                }
+                uniqueRows[row] = i;
+            }
+
+            DataFrame<T> result;
+
+            for (auto const& [key, val] : uniqueRows) {
+                std::map<std::string, T> row;
+                for (int j = 0; j < shape.second; j++) {
+                    row[columns[j]] = series[j][val];
+                }
+                result.append(row);
+            }
+
+            return result;
+
+        }
+
     private:
         std::vector<Series<T>> series;
         std::vector<std::string> columns;
