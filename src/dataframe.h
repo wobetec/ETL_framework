@@ -435,6 +435,7 @@ class DataFrame {
             return result;
         }
 
+        template <typename U>
         DataFrame<T> count(std::string columnName) {
             /**
              * @brief Count the number of occurrences of each value in a column
@@ -448,10 +449,10 @@ class DataFrame {
                 throw std::invalid_argument("Column does not exist");
             }
 
-            std::map<T, int> counts;
+            std::map<U, int> counts;
 
             for (int i = 0; i < shape.first; i++) {
-                counts[series[columnId][i]]++;
+                counts[std::get<U>(series[columnId][i])]++;
             }
 
             DataFrame<T> result;
