@@ -18,6 +18,10 @@ class Cache {
         }
 
         DataFrame<T> read(std::string table) {
+            auto it = cache.find(table);
+            if (it == cache.end()) {
+                return DataFrame<T>();
+            }
             return cache[table];
         }
 
