@@ -511,48 +511,49 @@ def gen_contaverde_products(num_events, prod=product):
     "Gaming Headset.jpg",
     "Portable SSD.jpg"
 ]
-    product_description = [
-    "Unleash your productivity with cutting-edge performance and sleek design.",  # Laptop
-    "Stay connected and stylish with the latest technology at your fingertips.",  # Smartphone
-    "Immerse yourself in crystal-clear sound and unparalleled comfort.",  # Headphones
-    "Experience the power of portability with stunning visuals and versatility.",  # Tablet
-    "Elevate your fitness and productivity with intelligent tracking and seamless connectivity.",  # Smartwatch
-    "Capture life's moments in stunning detail with professional-grade imaging.",  # Camera
-    "Print, scan, and copy with ease for vibrant documents and photos.",  # Printer
-    "Expand your storage and safeguard your data with reliable performance.",  # External Hard Drive
-    "Navigate with precision and freedom for seamless workflow.",  # Wireless Mouse
-    "Enhance your typing experience with ergonomic design and customizable keys.",  # Keyboard
-    "Immerse yourself in vibrant visuals and unparalleled clarity for work and play.",  # Monitor
-    "Embark on epic gaming adventures with powerful graphics and immersive gameplay.",  # Gaming Console
-    "Achieve your fitness goals with real-time tracking and personalized insights.",  # Fitness Tracker
-    "Bring your music to life with rich, immersive sound and portable convenience.",  # Bluetooth Speaker
-    "Stay charged on-the-go with reliable power for your devices.",  # Power Bank
-    "Capture breathtaking aerial footage and explore new perspectives.",  # Drone
-    "Step into immersive worlds and experience entertainment like never before.",  # Virtual Reality Headset
-    "Capture memories in stunning detail with advanced imaging technology.",  # Digital Camera
-    "Elevate your audio experience with rich, room-filling sound and sleek design.",  # Soundbar
-    "Stay connected with fast, reliable Wi-Fi coverage for your home or office.",  # Router
-    "Experience lightning-fast storage and transfer speeds for your data.",  # External SSD
-    "Capture your adventures in stunning 4K resolution with rugged durability.",  # Action Camera
-    "Dominate the game with precision control and customizable features.",  # Gaming Mouse
-    "Level up your gaming experience with responsive keys and customizable RGB lighting.",  # Gaming Keyboard
-    "Unleash the power of lifelike visuals and smooth gaming performance.",  # Graphics Card
-    "Stay motivated and track your progress with smart fitness features.",  # Fitness Watch
-    "Enjoy wireless freedom and immersive sound for music and calls.",  # Bluetooth Earbuds
-    "Escape into your music with comfort and superior sound quality.",  # Wireless Headphones
-    "Control your home and enjoy immersive audio with voice commands.",  # Smart Home Speaker
-    "Transform any space into a theater with portable, high-quality projection.",  # Portable Projector
-    "Protect and showcase your system with style and functionality.",  # Computer Case
-    "Stay comfortable and focused during intense gaming sessions with ergonomic support.",  # Gaming Chair
-    "Experience tactile precision and durability for gaming and typing.",  # Mechanical Keyboard
-    "Immerse yourself in smooth, lag-free gaming visuals with high refresh rates.",  # Gaming Monitor
-    "Take gaming on-the-go with powerful performance and stunning displays.",  # Gaming Laptop
-    "Experience blazing-fast speeds and reliable storage for your data.",  # SSD Drive
-    "Enjoy seamless connectivity and fast Wi-Fi speeds for your network.",  # Wireless Router
-    "Stay active and connected with smart fitness tracking and sleek design.",  # Fitness Band
-    "Experience immersive gaming audio and clear communication with teammates.",  # Gaming Headset
-    "Carry your data securely and access it quickly with ultra-portable SSD technology."  # Portable SSD
-]
+    product_description = [ "minha_descricao" for i in range(len(products_jpg))]
+    # [
+    # "Unleash your productivity with cutting-edge performance and sleek design.",  # Laptop
+    # "Stay connected and stylish with the latest technology at your fingertips.",  # Smartphone
+    # "Immerse yourself in crystal-clear sound and unparalleled comfort.",  # Headphones
+    # "Experience the power of portability with stunning visuals and versatility.",  # Tablet
+    # "Elevate your fitness and productivity with intelligent tracking and seamless connectivity.",  # Smartwatch
+    # "Capture life's moments in stunning detail with professional-grade imaging.",  # Camera
+    # "Print, scan, and copy with ease for vibrant documents and photos.",  # Printer
+    # "Expand your storage and safeguard your data with reliable performance.",  # External Hard Drive
+    # "Navigate with precision and freedom for seamless workflow.",  # Wireless Mouse
+    # "Enhance your typing experience with ergonomic design and customizable keys.",  # Keyboard
+    # "Immerse yourself in vibrant visuals and unparalleled clarity for work and play.",  # Monitor
+    # "Embark on epic gaming adventures with powerful graphics and immersive gameplay.",  # Gaming Console
+    # "Achieve your fitness goals with real-time tracking and personalized insights.",  # Fitness Tracker
+    # "Bring your music to life with rich, immersive sound and portable convenience.",  # Bluetooth Speaker
+    # "Stay charged on-the-go with reliable power for your devices.",  # Power Bank
+    # "Capture breathtaking aerial footage and explore new perspectives.",  # Drone
+    # "Step into immersive worlds and experience entertainment like never before.",  # Virtual Reality Headset
+    # "Capture memories in stunning detail with advanced imaging technology.",  # Digital Camera
+    # "Elevate your audio experience with rich, room-filling sound and sleek design.",  # Soundbar
+    # "Stay connected with fast, reliable Wi-Fi coverage for your home or office.",  # Router
+    # "Experience lightning-fast storage and transfer speeds for your data.",  # External SSD
+    # "Capture your adventures in stunning 4K resolution with rugged durability.",  # Action Camera
+    # "Dominate the game with precision control and customizable features.",  # Gaming Mouse
+    # "Level up your gaming experience with responsive keys and customizable RGB lighting.",  # Gaming Keyboard
+    # "Unleash the power of lifelike visuals and smooth gaming performance.",  # Graphics Card
+    # "Stay motivated and track your progress with smart fitness features.",  # Fitness Watch
+    # "Enjoy wireless freedom and immersive sound for music and calls.",  # Bluetooth Earbuds
+    # "Escape into your music with comfort and superior sound quality.",  # Wireless Headphones
+    # "Control your home and enjoy immersive audio with voice commands.",  # Smart Home Speaker
+    # "Transform any space into a theater with portable, high-quality projection.",  # Portable Projector
+    # "Protect and showcase your system with style and functionality.",  # Computer Case
+    # "Stay comfortable and focused during intense gaming sessions with ergonomic support.",  # Gaming Chair
+    # "Experience tactile precision and durability for gaming and typing.",  # Mechanical Keyboard
+    # "Immerse yourself in smooth, lag-free gaming visuals with high refresh rates.",  # Gaming Monitor
+    # "Take gaming on-the-go with powerful performance and stunning displays.",  # Gaming Laptop
+    # "Experience blazing-fast speeds and reliable storage for your data.",  # SSD Drive
+    # "Enjoy seamless connectivity and fast Wi-Fi speeds for your network.",  # Wireless Router
+    # "Stay active and connected with smart fitness tracking and sleek design.",  # Fitness Band
+    # "Experience immersive gaming audio and clear communication with teammates.",  # Gaming Headset
+    # "Carry your data securely and access it quickly with ultra-portable SSD technology."  # Portable SSD
+# ]
     product_price = [
     1000,  # Laptop
     800,  # Smartphone
@@ -612,10 +613,10 @@ def gen_contaverde_products(num_events, prod=product):
         description.append(product_description[id-1001]) 
         price.append(product_price[id-1001])
         
-    product_pd = pd.DataFrame({'product_id': product_id, 'name': product_name, 'picutre': product_picture, 'discription': description, 'price': price})
+    product_pd = pd.DataFrame({'product_id': product_id, 'name': product_name, 'picture': product_picture, 'discription': description, 'price': price})
     file_name = 'products.csv'
     csv_path = os.path.join('data', 'contaverde', file_name)
-    product_pd.to_csv(csv_path, index=False, sep=',')
+    product_pd.to_csv(csv_path, index=False, sep=',', encoding='ascii')
 
 def gen_contaverde_stock():
     stocks = pd.DataFrame({'product_id': product.keys(), 'available_quantity': product_stock})
