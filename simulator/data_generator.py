@@ -7,9 +7,19 @@ from random_address import real_random_address
 from random import randrange
 from datetime import timedelta
 from datetime import datetime
+import os
 
-#id_names = {f'{i}': generate_name(style='capital')  for i in range(1000, 6000)}
-#list_ids = list(id_names.keys())
+main_folder = 'data'
+
+subfolders = ['datacat', 'cadeanalytics', 'contaverde']
+
+if not os.path.exists(main_folder):
+    os.mkdir(main_folder)
+
+for folder in subfolders:
+    folder_path = os.path.join(main_folder, folder)
+    if not os.path.exists(folder_path):
+        os.mkdir(folder_path)
 
 id_names = {f'{i}': generate_name(style='capital')  for i in range(1000, 6000)}
 list_ids = list(id_names.keys())
@@ -183,7 +193,6 @@ def gen_logaudit(num_events, interval_minutes=30):
     end_date = start_date+timedelta(seconds=interval_minutes)
     interval_start = start_date
     interval_end = start_date + timedelta(seconds=interval_minutes)
-    #print(interval_end)
     
     simulated_data = []
     for k in range(num_events):
@@ -195,26 +204,21 @@ def gen_logaudit(num_events, interval_minutes=30):
         message = genAuditMessage(action, id_names[user_id], product)
         
         event_data = {'notification_date': notification_date.strftime('%Y-%m-%d %H:%M:%S'), 'event_type': event_type, 'message': message,  'user_id': user_id, 'action': action}
-        #event_data = [notification_date.strftime('%Y-%m-%d %H:%M:%S'), event_type, message, user_id, action]
         
-        #simulated_data.append(event_data.values())
         simulated_data.append(event_data)
         df = pd.DataFrame(data = simulated_data, columns = event_data.keys())
         df['notification_date'] = sorted(df['notification_date'])
-        #print(1)
         time = datetime.now()
         if time > interval_end:
-            # Salva o arquivo de log atual antes de iniciar um novo
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-            #print(1)
-            df.to_csv(file_name, index=False, sep=',')
+            csv_path = os.path.join('data', 'datacat', file_name)
+            df.to_csv(csv_path, index=False, sep=',')
             return df
         elif k==num_events-1: 
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-            #print(1)
-            df.to_csv(file_name, index=False, sep=',')
+            csv_path = os.path.join('data', 'datacat', file_name)
+            df.to_csv(csv_path, index=False, sep=',')
             return df
-    #return simulated_data
 
 def gen_logbehavior(num_events, interval_minutes=30):
     start_date = datetime.now()
@@ -233,33 +237,27 @@ def gen_logbehavior(num_events, interval_minutes=30):
         message = genBehaviorMessage(stimulus, id_names[user_id])
         
         event_data = {'notification_date': notification_date.strftime('%Y-%m-%d %H:%M:%S'), 'event_type': event_type, 'message': message, 'user_id': user_id, 'stimulus': stimulus, 'target_component': target_component}
-        #event_data = [notification_date.strftime('%Y-%m-%d %H:%M:%S'), event_type, message, user_id, stimulus, target_component]
         
-        #simulated_data.append(event_data.values())
         simulated_data.append(event_data)
         df = pd.DataFrame(data = simulated_data, columns = event_data.keys())
         df['notification_date'] = sorted(df['notification_date'])
-        #print(1)
         time = datetime.now()
         if time > interval_end:
-            # Salva o arquivo de log atual antes de iniciar um novo
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-            print(1)
-            df.to_csv(file_name, index=False, sep=',')
-            return
+            csv_path = os.path.join('data', 'datacat', file_name)
+            df.to_csv(csv_path, index=False, sep=',')
+            return df
         elif k==num_events-1: 
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-            #print(1)
-            df.to_csv(file_name, index=False, sep=',')
+            csv_path = os.path.join('data', 'datacat', file_name)
+            df.to_csv(csv_path, index=False, sep=',')
     return df
-    #return simulated_data
 
 def gen_logfailings(num_events, interval_minutes=30):
     start_date = datetime.now()
     end_date = start_date+timedelta(seconds=interval_minutes)
     interval_start = start_date
     interval_end = start_date + timedelta(seconds=interval_minutes)
-    #print(interval_end)
     
     simulated_data = []
     for k in range(num_events):
@@ -272,50 +270,33 @@ def gen_logfailings(num_events, interval_minutes=30):
         message = genFailureMsessage(err)
         
         event_data = {'notification_date': notification_date.strftime('%Y-%m-%d %H:%M:%S'), 'event_type': event_type, 'message': message, 'target_component': target_component, 'linecode': linecode, 'severity': severity}
-        #event_data = [notification_date.strftime('%Y-%m-%d %H:%M:%S'), event_type, message, target_component, linecode, severity]
         
         simulated_data.append(event_data.values())
-        #simulated_data.append(event_data)
+
         df = pd.DataFrame(data = simulated_data, columns = event_data.keys())
         df['notification_date'] = sorted(df['notification_date'])
-        #print(1)
+
         time = datetime.now()
         if time > interval_end:
-            # Salva o arquivo de log atual antes de iniciar um novo
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-            print(1)
-            df.to_csv(file_name, index=False, sep=',')
-            return
+            csv_path = os.path.join('data', 'datacat', file_name)
+            df.to_csv(csv_path, index=False, sep=',')
+            return df
         elif k==num_events-1: 
             file_name = f"log_{event_type}_{start_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-            #print(1)
-            df.to_csv(file_name, index=False, sep=',')
+            csv_path = os.path.join('data', 'datacat', file_name)
+            df.to_csv(csv_path, index=False, sep=',')
     return df
-    #return simulated_data
 
 def gen_randomlog(num_events):
-    #logs = [1, 2, 3]
-    #simulated_logs = []
-    #for k in range(num_events):
-    #choice = random.choice(logs)
     p = np.random.uniform(0,1/3)
     q = np.random.uniform(0,1-p)
     r = 1-p-q
     gen_logfailings(int(num_events*p))
-            #simulated_logs.append(log)
     gen_logbehavior(int(num_events*q))
-    #    simulated_logs.append(log)
     gen_logaudit(int(num_events*r))
-    #        simulated_logs.append(log)
-    #pd.DataFrame(simulated_logs)
 
-
-def genRandDate(start, end):
-    delta = end - start
-    int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
-    random_second = randrange(int_delta)
-    return start + timedelta(seconds=random_second)
-
+#CADEANALYTICS
 def genStimulus():
     stimuli = ['Click', 'Hover', 'Type', 'Scroll', 'Swipe']
     return random.choice(stimuli)
@@ -326,7 +307,7 @@ def genTargetComp():
 
 def gen_cadeanalytics(num_events):
     start_date = datetime(2020, 1, 1)
-    end_date = datetime(2024, 4, 16)
+    end_date = datetime(2024, 4, 22)
     
     simulated_data = []
     for _ in range(num_events):
@@ -341,8 +322,11 @@ def gen_cadeanalytics(num_events):
         df = pd.DataFrame(data = simulated_data, columns = event_data.keys())
         date = datetime.now()
         file_name = f"cade_analytics_{date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
-        df.to_csv(file_name, index=False, sep=',')
-        
+        csv_path = os.path.join('data', 'cadeanalytics', file_name)
+        df.to_csv(csv_path, index=False, sep=',')
+
+
+#CONTAVERDE        
 product = {
     1001: "Laptop",
     1002: "Smartphone",
@@ -431,12 +415,6 @@ product_stock = [
 
 product_dict = dict(zip(list(product.values()), product_stock))
 
-def genRandDate(start, end):
-    delta = end - start
-    int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
-    random_second = randrange(int_delta)
-    return start + timedelta(seconds=random_second)
-
 def gen_contaverde_users(num_events):
     df_audit = gen_logaudit(num_events)
     df_behavior = gen_logbehavior(num_events)
@@ -445,7 +423,7 @@ def gen_contaverde_users(num_events):
     last_names = []
     address = []
     start_date1 = datetime(2015, 1, 1)
-    end_date1 = datetime(2024, 4, 16)
+    end_date1 = datetime(2024, 4, 22)
     start_date2 = datetime(1960, 1, 1)
     end_date2 = datetime(2000, 1, 1)
     register_day = []
@@ -462,7 +440,9 @@ def gen_contaverde_users(num_events):
         birth_day.append(genRandDate(start_date2, end_date2))
         
     users = pd.DataFrame({'user_id': user_id, 'name': names, 'last_name': last_names, 'address': address, 'registar_day': register_day, 'birth_day': birth_day})
-    users.to_csv('users.txt')
+    file_name = 'users.txt'
+    csv_path = os.path.join('data', 'contaverde', file_name)
+    users.to_csv(csv_path, index=False, sep=',')
 
 def gen_contaverde_products(num_events, prod=product):
 
@@ -610,12 +590,16 @@ def gen_contaverde_products(num_events, prod=product):
         price.append(product_price[id-1001])
         
     product_pd = pd.DataFrame({'product_id': product_id, 'name': product_name, 'picutre': product_picture, 'discription': description, 'price': price})
-    product_pd.to_csv('products.txt')
+    file_name = 'products.txt'
+    csv_path = os.path.join('data', 'contaverde', file_name)
+    product_pd.to_csv(csv_path, index=False, sep=',')
 
 def gen_contaverde_stock():
     stocks = pd.DataFrame({'product_id': product.keys(), 'available_quantity': product_stock})
     stock_df = stocks
-    stocks.to_csv('stock.txt')
+    file_name = 'stock.txt'
+    csv_path = os.path.join('data', 'contaverde', file_name)
+    stocks.to_csv(csv_path, index=False, sep=',')
     return stock_df
 
 def gen_purchase_order(num_events):
@@ -642,7 +626,9 @@ def gen_purchase_order(num_events):
         deliver_date.append(genRandDate(start_date3, end_date3))
     purchase_orders = pd.DataFrame({'user_id': user_id, 'product_id': product_id, 'quantity': quantity, 'creation_date': creation_date, 'payment_date': payment_date, 'deliver_date': deliver_date})
     purchase_orders_df = purchase_orders
-    purchase_orders.to_csv('purchase_orders.txt')   
+    file_name = 'purchase_orders.txt'
+    csv_path = os.path.join('data', 'contaverde', file_name)
+    purchase_orders.to_csv(csv_path, index=False, sep=',')
     return purchase_orders_df
 
 def update_stock(orders, stock=gen_contaverde_stock()):
@@ -651,8 +637,9 @@ def update_stock(orders, stock=gen_contaverde_stock()):
         quantity = order['quantity']
         stock_index = stock[stock['product_id'] == product_id].index[0]
         stock.loc[stock_index, 'available_quantity'] -= quantity
-    #date = datetime.now()
-    stock.to_csv('stock.txt')
+    file_name = 'stock.txt'
+    csv_path = os.path.join('data', 'contaverde', file_name)
+    stock.to_csv(csv_path, index=False, sep=',')
     return stock
 
 while True:
