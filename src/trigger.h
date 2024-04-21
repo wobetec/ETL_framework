@@ -1,51 +1,69 @@
-#ifndef TRIGGER_H
-#define TRIGGER_H
+#pragma once
 
 #include <iostream>
 #include <string>
 #include <thread>
-#include <filesystem>
-#include <set>
 #include <vector>
+#include <chrono>
+#include "queue.h"
 
-using namespace std;
 namespace fs = filesystem;
+
+typedef Queue<std::string, std::string> QueueTrigger;
 
 class Trigger {
     public:
-        queueT* outQueue;
-        string path;
-        int running = 1;
-        void addToQueue(pair<string, string> data);
-        void run();
+        Trigger(QueueTrigger &outQueue, std::string first, std::string second) : outQueue(outQueue), first(first), second(second) {}
+        ~Trigger() { 
+            running = false;
+            join(); 
+        }
+        
+        void join() {
+            if (trigger_thread.joinable()) {
+                trigger_thread.join();
+            }
+        }
+
+        virtual void run() = 0;
+
+        void start() {
+            trigger_thread = std::thread(&Trigger::run, this);
+        }
+
+        void addToQueue(){
+            outQueue.enQueue(std::make_pair(first, second));
+        }
+
+        Queue &outQueue;
+        bool running = true;
+        std::string first;
+        std::string second;
+
+    private:
+        std::thread trigger_thread;
 };
 
 class TimeTrigger : public Trigger {
     public:
-        int time_interval = 1000;
-        void check();
-        void run(); 
-};
+        TimeTrigger(QueueTrigger outQueue, int interval, std::string first, std::string second) : Trigger(outQueue, first, second), interval(interval) {}
 
-class FolderTimeTrigger : public TimeTrigger {
-    public: 
-        set<string> known_files;
-        void check();
-        void run();
-};
+        void run() {
+            while(running) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(interval));
+            }
+        }
 
-class CSVTimeTrigger : public TimeTrigger {
-    public: 
-        void check();
-        void run();
-        
+    private:
+        int interval = 0;
 };
 
 class RequestTrigger : public Trigger {
     public:
-        int request = 0;
-        void check();
-        void run();
-};
+        RequestTrigger(QueueTrigger outQueue, std::string first, std::string second) : Trigger(outQueue, first, second) {}
 
-#endif 
+        void request() {
+            addToQueue();
+        }
+    private:
+};
