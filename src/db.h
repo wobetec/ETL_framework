@@ -24,7 +24,7 @@ class DB {
             // Create tables for our solution with datetime primary key and count integer
             sql = "CREATE TABLE IF NOT EXISTS T1 (datetime TEXT PRIMARY KEY, count FLOAT);";   
             sqlite3_exec(db, sql, NULL, 0, &errMsg);
-            sql = "CREATE TABLE IF NOT EXISTS T5 (nomeproduto TEXT PRIMARY KEY, count FLOAT);"; 
+            sql = "CREATE TABLE IF NOT EXISTS T5 (datetime TEXT PRIMARY KEY, count FLOAT);"; 
             sqlite3_exec(db, sql, NULL, 0, &errMsg);
             sql = "CREATE TABLE IF NOT EXISTS T3 (datetime TEXT PRIMARY KEY, count FLOAT);";
             sqlite3_exec(db, sql, NULL, 0, &errMsg);
@@ -32,7 +32,7 @@ class DB {
             sqlite3_exec(db, sql, NULL, 0, &errMsg);
             sql = "CREATE TABLE IF NOT EXISTS T2 (datetime TEXT PRIMARY KEY, count FLOAT);";
             sqlite3_exec(db, sql, NULL, 0, &errMsg);
-            sql = "CREATE TABLE IF NOT EXISTS T4 (nomeproduto TEXT PRIMARY KEY, count FLOAT);";
+            sql = "CREATE TABLE IF NOT EXISTS T4 (datetime TEXT PRIMARY KEY, count FLOAT);";
             sqlite3_exec(db, sql, NULL, 0, &errMsg);
         }
         ~DB(){
