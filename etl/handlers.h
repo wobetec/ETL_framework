@@ -345,9 +345,11 @@ class HandlerA3 : public Handler<Object> {
                 DataFrame<Object> df_in = item.second;
 
                 // do something with df_in
-                // df_in = df_in.groupby()  
+                df_in = df_in.dropDuplicate({"user_id", "project_id"});
+                df_in = df_in.count<std::string>("notification_date");
 
-                outQueues["load"]->enQueue(std::make_pair("T3 " + item.first, df_in));
+
+                outQueues["load"]->enQueue("load", df_in);
             }
         }
 };
