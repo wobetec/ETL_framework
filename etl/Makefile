@@ -21,4 +21,10 @@ main: build_framework
 			test.out \
 
 test: 
-	g++ main.cpp ../src/datetime.cpp ../src/repodata.cpp -o main.out
+	g++ \
+		main.cpp \
+		../src/datetime.cpp \
+		../src/repodata.cpp \
+		-l sqlite3\
+		-o \
+			main.out
