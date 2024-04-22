@@ -99,7 +99,7 @@ void ExtractorEstrategy::saveTextFile(DataFrame<DefaultObject> *df, std::string 
 
 // ExtractorCSV
 DataFrame<DefaultObject> ExtractorCSV::extractData() {
-    std::cout << "  g data from CSV file" << std::endl;
+    std::cout << "Extracting data from CSV file" << std::endl;
     std::vector<std::vector<std::string>> data = readTextFile(",");
     std::vector<std::string> columns = data[0];
     DataFrame<DefaultObject> df;
@@ -144,7 +144,6 @@ void ExtractorTXT::loadData(DataFrame<DefaultObject> *df) {
 // ExtractorSQL
 DataFrame<DefaultObject> ExtractorSQL::extractData() {
     std::cout << "Extracting data from SQL database" << std::endl;
-
     return DataFrame<DefaultObject>();
 }
 
