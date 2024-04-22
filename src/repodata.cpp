@@ -17,6 +17,14 @@ RepoData::RepoData() {
 
 // Set Strategy
 void RepoData::setStrategy(int type, std::string path, DB *db, std::string table) {
+    /**
+    * @brief Set the strategy to extract data
+    * @param type: Type of the strategy
+    * @param path: Path of the file
+    * @param db: Database object
+    * @param table: Table name
+    * @return None
+    */
     delete strategy_;
     switch (type) {
         case ExtractorCSVType:
@@ -35,15 +43,29 @@ void RepoData::setStrategy(int type, std::string path, DB *db, std::string table
 }
 
 DataFrame<DefaultObject> RepoData::extractData() {
+    /**
+    * @brief Extract data from the file
+    * @return DataFrame<DefaultObject>: Dataframe object
+    */
     DataFrame<DefaultObject> df = strategy_->extractData();
     return df;
 }
 
 void RepoData::loadData(DataFrame<DefaultObject> *df) {
+    /**
+    * @brief Load data to the file
+    * @param df: Dataframe object
+    * @return None
+    */
     strategy_->loadData(df);
 }
 
 std::vector<std::vector<std::string>> ExtractorEstrategy::readTextFile(std::string sep) {
+    /**
+    * @brief Read data from the file
+    * @param sep: Separator
+    * @return std::vector<std::vector<std::string>>: Data
+    */
     std::ifstream file;
 
     file.open(path_, std::ios::in);
@@ -64,11 +86,17 @@ std::vector<std::vector<std::string>> ExtractorEstrategy::readTextFile(std::stri
         }
         allData.push_back(data);
     }
-
     return allData;
 }
 
 void ExtractorEstrategy::saveTextFile(DataFrame<DefaultObject> *df, std::string sep) {
+    /**
+    * @brief Save data to the file
+    * @param df: Dataframe object
+    * @param sep: Separator
+    * @return None
+    */
+
     std::ofstream file;
     file.open(path_, std::ios::out);
     if (!file.is_open()) {
@@ -99,6 +127,10 @@ void ExtractorEstrategy::saveTextFile(DataFrame<DefaultObject> *df, std::string 
 
 // ExtractorCSV
 DataFrame<DefaultObject> ExtractorCSV::extractData() {
+    /**
+    * @brief Extract data from the CSV file
+    * @return DataFrame<DefaultObject>: Dataframe object
+    */
     std::cout << "Extracting data from CSV file" << std::endl;
     std::vector<std::vector<std::string>> data = readTextFile(",");
     std::vector<std::string> columns = data[0];
@@ -115,12 +147,22 @@ DataFrame<DefaultObject> ExtractorCSV::extractData() {
 }
 
 void ExtractorCSV::loadData(DataFrame<DefaultObject> *df) {
+    /**
+    * @brief Load data to the CSV file
+    * @param df: Dataframe object
+    * @return None
+    */
     std::cout << "Loading data from CSV file" << std::endl;
     saveTextFile(df, ",");
 }
 
 // ExtractorTXT
 DataFrame<DefaultObject> ExtractorTXT::extractData() {
+    /**
+    * @brief Extract data from the TXT file
+    * @return DataFrame<DefaultObject>: Dataframe object
+    */
+
     std::cout << "Extracting data from TXT file" << std::endl;
     std::vector<std::vector<std::string>> data = readTextFile(";");
     std::vector<std::string> columns = data[0];
@@ -137,17 +179,32 @@ DataFrame<DefaultObject> ExtractorTXT::extractData() {
 }
 
 void ExtractorTXT::loadData(DataFrame<DefaultObject> *df) {
+    /**
+    * @brief Load data to the TXT file
+    * @param df: Dataframe object
+    * @return None
+    */
     std::cout << "Loading data from TXT file" << std::endl;
     saveTextFile(df, " ");
 }
 
 // ExtractorSQL
 DataFrame<DefaultObject> ExtractorSQL::extractData() {
+    /**
+    * @brief Extract data from the SQL database
+    * @return DataFrame<DefaultObject>: Dataframe object
+    */
+
     std::cout << "Extracting data from SQL database" << std::endl;
     return DataFrame<DefaultObject>();
 }
 
 void ExtractorSQL::loadData(DataFrame<DefaultObject> *df) {
+    /**
+    * @brief Load data to the SQL database
+    * @param df: Dataframe object
+    * @return None
+    */
     std::cout << "Loading data from SQL database" << std::endl;
     std::pair<int, int> s = df->shape;
     for (int j = 0; j < s.first; j++) {
