@@ -9,6 +9,7 @@
 #include "sqlite3.h"
 #include "default_object.h"
 #include "series.h"
+#include "db.h"
 
 // Forward declaration of ExtractorEstrategy
 class ExtractorEstrategy;
@@ -18,11 +19,10 @@ public:
     enum ExtractorEstrategyType {
         ExtractorCSVType,
         ExtractorTXTType,
-        // ExtractorSQLType
+        ExtractorSQLType
     };
     RepoData();
-    void setStrategy(int type, std::string path = "", std::string dbAdress = "",
-                     std::string query = "");
+    void setStrategy(int type, std::string path = "", DB *db = nullptr, std::string table = "");
     DataFrame<DefaultObject> extractData();
     void loadData(DataFrame<DefaultObject> *df);
     ExtractorEstrategy* strategy_ = nullptr;
@@ -33,8 +33,8 @@ private:
 class ExtractorEstrategy {
 public:
     std::string path_;
-    std::string dbAdress_;
-    std::string query_;
+    DB* db_;
+    std::string table_;
     int* pointer_;
     int size_;
     virtual DataFrame<DefaultObject> extractData() = 0;
@@ -61,18 +61,15 @@ public:
     void loadData(DataFrame<DefaultObject> *df) override;
 };
 
-// class ExtractorSQL : public ExtractorEstrategy {
-// public:
-//     sqlite3* db_;
-//     int exit_ = 0;
-//     ExtractorSQL(std::string dbAdress, std::string query){
-//         dbAdress_ = dbAdress;
-//         exit_ = sqlite3_open(dbAdress.c_str(), &db_);
-//         query_ = query;
-//     };
-//     DataFrame<DefaultObject> extractData() override;
-//     void loadData() override;
-//     void doQuery(std::string query);
-// };
+class ExtractorSQL : public ExtractorEstrategy {
+public:
+    int exit_ = 0;
+    ExtractorSQL(DB *db, std::string table = ""){
+        db_ = db;
+        table_ = table;
+    };
+    DataFrame<DefaultObject> extractData() override;
+    void loadData(DataFrame<DefaultObject> *df) override;
+};
 
 #endif // REPDATA_H

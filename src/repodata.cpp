@@ -6,7 +6,6 @@
 #include <cstring>
 #include "repodata.h"
 #include "dataframe.h"
-#include "default_object.h"
 #include "sqlite3.h"
 #include "series.h"
 
@@ -17,8 +16,7 @@ RepoData::RepoData() {
 }
 
 // Set Strategy
-void RepoData::setStrategy(int type, std::string path, std::string dbAdress,
-                            std::string query) {
+void RepoData::setStrategy(int type, std::string path, DB *db, std::string table) {
     delete strategy_;
     switch (type) {
         case ExtractorCSVType:
@@ -27,9 +25,9 @@ void RepoData::setStrategy(int type, std::string path, std::string dbAdress,
         case ExtractorTXTType:
             strategy_ = new ExtractorTXT(path);
             break;
-        // case ExtractorSQLType:
-        //     strategy_ = new ExtractorSQL(dbAdress, query);
-        //     break;
+        case ExtractorSQLType:
+            strategy_ = new ExtractorSQL(db, table);
+            break;
         default:
             strategy_ = nullptr;
             break;
@@ -101,7 +99,7 @@ void ExtractorEstrategy::saveTextFile(DataFrame<DefaultObject> *df, std::string 
 
 // ExtractorCSV
 DataFrame<DefaultObject> ExtractorCSV::extractData() {
-    std::cout << "Extracting data from CSV file" << std::endl;
+    std::cout << "  g data from CSV file" << std::endl;
     std::vector<std::vector<std::string>> data = readTextFile(",");
     std::vector<std::string> columns = data[0];
     DataFrame<DefaultObject> df;
@@ -124,7 +122,7 @@ void ExtractorCSV::loadData(DataFrame<DefaultObject> *df) {
 // ExtractorTXT
 DataFrame<DefaultObject> ExtractorTXT::extractData() {
     std::cout << "Extracting data from TXT file" << std::endl;
-    std::vector<std::vector<std::string>> data = readTextFile(";");
+    std::vector<std::vector<std::string>> data = readTextFile(" ");
     std::vector<std::string> columns = data[0];
     DataFrame<DefaultObject> df;
     data.erase(data.begin());
@@ -144,28 +142,18 @@ void ExtractorTXT::loadData(DataFrame<DefaultObject> *df) {
 }
 
 // ExtractorSQL
-// DataFrame<DefaultObject> ExtractorSQL::extractData() {
-//     std::cout << "Extracting data from SQL database" << std::endl;
-//     doQuery(query_);
-//     return DataFrame<DefaultObject>();
-// }
+DataFrame<DefaultObject> ExtractorSQL::extractData() {
+    std::cout << "Extracting data from SQL database" << std::endl;
 
-// void ExtractorSQL::loadData() {
-//     std::cout << "Loading data from SQL database" << std::endl;
-//     doQuery(query_);
-// }
+    return DataFrame<DefaultObject>();
+}
 
-// void ExtractorSQL::doQuery(std::string query) {
-//     sqlite3_stmt* stmt;
-//     exit_ = sqlite3_prepare_v2(db_, query.c_str(), -1, &stmt, nullptr);
-//     if (exit_ != SQLITE_OK) {
-//         std::cerr << "Error preparing statement" << std::endl;
-//         return;
-//     }
-
-//     while ((exit_ = sqlite3_step(stmt)) == SQLITE_ROW) {
-//         std::cout << sqlite3_column_text(stmt, 0) << std::endl;
-//     }
-
-//     sqlite3_finalize(stmt);
-// }
+void ExtractorSQL::loadData(DataFrame<DefaultObject> *df) {
+    std::cout << "Loading data from SQL database" << std::endl;
+    std::pair<int, int> s = df->shape;
+    for (int j = 0; j < s.first; j++) {
+        int v = std::get<int>(df->series[0][j]);
+        std::string a = std::get<std::string>(df->series[1][j]);
+        db_->insertData(table_, a, v);
+    }
+}
