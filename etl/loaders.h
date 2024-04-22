@@ -30,13 +30,15 @@ class LoaderThreads : public ThreadWrapper<Queue<std::string, DataFrame<Object>>
 
                 DataFrame<Object> df = data.second;
 
-                loader.setStrategy(RepoData::ExtractorSQLType, "", &db, key);
+
+                loader.setStrategy(RepoData::ExtractorSQLType, "", &db, key_name);
                 loader.loadData(&df);
 
-                auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+                auto now = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+
                 std::ofstream file;
-                file.open("times.txt", std::ios::out);
-                file << key_name << " " << key_time << " " << std::ctime(&now);
+                file.open("times.txt", std::ios::out | std::ios::app);
+                file << key_name << " " << key_time << " " << std::to_string(now) << std::endl;
                 file.close();
             }
         }
