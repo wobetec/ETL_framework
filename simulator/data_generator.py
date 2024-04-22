@@ -667,7 +667,7 @@ def update_stock(orders, stock=gen_contaverde_stock()):
     return stock
 
 while True:
-    num_events = random.randint(5000,10000)
+    num_events = random.randint(100,1000)
     gen_contaverde_users(num_events)
     gen_contaverde_products(num_events, prod=product)
     stock = gen_contaverde_stock()
@@ -677,4 +677,4 @@ while True:
     gen_randomlog(num_events)
     folder_path = os.path.join('data', 'datacat')
     delete_old_files(folder_path=folder_path, waiting_time=120)
-    time.sleep(1)
+    time.sleep(10)
