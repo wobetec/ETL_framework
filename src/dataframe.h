@@ -43,14 +43,14 @@ class DataFrame {
         // Print the DataFrame
         void print() {
             for (std::string column : columns) {
-                std::cout << std::right << std::setw(15) << column;
+                std::cout << std::right << std::setw(30) << column;
             }
 
             std::cout << std::endl;
 
             for (int i = 0; i < shape.first; i++) {
                 for (int j = 0; j < shape.second; j++) {
-                    std::cout << std::right << std::setw(15);
+                    std::cout << std::right << std::setw(30);
                     std::visit(PrintVisitor{}, series[j][i]);
                 }
 
@@ -122,7 +122,7 @@ class DataFrame {
             int column = column_id(columnName);
 
             if (column == -1) {
-                throw std::invalid_argument("Column does not exist");
+                throw std::invalid_argument("Column does not exist drop " + columnName);
             }
 
             columns.erase(columns.begin() + column);
@@ -190,7 +190,7 @@ class DataFrame {
             int column = column_id(columnName);
 
             if (column == -1) {
-                throw std::invalid_argument("Column does not exist");
+                throw std::invalid_argument("Column does not exist" + columnName);
             }
 
             DataFrame<T> result;
@@ -267,7 +267,7 @@ class DataFrame {
             int column = column_id(columnName);
 
             if (column == -1) {
-                throw std::invalid_argument("Column does not exist");
+                throw std::invalid_argument("Column does not exist" + columnName);
             }
 
             DataFrame<T> result;
@@ -352,18 +352,17 @@ class DataFrame {
             int columnId = column_id(columnName);
 
             if (columnId == -1) {
-                throw std::invalid_argument("Column does not exist");
+                throw std::invalid_argument("Column does not exist" + columnName);
             }
             
             std::vector<int> columnsToAggregateIds;
             for (std::string column : columnsToAggregate) {
                 int aggColumnId = column_id(column);
                 if (aggColumnId == -1) {
-                    throw std::invalid_argument("Column does not exist");
+                    throw std::invalid_argument("Column does not exist" + columnName);
                 }
                 columnsToAggregateIds.push_back(aggColumnId);
             }
-
 
             std::map<U, std::vector<int>> groups;
 
@@ -446,7 +445,7 @@ class DataFrame {
             int columnId = column_id(columnName);
 
             if (columnId == -1) {
-                throw std::invalid_argument("Column does not exist");
+                throw std::invalid_argument("Column does not exist" + columnName);
             }
 
             std::map<U, int> counts;
@@ -502,12 +501,13 @@ class DataFrame {
             return result;
 
         }
+
         std::vector<Series<T>> series;
         std::vector<std::string> columns;
         std::pair<int, int> shape;
     private:
 
-
+    private:
         int column_id(std::string columnName) {
             for (int i = 0; i < columns.size(); i++) {
                 if (columns[i] == columnName) {
