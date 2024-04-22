@@ -4,6 +4,7 @@
 #include "handlers.h"
 #include "object.h"
 #include "extractors.h"
+#include "loaders.h"
 
 #define DEFAULT_QUEUE_SIZE 5
 
@@ -127,6 +128,9 @@ int main(){
     HandlerA7 t_a7(q_t_7, {{"load", &q_load}}, cache);
     t_a7.start();
 
+    // Load
+    LoaderThreads t_load(q_load);
+    t_load.start();
 
     // Simulate
     while(true){
@@ -159,5 +163,7 @@ int main(){
     t_a6.join();
     t_a7.join();
 
+    t_load.join();
+    
     return 0;
 }
