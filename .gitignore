@@ -10,7 +10,7 @@ env
 */obj
 
 # simulation data
-# /simulator/data
+/simulator/data
 
 # vscode
 /.vscode

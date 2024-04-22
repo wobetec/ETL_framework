@@ -73,7 +73,7 @@ def fetch_data_avg_views_before_purchase():
 def ler_e_calcular_media(arquivo):
     try:
         df = pd.read_csv(arquivo, delim_whitespace=True, header=None, names=["Tratador", "Start", "End"])
-        df["Duration"] = (df["End"] - df["Start"]) / 1000000
+        df["Duration"] = (df["End"] - df["Start"]) / 1e9
         medias = df.groupby("Tratador")["Duration"].mean().reset_index()
         medias["Duration"] = medias["Duration"].round(2)
         return medias

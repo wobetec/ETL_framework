@@ -7,7 +7,7 @@ CC := g++
 CFLAGS := -Wall -Wextra -std=c++11
 
 # Directories
-SRC_DIR := $(MAKEFILE_DIR)/
+SRC_DIR := $(MAKEFILE_DIR)/w
 OBJ_DIR := $(MAKEFILE_DIR)/obj
 LIB_DIR := $(MAKEFILE_DIR)/lib
 
