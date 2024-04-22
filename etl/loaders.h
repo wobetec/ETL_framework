@@ -29,8 +29,7 @@ class LoaderThreads : public ThreadWrapper<Queue<std::string, DataFrame<Object>>
                 std::string key_time = key.substr(spacePos + 1);
 
                 DataFrame<Object> df = data.second;
-
-                std::cout << key_name << " " << key_time << std::endl;
+                
                 loader.setStrategy(RepoData::ExtractorSQLType, "", &db, key_name);
                 loader.loadData(&df);
 
@@ -38,6 +37,7 @@ class LoaderThreads : public ThreadWrapper<Queue<std::string, DataFrame<Object>>
 
                 std::ofstream file;
                 file.open("times.txt", std::ios::out | std::ios::app);
+                file << key_name << " " << key_time << " " << std::to_string(now) << std::endl;
                 file.close();
             }
         }
