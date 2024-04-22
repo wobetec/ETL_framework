@@ -27,3 +27,15 @@ Para executar o projeto, com o simulador em execução e os arquivos compilados,
 ```
 ./test.out
 ```
+
+
+## Dashboard Flask
+Primeiro é necessário instalar as dependências do projeto:
+```
+pip install -r requirements.txt
+```
+
+Para executar o dashboard, basta executar o comando:
+```
+python3 dashboard/visualizationsqlite.py
+```
