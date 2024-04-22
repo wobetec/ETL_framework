@@ -275,8 +275,6 @@ class HandlerA1 : public Handler<Object> {
 
                 QueueItem item = inQueue.deQueue();
                 DataFrame<Object> df = item.second;
-
-                std::cout << "HandlerA1: " << item.first << std::endl;
                 
                 df = df.count<std::string>("notification_date");
            
