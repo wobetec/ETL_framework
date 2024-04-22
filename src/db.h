@@ -28,7 +28,7 @@ class DB {
             sqlite3_exec(db, sql, NULL, 0, &errMsg);
             sql = "CREATE TABLE IF NOT EXISTS T3 (datetime TEXT PRIMARY KEY, count FLOAT);";
             sqlite3_exec(db, sql, NULL, 0, &errMsg);
-            sql = "CREATE TABLE IF NOT EXISTS T6 (datetime TEXT PRIMARY KEY, mean FLOAT);";
+            sql = "CREATE TABLE IF NOT EXISTS T6 (datetime TEXT PRIMARY KEY, count FLOAT);";
             sqlite3_exec(db, sql, NULL, 0, &errMsg);
             sql = "CREATE TABLE IF NOT EXISTS T2 (datetime TEXT PRIMARY KEY, count FLOAT);";
             sqlite3_exec(db, sql, NULL, 0, &errMsg);

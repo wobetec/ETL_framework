@@ -29,8 +29,7 @@ class LoaderThreads : public ThreadWrapper<Queue<std::string, DataFrame<Object>>
                 std::string key_time = key.substr(spacePos + 1);
 
                 DataFrame<Object> df = data.second;
-
-
+                
                 loader.setStrategy(RepoData::ExtractorSQLType, "", &db, key_name);
                 loader.loadData(&df);
 

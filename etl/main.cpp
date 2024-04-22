@@ -155,12 +155,12 @@ int main(){
     t_s_compras.join();
     t_s_estoque.join();
     t_s_produtos.join();
-    // t_a1.join();
-    // t_a2.join();
-    // t_a3.join();
-    // t_a4.join();
-    // t_a5.join();
-    // t_a6.join();
+    t_a1.join();
+    t_a2.join();
+    t_a3.join();
+    t_a4.join();
+    t_a5.join();
+    t_a6.join();
     // t_a7.join();
 
     t_load.join();
