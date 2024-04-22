@@ -39,3 +39,10 @@ Para executar o dashboard, basta executar o comando:
 ```
 python3 dashboard/visualizationsqlite.py
 ```
+
+## Alunos
+- Cleyton Santos
+- Esdras Cavalcanti
+- Marcelo Ângelo
+- Ramyro Aquines
+- Zuilho Segundo
