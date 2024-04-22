@@ -18,7 +18,7 @@ class HandlerSpliter : public Handler<Object> {
             while (running) {
                 std::cout << "Handler running Spliter" << std::endl;
                 QueueItem item = inQueue.deQueue();
-                auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+                auto now = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
                 std::string key = item.first;
                 item.first = std::to_string(now);
                 outQueues[key]->enQueue(item);
@@ -232,14 +232,35 @@ class HandlerSCompras : public Handler<Object> {
                 QueueItem item = inQueue.deQueue();
                 DataFrame<Object> df_in = item.second;
 
-
                 std::unique_lock<std::mutex> lock = cache.getLock("compras");
 
                 DataFrame<Object> df_cache = cache.read("compras");
 
-                // do something with cache
+                df_in = df_in[{"product_id", "user_id", "creation_date"}];
+                
+                df_in = df_in.concat(df_cache);
+                
+                DataFrame<Object> df_out = df_in.dropDuplicate({"product_id", "user_id", "creation_date"});
 
-                cache.save("compras", df_in);
+
+                std::vector<DefaultObject> filter = {};
+                DateTime now = DateTime();
+                for (int i = 0; i < df_out.shape.first; i++) {
+                    DateTime dt(std::get<std::string>(df_out["creation_date"][i]));
+                    dt.replace(dt.year(), dt.month(), dt.day(), dt.hour(), dt.minute(), 0);
+                    
+                    if ((now - dt).seconds() > TimeDelta(60 * 60).seconds()) {
+                        filter.push_back(false);
+                    } else {
+                        filter.push_back(true);
+                    }
+
+                    df_out["creation_date"][i] = Object(dt.strftime());
+                }
+
+                df_out = df_out.filter(Series<DefaultObject>(filter));
+
+                cache.save("compras", df_out);
 
                 lock.unlock();
 
@@ -268,7 +289,7 @@ class HandlerA1 : public Handler<Object> {
                 
                 df = df.count<std::string>("notification_date");
            
-                outQueues["load"]->enQueue(std::make_pair(item.first, df));
+                outQueues["load"]->enQueue(std::make_pair("T1 " + item.first, df));
                 outQueues["t_6"]->enQueue(std::make_pair(item.first, df));
             }
         }
@@ -293,13 +314,15 @@ class HandlerA2 : public Handler<Object> {
 
                 DataFrame<Object> df_cache = cache.read("compras_media");
 
-                // do something with cache
+                df_in = df_in.count<std::string>("creation_date");
+
+                df_in = df_in.concat(df_cache);
 
                 cache.save("compras_media", df_in);
 
                 lock.unlock();
 
-                outQueues["load"]->enQueue(std::make_pair(item.first, df_in));
+                outQueues["load"]->enQueue(std::make_pair("T2 " + item.first, df_in));
             }
         }
 
@@ -322,10 +345,9 @@ class HandlerA3 : public Handler<Object> {
                 DataFrame<Object> df_in = item.second;
 
                 // do something with df_in
-                // df_in = df_in.groupby()
+                // df_in = df_in.groupby()  
 
-
-                outQueues["load"]->enQueue(std::make_pair(item.first, df_in));
+                outQueues["load"]->enQueue(std::make_pair("T3 " + item.first, df_in));
             }
         }
 };
@@ -345,15 +367,19 @@ class HandlerA4 : public Handler<Object> {
                 QueueItem item = inQueue.deQueue();
                 DataFrame<Object> df_in = item.second;
 
-                std::cout << "HandlerA4: " << item.first << std::endl;
+                df_in = df_in.count<std::string>("product_id");
 
                 std::unique_lock<std::mutex> lock = cache.getLock("produtos");
                 DataFrame<Object> df_cache = cache.read("produtos");
                 lock.unlock();
 
-                // do something with df_in and df_cache
+                if (df_cache.shape.first == 0) {
+                    continue;
+                }
 
-                outQueues["load"]->enQueue(std::make_pair(item.first, df_in));
+                DataFrame<Object> df_out = df_in.merge<std::string>(df_cache, "product_id", "product_id");
+
+                outQueues["load"]->enQueue(std::make_pair("T4 " + item.first, df_in));
             }
         }
 
@@ -387,7 +413,8 @@ class HandlerA5 : public Handler<Object> {
 
                 DataFrame<Object> df_out = df_in.merge<std::string>(df_cache, "product_id", "product_id");
 
-                outQueues["load"]->enQueue(std::make_pair(item.first, df_out));
+
+                outQueues["load"]->enQueue(std::make_pair("T5 " + item.first, df_out));
             }
         }
 
@@ -410,15 +437,13 @@ class HandlerA6 : public Handler<Object> {
                 QueueItem item = inQueue.deQueue();
                 DataFrame<Object> df_in = item.second;
 
-                std::cout << "HandlerA6: " << item.first << std::endl;
-
                 std::unique_lock<std::mutex> lock = cache.getLock("compras_media");
                 DataFrame<Object> df_cache = cache.read("compras_media");
                 lock.unlock();
 
                 // do something with df_in and df_cache
 
-                outQueues["load"]->enQueue(std::make_pair(item.first, df_in));
+                outQueues["load"]->enQueue(std::make_pair("T6 " + item.first, df_in));
             }
         }
 
@@ -449,7 +474,7 @@ class HandlerA7 : public Handler<Object> {
 
                 // do something with df_in and df_cache
 
-                outQueues["load"]->enQueue(std::make_pair(item.first, df_in));
+                outQueues["load"]->enQueue(std::make_pair("T7 " + item.first, df_in));
             }
         }
 
