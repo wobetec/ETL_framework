@@ -9,39 +9,39 @@ import plotly.graph_objs as go
 
 # Conexão ao banco de dados SQLite
 def connect_to_database():
-    return sqlite3.connect("ecommerce_data.db")
+    return sqlite3.connect("../etl/new.db")
 
 def fetch_data_viewed_per_minute():
     conn = connect_to_database()
-    query = "SELECT Time, Viewed FROM viewed_per_minute ORDER BY Time DESC LIMIT 60"
-    df = pd.read_sql_query(query, conn, parse_dates=["Time"])
+    query = "SELECT datetime, count FROM T1 ORDER BY datetime DESC LIMIT 60"
+    df = pd.read_sql_query(query, conn, parse_dates=["datetime"])
     conn.close()
     return df
 
 def fetch_data_bought_per_minute():
     conn = connect_to_database()
-    query = "SELECT Time, Bought FROM bought_per_minute ORDER BY Time DESC LIMIT 60"
-    df = pd.read_sql_query(query, conn, parse_dates=["Time"])
+    query = "SELECT datetime, count FROM T2 ORDER BY datetime DESC LIMIT 60"
+    df = pd.read_sql_query(query, conn, parse_dates=["datetime"])
     conn.close()
     return df
 
 def fetch_data_unique_users_per_product():
     conn = connect_to_database()
-    query = "SELECT Time, ProductID, UniqueUsers FROM unique_users_per_product ORDER BY Time DESC LIMIT 60"
-    df = pd.read_sql_query(query, conn, parse_dates=["Time"])
+    query = "SELECT datetime, count FROM T3 ORDER BY datetime DESC LIMIT 60"
+    df = pd.read_sql_query(query, conn, parse_dates=["datetime"])
     conn.close()
     return df
 
 def fetch_data_most_bought_last_hour():
     conn = connect_to_database()
-    query = "SELECT ProductID, SUM(BoughtCount) as BoughtCount FROM most_bought_last_hour GROUP BY ProductID ORDER BY BoughtCount DESC LIMIT 10"
+    query = "SELECT datetime, count FROM T4 ORDER BY count DESC LIMIT 10"
     df = pd.read_sql_query(query, conn)
     conn.close()
     return df
 
 def fetch_data_most_viewed_last_hour():
     conn = connect_to_database()
-    query = "SELECT ProductID, SUM(ViewCount) as ViewCount FROM most_viewed_last_hour GROUP BY ProductID ORDER BY ViewCount DESC LIMIT 10"
+    query = "SELECT datetime, count FROM T5 ORDER BY datetime DESC LIMIT 10"
     df = pd.read_sql_query(query, conn)
     conn.close()
     return df
@@ -63,10 +63,9 @@ def fetch_data_most_viewed_last_hour():
 # print(df_sold_out)
 
 
-
 def fetch_data_avg_views_before_purchase():
     conn = connect_to_database()
-    query = "SELECT ProductID, AVG(AvgViews) as AvgViews FROM avg_views_before_purchase GROUP BY ProductID LIMIT 10"
+    query = "SELECT datetime, count FROM T6 ORDER BY datetime DESC LIMIT 60"
     df = pd.read_sql_query(query, conn)
     conn.close()
     return df
@@ -127,7 +126,7 @@ app.layout = html.Div([
 def update_graph_viewed_per_minute(n):
     df = fetch_data_viewed_per_minute()
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=df["Time"], y=df["Viewed"], mode="lines+markers", name="Viewed per Minute"))
+    fig.add_trace(go.Scatter(x=df["datetime"], y=df["count"], mode="lines+markers", name="Viewed per Minute"))
     fig.update_layout(
         title="Número de Produtos Visualizados por Minuto",
         xaxis=dict(type="date", tickformat="%H:%M", dtick=60000),
@@ -141,7 +140,7 @@ def update_graph_viewed_per_minute(n):
 def update_graph_bought_per_minute(n):
     df = fetch_data_bought_per_minute()
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=df["Time"], y=df["Bought"], mode="lines+markers", name="Bought per Minute"))
+    fig.add_trace(go.Scatter(x=df["datetime"], y=df["count"], mode="lines+markers", name="Bought per Minute"))
     fig.update_layout(
         title="Número de Produtos Comprados por Minuto",
         xaxis=dict(type="date", tickformat="%H:%M", dtick=60000),
@@ -155,7 +154,7 @@ def update_graph_bought_per_minute(n):
 def update_graph_unique_users_per_product(n):
     df = fetch_data_unique_users_per_product()
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=df["Time"], y=df["UniqueUsers"], mode="lines+markers", name="Unique Users per Product"))
+    fig.add_trace(go.Scatter(x=df["datetime"], y=df["count"], mode="lines+markers", name="Unique Users per Product"))
     fig.update_layout(
         title="Número de Usuários Únicos por Produto",
         xaxis=dict(type="date", tickformat="%H:%M", dtick=60000),
@@ -169,7 +168,7 @@ def update_graph_unique_users_per_product(n):
 def update_graph_most_bought_last_hour(n):
     df = fetch_data_most_bought_last_hour()
     fig = go.Figure()
-    fig.add_trace(go.Bar(y=df["ProductID"].astype(str), x=df["BoughtCount"], orientation="h", name="Most Bought Last Hour"))
+    fig.add_trace(go.Bar(y=df["datetime"].astype(str), x=df["count"], orientation="h", name="Most Bought Last Hour"))
     fig.update_layout(
         title="Produtos Mais Comprados na Última Hora",
         xaxis=dict(title="Quantidade Comprada"),
@@ -183,7 +182,7 @@ def update_graph_most_bought_last_hour(n):
 def update_graph_most_viewed_last_hour(n):
     df = fetch_data_most_viewed_last_hour()
     fig = go.Figure()
-    fig.add_trace(go.Bar(y=df["ProductID"].astype(str), x=df["ViewCount"], orientation="h", name="Most Viewed Last Hour"))
+    fig.add_trace(go.Bar(y=df["datetime"].astype(str), x=df["count"], orientation="h", name="Most Viewed Last Hour"))
     fig.update_layout(
         title="Produtos Mais Visualizados na Última Hora",
         xaxis=dict(title="Quantidade de Visualizações"),
@@ -197,7 +196,7 @@ def update_graph_most_viewed_last_hour(n):
 def update_graph_avg_views_before_purchase(n):
     df = fetch_data_avg_views_before_purchase()
     fig = go.Figure()
-    fig.add_trace(go.Scatter(x=df["ProductID"].astype(str), y=df["AvgViews"], mode="lines+markers", name="Average Views Before Purchase"))
+    fig.add_trace(go.Scatter(x=df["datetime"].astype(str), y=df["count"], mode="lines+markers", name="Average Views Before Purchase"))
     fig.update_layout(
         title="Média de Visualizações Antes da Compra",
         xaxis=dict(title="ID do Produto"),
@@ -230,7 +229,7 @@ def update_graph_avg_views_before_purchase(n):
     Output("graph-treatment-time", "figure"),
     Input("interval-treatment-time", "n_intervals"))
 def update_graph_treatment_time(n):
-    df_medias = ler_e_calcular_media("times.txt")
+    df_medias = ler_e_calcular_media("../etl/times.txt")
     fig = go.Figure()
     fig.add_trace(go.Bar(x=df_medias["Tratador"], y=df_medias["Duration"], name="Tempo Médio por Tratador"))
     fig.update_layout(
@@ -239,11 +238,6 @@ def update_graph_treatment_time(n):
         yaxis=dict(title="Tempo Médio (segundos)")
     )
     return fig
-
-
-
-
-
 
 if __name__ == "__main__":
     app.run_server(debug=True)
