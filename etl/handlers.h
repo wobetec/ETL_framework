@@ -116,7 +116,6 @@ class HandlerSVis : public Handler<Object> {
 
                 QueueItem item = inQueue.deQueue();
                 DataFrame<Object> df_in = item.second;
-                // df_in.print();
 
                 std::unique_lock<std::mutex> lock = cache.getLock("visualizacoes");
 
@@ -462,7 +461,6 @@ class HandlerA6 : public Handler<Object> {
                 df_out2.addColumn("media_vis_por_compra", df_out["media_vis_por_compra"]);
                 df_out2.addColumn("notification_date", df_out["notification_date"]);
                 
-                df_out2.print();
                 outQueues["load"]->enQueue(std::make_pair("T6 " + item.first, df_out2));
             }
         }

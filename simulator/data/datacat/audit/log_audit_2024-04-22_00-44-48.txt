@@ -1,0 +1,429 @@
+notification_date;event_type;message;user_id;action
+2024-04-22 00:44:48;audit;User Vigorous Chebyshev added a product to the cart.;1484;Add
+2024-04-22 00:44:48;audit;User Stoic Khayyam added a product to the cart.;2223;Add
+2024-04-22 00:44:48;audit;User Amazing Mahavira deleted a product from the cart.;1605;Delete
+2024-04-22 00:44:48;audit;User Keen Proskuriakova logged in.;4065;Login
+2024-04-22 00:44:48;audit;User Practical Matsumoto updated settings.;5388;Update
+2024-04-22 00:44:48;audit;User Nervous Brattain added a product to the cart.;1813;Add
+2024-04-22 00:44:48;audit;User Condescending Wright purchased Tablet.;1457;Purchase
+2024-04-22 00:44:48;audit;User Flamboyant Borg deleted a product from the cart.;2720;Delete
+2024-04-22 00:44:48;audit;User Beautiful Brahmagupta purchased Drone.;4325;Purchase
+2024-04-22 00:44:48;audit;User Stoic Chatterjee purchased External Hard Drive.;1741;Purchase
+2024-04-22 00:44:48;audit;User Pensive Proskuriakova deleted a product from the cart.;5307;Delete
+2024-04-22 00:44:48;audit;User Heuristic Haibt deleted a product from the cart.;2072;Delete
+2024-04-22 00:44:48;audit;User Strange Brattain purchased Digital Camera.;2214;Purchase
+2024-04-22 00:44:48;audit;User Agitated Ptolemy updated settings.;4093;Update
+2024-04-22 00:44:48;audit;User Funny Visvesvaraya logged out.;5291;Logout
+2024-04-22 00:44:48;audit;User Heuristic Carson logged in.;4021;Login
+2024-04-22 00:44:48;audit;User Elastic Leavitt purchased Bluetooth Earbuds.;3466;Purchase
+2024-04-22 00:44:48;audit;User Adoring Mayer searched for a product.;2285;Search
+2024-04-22 00:44:48;audit;User Exciting Thompson searched for a product.;3149;Search
+2024-04-22 00:44:48;audit;User Zealous Meninsky logged in.;4443;Login
+2024-04-22 00:44:48;audit;User Intelligent Babbage updated settings.;4220;Update
+2024-04-22 00:44:48;audit;User Great Driscoll logged in.;3986;Login
+2024-04-22 00:44:48;audit;User Unruffled Lamarr deleted a product from the cart.;5033;Delete
+2024-04-22 00:44:48;audit;User Eager Ellis purchased Fitness Watch.;3840;Purchase
+2024-04-22 00:44:48;audit;User Trusting Merkle purchased Camera.;4530;Purchase
+2024-04-22 00:44:48;audit;User Peaceful Banzai logged in.;3574;Login
+2024-04-22 00:44:48;audit;User Vigorous Taussig added a product to the cart.;5542;Add
+2024-04-22 00:44:48;audit;User Jolly Lederberg added a product to the cart.;3803;Add
+2024-04-22 00:44:48;audit;User Hardcore Wescoff purchased Gaming Keyboard.;3684;Purchase
+2024-04-22 00:44:48;audit;User Vigorous Benz purchased Wireless Router.;4407;Purchase
+2024-04-22 00:44:48;audit;User Silly Ptolemy updated settings.;1738;Update
+2024-04-22 00:44:48;audit;User Elegant Benz logged in.;3618;Login
+2024-04-22 00:44:48;audit;User Optimistic Shtern updated settings.;4702;Update
+2024-04-22 00:44:48;audit;User Funny Faraday added a product to the cart.;2910;Add
+2024-04-22 00:44:48;audit;User Flamboyant Thompson added a product to the cart.;2365;Add
+2024-04-22 00:44:48;audit;User Practical Saha searched for a product.;1229;Search
+2024-04-22 00:44:48;audit;User Tender Wilson searched for a product.;5837;Search
+2024-04-22 00:44:48;audit;User Dazzling Benz searched for a product.;4805;Search
+2024-04-22 00:44:48;audit;User Peaceful Banach deleted a product from the cart.;5077;Delete
+2024-04-22 00:44:48;audit;User Silly Wescoff updated settings.;3079;Update
+2024-04-22 00:44:48;audit;User Charming Ritchie added a product to the cart.;4122;Add
+2024-04-22 00:44:48;audit;User Crazy Tu purchased Gaming Console.;5868;Purchase
+2024-04-22 00:44:48;audit;User Recursing Napier deleted a product from the cart.;5061;Delete
+2024-04-22 00:44:48;audit;User Friendly Khayyam logged out.;1136;Logout
+2024-04-22 00:44:48;audit;User Great Poincare purchased Soundbar.;5694;Purchase
+2024-04-22 00:44:48;audit;User Relaxed Morse purchased Tablet.;2315;Purchase
+2024-04-22 00:44:48;audit;User Quizzical Babbage added a product to the cart.;5675;Add
+2024-04-22 00:44:48;audit;User Keen Antonelli searched for a product.;5512;Search
+2024-04-22 00:44:48;audit;User Thirsty Banach purchased Smartwatch.;2779;Purchase
+2024-04-22 00:44:48;audit;User Nervous Grothendieck deleted a product from the cart.;2534;Delete
+2024-04-22 00:44:48;audit;User Crazy Mestorf searched for a product.;3408;Search
+2024-04-22 00:44:48;audit;User Kind Clarke updated settings.;3709;Update
+2024-04-22 00:44:48;audit;User Infallible Kare updated settings.;4063;Update
+2024-04-22 00:44:48;audit;User Exciting Shockley searched for a product.;3513;Search
+2024-04-22 00:44:48;audit;User Exciting Cori logged in.;1449;Login
+2024-04-22 00:44:48;audit;User Modest Brown added a product to the cart.;1680;Add
+2024-04-22 00:44:48;audit;User Sad Franklin deleted a product from the cart.;1041;Delete
+2024-04-22 00:44:48;audit;User Charming Wozniak logged out.;5489;Logout
+2024-04-22 00:44:48;audit;User Eager Moser searched for a product.;4162;Search
+2024-04-22 00:44:48;audit;User Angry Matsumoto logged out.;2238;Logout
+2024-04-22 00:44:48;audit;User Great Lovelace logged in.;1863;Login
+2024-04-22 00:44:48;audit;User Vigilant Leavitt logged out.;4025;Logout
+2024-04-22 00:44:48;audit;User Crazy Lamarr searched for a product.;1655;Search
+2024-04-22 00:44:48;audit;User Sharp Snyder logged out.;5257;Logout
+2024-04-22 00:44:48;audit;User Compassionate Shannon purchased Soundbar.;3946;Purchase
+2024-04-22 00:44:48;audit;User Dazzling Blackburn searched for a product.;2648;Search
+2024-04-22 00:44:48;audit;User Pensive Tharp logged in.;1542;Login
+2024-04-22 00:44:48;audit;User Quirky Davinci purchased Portable SSD.;5574;Purchase
+2024-04-22 00:44:48;audit;User Wonderful Elbakyan logged in.;1632;Login
+2024-04-22 00:44:48;audit;User Optimistic Banach logged out.;3397;Logout
+2024-04-22 00:44:48;audit;User Youthful Cohen logged in.;2078;Login
+2024-04-22 00:44:48;audit;User Clever Hypatia logged in.;5565;Login
+2024-04-22 00:44:48;audit;User Cranky Swanson purchased Digital Camera.;5558;Purchase
+2024-04-22 00:44:48;audit;User Elegant Black purchased Wireless Headphones.;5057;Purchase
+2024-04-22 00:44:48;audit;User Nice Ardinghelli logged in.;4377;Login
+2024-04-22 00:44:48;audit;User Goofy Hellman logged in.;2046;Login
+2024-04-22 00:44:48;audit;User Practical Mendeleev purchased Action Camera.;5494;Purchase
+2024-04-22 00:44:48;audit;User Hardcore Ganguly deleted a product from the cart.;4227;Delete
+2024-04-22 00:44:48;audit;User Recursing Euler deleted a product from the cart.;4629;Delete
+2024-04-22 00:44:48;audit;User Clever Zhukovsky deleted a product from the cart.;1754;Delete
+2024-04-22 00:44:48;audit;User Nice Shaw purchased Smart Home Speaker.;3938;Purchase
+2024-04-22 00:44:48;audit;User Stupefied Rosalind searched for a product.;2717;Search
+2024-04-22 00:44:48;audit;User Jovial Wozniak logged out.;1792;Logout
+2024-04-22 00:44:48;audit;User Pedantic Fermi logged in.;3635;Login
+2024-04-22 00:44:48;audit;User Awesome Sutherland logged out.;2071;Logout
+2024-04-22 00:44:48;audit;User Cool Austin searched for a product.;2138;Search
+2024-04-22 00:44:48;audit;User Wizardly Haslett searched for a product.;3954;Search
+2024-04-22 00:44:48;audit;User Flamboyant Keldysh logged in.;3325;Login
+2024-04-22 00:44:48;audit;User Vigilant Colden logged out.;5691;Logout
+2024-04-22 00:44:48;audit;User Unruffled Swirles logged out.;3169;Logout
+2024-04-22 00:44:48;audit;User Gifted Beaver logged out.;5042;Logout
+2024-04-22 00:44:48;audit;User Beautiful Allen deleted a product from the cart.;1388;Delete
+2024-04-22 00:44:48;audit;User Angry Cori updated settings.;1566;Update
+2024-04-22 00:44:48;audit;User Laughing Pare deleted a product from the cart.;4773;Delete
+2024-04-22 00:44:48;audit;User Zealous Perlman updated settings.;5826;Update
+2024-04-22 00:44:48;audit;User Pedantic Dhawan added a product to the cart.;1630;Add
+2024-04-22 00:44:48;audit;User Modest Feynman searched for a product.;2667;Search
+2024-04-22 00:44:48;audit;User Sweet Poitras deleted a product from the cart.;2574;Delete
+2024-04-22 00:44:48;audit;User Affectionate Lumiere deleted a product from the cart.;4069;Delete
+2024-04-22 00:44:48;audit;User Reverent Bose logged in.;3418;Login
+2024-04-22 00:44:48;audit;User Elegant Hofstadter logged out.;2821;Logout
+2024-04-22 00:44:48;audit;User Objective Perlman updated settings.;5707;Update
+2024-04-22 00:44:48;audit;User Nifty Shaw updated settings.;1760;Update
+2024-04-22 00:44:48;audit;User Clever Germain deleted a product from the cart.;5623;Delete
+2024-04-22 00:44:48;audit;User Elated Matsumoto added a product to the cart.;4260;Add
+2024-04-22 00:44:48;audit;User Fervent Moore updated settings.;5875;Update
+2024-04-22 00:44:48;audit;User Charming Kirch logged in.;3679;Login
+2024-04-22 00:44:48;audit;User Amazing Booth logged in.;2022;Login
+2024-04-22 00:44:48;audit;User Silly Tharp logged out.;5445;Logout
+2024-04-22 00:44:48;audit;User Quizzical Zhukovsky deleted a product from the cart.;2611;Delete
+2024-04-22 00:44:48;audit;User Jovial Hawking added a product to the cart.;5482;Add
+2024-04-22 00:44:48;audit;User Relaxed Lamarr logged out.;1376;Logout
+2024-04-22 00:44:48;audit;User Stoic Mestorf searched for a product.;3833;Search
+2024-04-22 00:44:48;audit;User Jolly Yalow deleted a product from the cart.;2734;Delete
+2024-04-22 00:44:48;audit;User Fervent Keldysh deleted a product from the cart.;5730;Delete
+2024-04-22 00:44:48;audit;User Gracious Hertz logged out.;2245;Logout
+2024-04-22 00:44:48;audit;User Peaceful Lehmann purchased Smart Home Speaker.;3800;Purchase
+2024-04-22 00:44:48;audit;User Friendly Bhaskara logged out.;3568;Logout
+2024-04-22 00:44:48;audit;User Cool Jackson searched for a product.;4858;Search
+2024-04-22 00:44:48;audit;User Magical Varahamihira updated settings.;2375;Update
+2024-04-22 00:44:48;audit;User Serene Swanson deleted a product from the cart.;1557;Delete
+2024-04-22 00:44:48;audit;User Eloquent Shtern logged in.;2466;Login
+2024-04-22 00:44:48;audit;User Blissful Johnson purchased Bluetooth Earbuds.;1759;Purchase
+2024-04-22 00:44:48;audit;User Awesome Herschel purchased Graphics Card.;5658;Purchase
+2024-04-22 00:44:48;audit;User Wonderful Shaw added a product to the cart.;3489;Add
+2024-04-22 00:44:48;audit;User Nervous Bouman updated settings.;3462;Update
+2024-04-22 00:44:48;audit;User Stoic Wright deleted a product from the cart.;4719;Delete
+2024-04-22 00:44:48;audit;User Bold Mendel deleted a product from the cart.;4103;Delete
+2024-04-22 00:44:48;audit;User Sharp Greider logged in.;1452;Login
+2024-04-22 00:44:48;audit;User Musing Stonebraker added a product to the cart.;3752;Add
+2024-04-22 00:44:48;audit;User Sad Murdock updated settings.;4974;Update
+2024-04-22 00:44:48;audit;User Friendly Mcnulty searched for a product.;1382;Search
+2024-04-22 00:44:48;audit;User Naughty Lehmann purchased Portable Projector.;1240;Purchase
+2024-04-22 00:44:48;audit;User Zen Joliot deleted a product from the cart.;1408;Delete
+2024-04-22 00:44:48;audit;User Jovial Fermat logged out.;5805;Logout
+2024-04-22 00:44:48;audit;User Condescending Stonebraker purchased Fitness Band.;5742;Purchase
+2024-04-22 00:44:48;audit;User Charming Poincare logged out.;2177;Logout
+2024-04-22 00:44:48;audit;User Angry Turing logged out.;3080;Logout
+2024-04-22 00:44:48;audit;User Focused Gauss added a product to the cart.;2431;Add
+2024-04-22 00:44:48;audit;User Goofy Brattain searched for a product.;3258;Search
+2024-04-22 00:44:48;audit;User Stoic Fermi deleted a product from the cart.;1548;Delete
+2024-04-22 00:44:48;audit;User Nice Heyrovsky updated settings.;5913;Update
+2024-04-22 00:44:48;audit;User Clever Rubin deleted a product from the cart.;1596;Delete
+2024-04-22 00:44:48;audit;User Elated Matsumoto logged out.;4260;Logout
+2024-04-22 00:44:48;audit;User Adoring Hertz logged out.;5564;Logout
+2024-04-22 00:44:48;audit;User Focused Gauss logged in.;2431;Login
+2024-04-22 00:44:48;audit;User Modest Bassi logged out.;1791;Logout
+2024-04-22 00:44:48;audit;User Friendly Volhard purchased Portable SSD.;3922;Purchase
+2024-04-22 00:44:48;audit;User Dazzling Moore logged in.;3549;Login
+2024-04-22 00:44:48;audit;User Elegant Allen added a product to the cart.;2700;Add
+2024-04-22 00:44:48;audit;User Thirsty Haibt updated settings.;2330;Update
+2024-04-22 00:44:48;audit;User Sweet Colden logged in.;2792;Login
+2024-04-22 00:44:48;audit;User Gifted Hypatia searched for a product.;1433;Search
+2024-04-22 00:44:48;audit;User Elastic Mahavira searched for a product.;5802;Search
+2024-04-22 00:44:48;audit;User Intelligent Poincare updated settings.;5646;Update
+2024-04-22 00:44:48;audit;User Interesting Ellis updated settings.;1890;Update
+2024-04-22 00:44:48;audit;User Mystifying Diffie logged in.;5135;Login
+2024-04-22 00:44:48;audit;User Interesting Engelbart updated settings.;3183;Update
+2024-04-22 00:44:48;audit;User Dreamy Saha updated settings.;4106;Update
+2024-04-22 00:44:48;audit;User Nifty Chaum logged out.;3552;Logout
+2024-04-22 00:44:48;audit;User Relaxed Jones logged in.;5204;Login
+2024-04-22 00:44:48;audit;User Infallible Euler purchased Action Camera.;2607;Purchase
+2024-04-22 00:44:48;audit;User Frosty Chatelet deleted a product from the cart.;3431;Delete
+2024-04-22 00:44:48;audit;User Eloquent Merkle added a product to the cart.;3593;Add
+2024-04-22 00:44:48;audit;User Interesting Leakey logged in.;1258;Login
+2024-04-22 00:44:48;audit;User Strange Brattain added a product to the cart.;2214;Add
+2024-04-22 00:44:48;audit;User Quirky Lichterman logged in.;3233;Login
+2024-04-22 00:44:48;audit;User Cool Ptolemy logged in.;1740;Login
+2024-04-22 00:44:48;audit;User Priceless Hoover searched for a product.;4447;Search
+2024-04-22 00:44:48;audit;User Charming Proskuriakova updated settings.;3068;Update
+2024-04-22 00:44:48;audit;User Competent Hopper updated settings.;3978;Update
+2024-04-22 00:44:48;audit;User Serene Pare purchased Mechanical Keyboard.;3339;Purchase
+2024-04-22 00:44:48;audit;User Dreamy Franklin added a product to the cart.;5012;Add
+2024-04-22 00:44:48;audit;User Strange Hofstadter deleted a product from the cart.;2867;Delete
+2024-04-22 00:44:48;audit;User Condescending Haslett added a product to the cart.;2745;Add
+2024-04-22 00:44:48;audit;User Eloquent Solomon deleted a product from the cart.;1750;Delete
+2024-04-22 00:44:48;audit;User Xenodochial Cori searched for a product.;3530;Search
+2024-04-22 00:44:48;audit;User Sweet Payne updated settings.;4550;Update
+2024-04-22 00:44:48;audit;User Friendly Galois logged in.;5689;Login
+2024-04-22 00:44:48;audit;User Thirsty Hertz purchased Gaming Headset.;3028;Purchase
+2024-04-22 00:44:48;audit;User Sad Wilbur added a product to the cart.;4324;Add
+2024-04-22 00:44:48;audit;User Strange Greider logged out.;1168;Logout
+2024-04-22 00:44:48;audit;User Wizardly Hoover logged out.;2644;Logout
+2024-04-22 00:44:48;audit;User Hungry Goldwasser searched for a product.;2784;Search
+2024-04-22 00:44:48;audit;User Musing Pascal added a product to the cart.;2029;Add
+2024-04-22 00:44:48;audit;User Nervous Goldberg added a product to the cart.;3647;Add
+2024-04-22 00:44:48;audit;User Infallible Mendel added a product to the cart.;1410;Add
+2024-04-22 00:44:48;audit;User Kind Burnell searched for a product.;5891;Search
+2024-04-22 00:44:48;audit;User Laughing Blackwell logged in.;4615;Login
+2024-04-22 00:44:48;audit;User Fervent Sutherland updated settings.;1209;Update
+2024-04-22 00:44:48;audit;User Cranky Zhukovsky purchased Headphones.;5271;Purchase
+2024-04-22 00:44:48;audit;User Clever Germain logged in.;5623;Login
+2024-04-22 00:44:48;audit;User Funny Galileo added a product to the cart.;4357;Add
+2024-04-22 00:44:48;audit;User Jovial Shannon added a product to the cart.;1214;Add
+2024-04-22 00:44:48;audit;User Hardcore Wright logged in.;3361;Login
+2024-04-22 00:44:48;audit;User Youthful Bartik searched for a product.;2798;Search
+2024-04-22 00:44:48;audit;User Nervous Wing searched for a product.;4496;Search
+2024-04-22 00:44:48;audit;User Suspicious Shannon searched for a product.;4182;Search
+2024-04-22 00:44:48;audit;User Charming Mestorf purchased Action Camera.;1812;Purchase
+2024-04-22 00:44:48;audit;User Great Lichterman added a product to the cart.;5617;Add
+2024-04-22 00:44:48;audit;User Sharp Merkle updated settings.;5252;Update
+2024-04-22 00:44:48;audit;User Laughing Goldwasser searched for a product.;3695;Search
+2024-04-22 00:44:48;audit;User Infallible Chandrasekhar logged out.;2042;Logout
+2024-04-22 00:44:48;audit;User Kind Meninsky deleted a product from the cart.;5347;Delete
+2024-04-22 00:44:48;audit;User Crazy Mahavira deleted a product from the cart.;1576;Delete
+2024-04-22 00:44:48;audit;User Mystifying Borg updated settings.;2793;Update
+2024-04-22 00:44:48;audit;User Fervent Euler deleted a product from the cart.;4010;Delete
+2024-04-22 00:44:48;audit;User Charming Pike logged in.;1763;Login
+2024-04-22 00:44:48;audit;User Admiring Jackson deleted a product from the cart.;5389;Delete
+2024-04-22 00:44:48;audit;User Distracted Hamilton deleted a product from the cart.;4113;Delete
+2024-04-22 00:44:48;audit;User Hardcore Margulis added a product to the cart.;5236;Add
+2024-04-22 00:44:48;audit;User Bold Einstein added a product to the cart.;1407;Add
+2024-04-22 00:44:48;audit;User Nice Nightingale purchased Digital Camera.;3345;Purchase
+2024-04-22 00:44:48;audit;User Nice Meninsky added a product to the cart.;1909;Add
+2024-04-22 00:44:48;audit;User Upbeat Jennings logged out.;2751;Logout
+2024-04-22 00:44:48;audit;User Sweet Ptolemy deleted a product from the cart.;5533;Delete
+2024-04-22 00:44:48;audit;User Gifted Hoover updated settings.;5717;Update
+2024-04-22 00:44:48;audit;User Pedantic Jones deleted a product from the cart.;5906;Delete
+2024-04-22 00:44:48;audit;User Distracted Clarke logged in.;1187;Login
+2024-04-22 00:44:48;audit;User Wizardly Booth purchased Bluetooth Speaker.;4168;Purchase
+2024-04-22 00:44:48;audit;User Pensive Faraday updated settings.;2741;Update
+2024-04-22 00:44:48;audit;User Gracious Tesla logged in.;5723;Login
+2024-04-22 00:44:48;audit;User Eloquent Carver logged in.;5820;Login
+2024-04-22 00:44:48;audit;User Magical Leavitt logged in.;3957;Login
+2024-04-22 00:44:48;audit;User Vigilant Moore updated settings.;2194;Update
+2024-04-22 00:44:48;audit;User Silly Lumiere updated settings.;2547;Update
+2024-04-22 00:44:48;audit;User Sweet Lamport purchased Soundbar.;4425;Purchase
+2024-04-22 00:44:48;audit;User Hardcore Mirzakhani logged out.;2446;Logout
+2024-04-22 00:44:48;audit;User Festive Varahamihira purchased External SSD.;4075;Purchase
+2024-04-22 00:44:48;audit;User Jolly Rhodes logged out.;2352;Logout
+2024-04-22 00:44:48;audit;User Jolly Spence purchased Keyboard.;1690;Purchase
+2024-04-22 00:44:48;audit;User Confident Wozniak purchased Bluetooth Speaker.;5995;Purchase
+2024-04-22 00:44:48;audit;User Sweet Payne deleted a product from the cart.;4550;Delete
+2024-04-22 00:44:48;audit;User Eloquent Bassi logged out.;1325;Logout
+2024-04-22 00:44:48;audit;User Tender Yalow searched for a product.;5154;Search
+2024-04-22 00:44:48;audit;User Infallible Sanderson added a product to the cart.;2067;Add
+2024-04-22 00:44:48;audit;User Charming Brown purchased Tablet.;3928;Purchase
+2024-04-22 00:44:48;audit;User Zealous Franklin deleted a product from the cart.;1217;Delete
+2024-04-22 00:44:48;audit;User Confident Jang logged in.;1473;Login
+2024-04-22 00:44:48;audit;User Musing Pike logged in.;1357;Login
+2024-04-22 00:44:48;audit;User Quirky Khorana purchased Gaming Headset.;1055;Purchase
+2024-04-22 00:44:48;audit;User Nice Mahavira added a product to the cart.;5652;Add
+2024-04-22 00:44:48;audit;User Heuristic Ellis logged out.;3171;Logout
+2024-04-22 00:44:48;audit;User Loving Dijkstra deleted a product from the cart.;4040;Delete
+2024-04-22 00:44:48;audit;User Reverent Perlman purchased Gaming Monitor.;1924;Purchase
+2024-04-22 00:44:48;audit;User Cool Edison updated settings.;1435;Update
+2024-04-22 00:44:48;audit;User Dreamy Colden searched for a product.;3376;Search
+2024-04-22 00:44:48;audit;User Confident Herschel logged in.;3166;Login
+2024-04-22 00:44:48;audit;User Wizardly Diffie added a product to the cart.;5925;Add
+2024-04-22 00:44:48;audit;User Happy Bardeen searched for a product.;5793;Search
+2024-04-22 00:44:48;audit;User Eager Liskov added a product to the cart.;2412;Add
+2024-04-22 00:44:48;audit;User Friendly Chatelet updated settings.;2341;Update
+2024-04-22 00:44:48;audit;User Inspiring Wilson purchased Gaming Headset.;1788;Purchase
+2024-04-22 00:44:48;audit;User Stupefied Bouman logged out.;1430;Logout
+2024-04-22 00:44:48;audit;User Agitated Kapitsa logged in.;5071;Login
+2024-04-22 00:44:48;audit;User Dreamy Chatelet logged out.;5353;Logout
+2024-04-22 00:44:48;audit;User Vigorous Morse deleted a product from the cart.;2696;Delete
+2024-04-22 00:44:48;audit;User Hopeful Margulis added a product to the cart.;1983;Add
+2024-04-22 00:44:48;audit;User Awesome Swartz updated settings.;3225;Update
+2024-04-22 00:44:48;audit;User Wizardly Chaum logged in.;3539;Login
+2024-04-22 00:44:48;audit;User Affectionate Mccarthy logged out.;1735;Logout
+2024-04-22 00:44:48;audit;User Distracted Burnell logged in.;5179;Login
+2024-04-22 00:44:48;audit;User Beautiful Brown purchased Gaming Console.;3038;Purchase
+2024-04-22 00:44:48;audit;User Vigorous Torvalds added a product to the cart.;1826;Add
+2024-04-22 00:44:48;audit;User Unruffled Kalam searched for a product.;3531;Search
+2024-04-22 00:44:48;audit;User Crazy Rosalind searched for a product.;5576;Search
+2024-04-22 00:44:48;audit;User Naughty Lehmann searched for a product.;1240;Search
+2024-04-22 00:44:48;audit;User Keen Chaum deleted a product from the cart.;1933;Delete
+2024-04-22 00:44:48;audit;User Eloquent Neumann logged out.;4461;Logout
+2024-04-22 00:44:48;audit;User Musing Goldwasser logged in.;1385;Login
+2024-04-22 00:44:48;audit;User Wizardly Matsumoto logged out.;1501;Logout
+2024-04-22 00:44:48;audit;User Bold Northcutt purchased Gaming Headset.;2027;Purchase
+2024-04-22 00:44:48;audit;User Awesome Noether updated settings.;1142;Update
+2024-04-22 00:44:48;audit;User Nice Golick added a product to the cart.;2342;Add
+2024-04-22 00:44:48;audit;User Sharp Williams purchased Gaming Laptop.;1969;Purchase
+2024-04-22 00:44:48;audit;User Ecstatic Borg logged out.;2117;Logout
+2024-04-22 00:44:48;audit;User Elated Wilbur searched for a product.;2706;Search
+2024-04-22 00:44:48;audit;User Tender Haibt purchased Virtual Reality Headset.;1215;Purchase
+2024-04-22 00:44:48;audit;User Awesome Yalow updated settings.;3632;Update
+2024-04-22 00:44:48;audit;User Gifted Bhaskara added a product to the cart.;4462;Add
+2024-04-22 00:44:48;audit;User Great Lovelace added a product to the cart.;1863;Add
+2024-04-22 00:44:48;audit;User Zen Villani logged out.;2662;Logout
+2024-04-22 00:44:48;audit;User Stupefied Neumann logged in.;4171;Login
+2024-04-22 00:44:48;audit;User Eager Shaw updated settings.;3971;Update
+2024-04-22 00:44:48;audit;User Xenodochial Ardinghelli purchased Monitor.;5945;Purchase
+2024-04-22 00:44:48;audit;User Nice Wilson added a product to the cart.;4302;Add
+2024-04-22 00:44:48;audit;User Vigorous Bassi searched for a product.;1662;Search
+2024-04-22 00:44:48;audit;User Elated Shaw deleted a product from the cart.;2459;Delete
+2024-04-22 00:44:48;audit;User Friendly Tesla deleted a product from the cart.;5518;Delete
+2024-04-22 00:44:48;audit;User Epic Margulis searched for a product.;1017;Search
+2024-04-22 00:44:48;audit;User Inspiring Leakey logged out.;3139;Logout
+2024-04-22 00:44:48;audit;User Loving Turing logged out.;3164;Logout
+2024-04-22 00:44:48;audit;User Pensive Kare searched for a product.;3941;Search
+2024-04-22 00:44:48;audit;User Vigorous Raman purchased Graphics Card.;4903;Purchase
+2024-04-22 00:44:48;audit;User Cool Dewdney added a product to the cart.;3296;Add
+2024-04-22 00:44:48;audit;User Exciting Proskuriakova logged out.;5183;Logout
+2024-04-22 00:44:48;audit;User Vibrant Proskuriakova purchased Keyboard.;4954;Purchase
+2024-04-22 00:44:48;audit;User Nervous Visvesvaraya updated settings.;5581;Update
+2024-04-22 00:44:48;audit;User Xenodochial Haibt added a product to the cart.;4985;Add
+2024-04-22 00:44:48;audit;User Awesome Varahamihira updated settings.;3122;Update
+2024-04-22 00:44:48;audit;User Confident Wozniak purchased Portable Projector.;5995;Purchase
+2024-04-22 00:44:48;audit;User Admiring Chandrasekhar deleted a product from the cart.;5874;Delete
+2024-04-22 00:44:48;audit;User Compassionate Murdock logged out.;5112;Logout
+2024-04-22 00:44:48;audit;User Nostalgic Northcutt logged out.;1120;Logout
+2024-04-22 00:44:48;audit;User Angry Lichterman deleted a product from the cart.;3979;Delete
+2024-04-22 00:44:48;audit;User Keen Black logged out.;3821;Logout
+2024-04-22 00:44:48;audit;User Clever Turing deleted a product from the cart.;2957;Delete
+2024-04-22 00:44:48;audit;User Youthful Franklin logged in.;4581;Login
+2024-04-22 00:44:48;audit;User Adoring Wiles logged out.;2499;Logout
+2024-04-22 00:44:48;audit;User Youthful Booth purchased Power Bank.;1797;Purchase
+2024-04-22 00:44:48;audit;User Elated Galois searched for a product.;5326;Search
+2024-04-22 00:44:48;audit;User Thirsty Gates updated settings.;3351;Update
+2024-04-22 00:44:48;audit;User Lucid Agnesi searched for a product.;2626;Search
+2024-04-22 00:44:48;audit;User Angry Tharp updated settings.;1672;Update
+2024-04-22 00:44:48;audit;User Ecstatic Euler purchased SSD Drive.;2206;Purchase
+2024-04-22 00:44:48;audit;User Zealous Almeida deleted a product from the cart.;5798;Delete
+2024-04-22 00:44:48;audit;User Vigilant Tesla updated settings.;5250;Update
+2024-04-22 00:44:48;audit;User Infallible Kalam updated settings.;5308;Update
+2024-04-22 00:44:48;audit;User Strange Chandrasekhar updated settings.;1190;Update
+2024-04-22 00:44:48;audit;User Condescending Shamir purchased Router.;4097;Purchase
+2024-04-22 00:44:48;audit;User Dreamy Lehmann searched for a product.;2762;Search
+2024-04-22 00:44:48;audit;User Beautiful Allen deleted a product from the cart.;1388;Delete
+2024-04-22 00:44:48;audit;User Nifty Rosalind updated settings.;1819;Update
+2024-04-22 00:44:48;audit;User Vigilant Carson logged in.;3168;Login
+2024-04-22 00:44:48;audit;User Sharp Swirles deleted a product from the cart.;3970;Delete
+2024-04-22 00:44:48;audit;User Suspicious Sammet searched for a product.;5210;Search
+2024-04-22 00:44:48;audit;User Clever Pasteur deleted a product from the cart.;4143;Delete
+2024-04-22 00:44:48;audit;User Upbeat Sammet added a product to the cart.;4006;Add
+2024-04-22 00:44:48;audit;User Intelligent Montalcini purchased Mechanical Keyboard.;4051;Purchase
+2024-04-22 00:44:48;audit;User Brave Shirley purchased Printer.;2929;Purchase
+2024-04-22 00:44:48;audit;User Tender Spence searched for a product.;3379;Search
+2024-04-22 00:44:48;audit;User Clever Lichterman purchased Router.;4774;Purchase
+2024-04-22 00:44:48;audit;User Confident Austin logged out.;2082;Logout
+2024-04-22 00:44:48;audit;User Beautiful Galois deleted a product from the cart.;3589;Delete
+2024-04-22 00:44:48;audit;User Infallible Darwin logged out.;1554;Logout
+2024-04-22 00:44:48;audit;User Jolly Snyder logged in.;2934;Login
+2024-04-22 00:44:48;audit;User Awesome Chaplygin updated settings.;4411;Update
+2024-04-22 00:44:48;audit;User Funny Cerf added a product to the cart.;5573;Add
+2024-04-22 00:44:48;audit;User Quirky Noether updated settings.;2660;Update
+2024-04-22 00:44:48;audit;User Nifty Golick added a product to the cart.;1276;Add
+2024-04-22 00:44:48;audit;User Sharp Greider searched for a product.;3143;Search
+2024-04-22 00:44:48;audit;User Nice Taussig searched for a product.;3354;Search
+2024-04-22 00:44:48;audit;User Lucid Hellman deleted a product from the cart.;2335;Delete
+2024-04-22 00:44:48;audit;User Suspicious Haibt searched for a product.;2438;Search
+2024-04-22 00:44:48;audit;User Sweet Brown purchased Gaming Chair.;4284;Purchase
+2024-04-22 00:44:48;audit;User Peaceful Euclid searched for a product.;1749;Search
+2024-04-22 00:44:48;audit;User Adoring Lumiere deleted a product from the cart.;5584;Delete
+2024-04-22 00:44:48;audit;User Happy Booth deleted a product from the cart.;3550;Delete
+2024-04-22 00:44:48;audit;User Blissful Feynman deleted a product from the cart.;1188;Delete
+2024-04-22 00:44:48;audit;User Thirsty Hertz updated settings.;3028;Update
+2024-04-22 00:44:48;audit;User Blissful Matsumoto updated settings.;2884;Update
+2024-04-22 00:44:48;audit;User Musing Chandrasekhar added a product to the cart.;3044;Add
+2024-04-22 00:44:48;audit;User Eloquent Hopper logged in.;2480;Login
+2024-04-22 00:44:48;audit;User Nervous Pare purchased Laptop.;4847;Purchase
+2024-04-22 00:44:48;audit;User Pensive Tharp logged out.;1542;Logout
+2024-04-22 00:44:48;audit;User Zealous Montalcini logged out.;3119;Logout
+2024-04-22 00:44:48;audit;User Sleepy Hodgkin logged out.;3648;Logout
+2024-04-22 00:44:48;audit;User Inspiring Bohr searched for a product.;4831;Search
+2024-04-22 00:44:48;audit;User Stoic Hodgkin updated settings.;3207;Update
+2024-04-22 00:44:48;audit;User Adoring Darwin logged in.;4822;Login
+2024-04-22 00:44:48;audit;User Nice Lehmann logged in.;3310;Login
+2024-04-22 00:44:48;audit;User Affectionate Lederberg logged out.;5471;Logout
+2024-04-22 00:44:48;audit;User Musing Lewin added a product to the cart.;5540;Add
+2024-04-22 00:44:48;audit;User Infallible Kare logged in.;4063;Login
+2024-04-22 00:44:48;audit;User Awesome Bassi logged out.;2740;Logout
+2024-04-22 00:44:48;audit;User Dreamy Lehmann purchased Keyboard.;2762;Purchase
+2024-04-22 00:44:48;audit;User Cool Tereshkova searched for a product.;3751;Search
+2024-04-22 00:44:48;audit;User Nifty Mahavira logged in.;1552;Login
+2024-04-22 00:44:48;audit;User Mystifying Cray logged out.;2362;Logout
+2024-04-22 00:44:48;audit;User Gracious Tesla added a product to the cart.;5723;Add
+2024-04-22 00:44:48;audit;User Epic Black searched for a product.;2760;Search
+2024-04-22 00:44:48;audit;User Angry Hypatia deleted a product from the cart.;2270;Delete
+2024-04-22 00:44:48;audit;User Heuristic Greider added a product to the cart.;3360;Add
+2024-04-22 00:44:48;audit;User Competent Mcnulty searched for a product.;5721;Search
+2024-04-22 00:44:48;audit;User Dazzling Chaum updated settings.;5618;Update
+2024-04-22 00:44:48;audit;User Lucid Bassi updated settings.;1839;Update
+2024-04-22 00:44:48;audit;User Compassionate Herschel purchased Gaming Chair.;3504;Purchase
+2024-04-22 00:44:48;audit;User Epic Cohen purchased SSD Drive.;3843;Purchase
+2024-04-22 00:44:48;audit;User Upbeat Haibt searched for a product.;3811;Search
+2024-04-22 00:44:48;audit;User Flamboyant Thompson updated settings.;1046;Update
+2024-04-22 00:44:48;audit;User Festive Almeida added a product to the cart.;5683;Add
+2024-04-22 00:44:48;audit;User Bold Wing searched for a product.;4114;Search
+2024-04-22 00:44:48;audit;User Elegant Ishizaka deleted a product from the cart.;1130;Delete
+2024-04-22 00:44:48;audit;User Relaxed Jones searched for a product.;5204;Search
+2024-04-22 00:44:48;audit;User Musing Pasteur searched for a product.;3907;Search
+2024-04-22 00:44:48;audit;User Jolly Golick purchased Gaming Mouse.;2955;Purchase
+2024-04-22 00:44:48;audit;User Condescending Curran logged in.;1098;Login
+2024-04-22 00:44:48;audit;User Upbeat Borg updated settings.;2461;Update
+2024-04-22 00:44:48;audit;User Strange Kare logged out.;4409;Logout
+2024-04-22 00:44:48;audit;User Charming Aryabhata logged in.;5611;Login
+2024-04-22 00:44:48;audit;User Elegant Borg purchased Portable SSD.;2758;Purchase
+2024-04-22 00:44:48;audit;User Great Driscoll logged out.;2822;Logout
+2024-04-22 00:44:48;audit;User Vigilant Gagarin logged in.;4812;Login
+2024-04-22 00:44:48;audit;User Jolly Black logged in.;3642;Login
+2024-04-22 00:44:48;audit;User Angry Dubinsky deleted a product from the cart.;3665;Delete
+2024-04-22 00:44:48;audit;User Festive Hermann updated settings.;5141;Update
+2024-04-22 00:44:48;audit;User Sad Black added a product to the cart.;5569;Add
+2024-04-22 00:44:48;audit;User Xenodochial Jepsen logged out.;4565;Logout
+2024-04-22 00:44:48;audit;User Hungry Poincare logged out.;1237;Logout
+2024-04-22 00:44:48;audit;User Nice Chandrasekhar searched for a product.;5367;Search
+2024-04-22 00:44:48;audit;User Eager Faraday deleted a product from the cart.;3934;Delete
+2024-04-22 00:44:48;audit;User Flamboyant Chatterjee deleted a product from the cart.;1676;Delete
+2024-04-22 00:44:48;audit;User Heuristic Merkle purchased Gaming Console.;2780;Purchase
+2024-04-22 00:44:48;audit;User Stoic Hellman added a product to the cart.;4706;Add
+2024-04-22 00:44:48;audit;User Friendly Lamarr added a product to the cart.;2118;Add
+2024-04-22 00:44:48;audit;User Hungry Greider deleted a product from the cart.;3470;Delete
+2024-04-22 00:44:48;audit;User Bold Morse logged out.;5915;Logout
+2024-04-22 00:44:48;audit;User Compassionate Chaum purchased SSD Drive.;1300;Purchase
+2024-04-22 00:44:48;audit;User Gracious Thompson updated settings.;1694;Update
+2024-04-22 00:44:48;audit;User Exciting Moser logged out.;4261;Logout
+2024-04-22 00:44:48;audit;User Busy Kepler searched for a product.;3280;Search
+2024-04-22 00:44:48;audit;User Boring Easley searched for a product.;3259;Search
+2024-04-22 00:44:48;audit;User Brave Lumiere deleted a product from the cart.;1577;Delete
+2024-04-22 00:44:48;audit;User Dazzling Gould added a product to the cart.;5989;Add
+2024-04-22 00:44:48;audit;User Vigorous Chebyshev logged in.;1484;Login
+2024-04-22 00:44:48;audit;User Romantic Jones logged in.;3948;Login
+2024-04-22 00:44:48;audit;User Wizardly Morse searched for a product.;1169;Search
+2024-04-22 00:44:48;audit;User Blissful Johnson logged in.;1759;Login
+2024-04-22 00:44:48;audit;User Thirsty Ganguly deleted a product from the cart.;3668;Delete
+2024-04-22 00:44:48;audit;User Modest Davinci updated settings.;4764;Update
+2024-04-22 00:44:48;audit;User Crazy Clarke updated settings.;5404;Update
+2024-04-22 00:44:48;audit;User Flamboyant Elgamal added a product to the cart.;3019;Add
+2024-04-22 00:44:48;audit;User Vibrant Moore updated settings.;2181;Update
+2024-04-22 00:44:48;audit;User Interesting Curran searched for a product.;2515;Search
+2024-04-22 00:44:48;audit;User Agitated Wiles logged out.;2639;Logout
+2024-04-22 00:44:48;audit;User Busy Jones logged out.;1617;Logout
+2024-04-22 00:44:48;audit;User Strange Chatelet deleted a product from the cart.;3715;Delete
+2024-04-22 00:44:48;audit;User Festive Varahamihira deleted a product from the cart.;4075;Delete
