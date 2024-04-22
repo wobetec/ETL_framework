@@ -1,5 +1,6 @@
 # ETL_framework
-ETL micro-framwork para disciplina de computação escalável
+
+ETL micro-framwork para disciplina de computação escalável 2024.1.
 
 ## Estrutura de diretórios
 ```
@@ -13,31 +14,30 @@ ETL_framework
 ## Compilação usando o Makefile
 Para compilar o projeto, basta executar o comando:
 ```
-make test 
+make main
 ```
 
 ## Simulador
-O simulador é responsável por gerar dados de entrada para o ETL. Para executar o simulador, basta executar o comando:
+O simulador é responsável por gerar dados de entrada para o ETL. Para executar o simulador, no diretório `.\simulator\`, basta executar:
 ```
-python3 simulator/data_generator.py
+python3 data_generator.py
 ```
 
 ## Execução
-Para executar o projeto, com o simulador em execução e os arquivos compilados, basta executar o comando:
+Para executar o projeto, com o simulador em execução e os arquivos compilados, basta executar o arqivo no diretório `.\etl\`:
 ```
-./test.out
+./main.out
 ```
 
-
-## Dashboard Flask
-Primeiro é necessário instalar as dependências do projeto:
+## Dashboard Dash/Plotly
+Primeiro é necessário instalar as dependências do projeto. Cada aplicação (Dashboard e Simulador) possuiem suas dependências de forma separada.
 ```
 pip install -r requirements.txt
 ```
 
 Para executar o dashboard, basta executar o comando:
 ```
-python3 dashboard/visualizationsqlite.py
+python3 ./visualizationsqlite.py
 ```
 
 ## Alunos
