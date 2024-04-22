@@ -125,8 +125,8 @@ int main(){
     HandlerA6 t_a6(q_t_6, {{"load", &q_load}}, cache);
     t_a6.start();
 
-    HandlerA7 t_a7(q_t_7, {{"load", &q_load}}, cache);
-    t_a7.start();
+    // HandlerA7 t_a7(q_t_7, {{"load", &q_load}}, cache);
+    // t_a7.start();
 
     // Load
     LoaderThreads t_load(q_load);
@@ -155,13 +155,13 @@ int main(){
     t_s_compras.join();
     t_s_estoque.join();
     t_s_produtos.join();
-    t_a1.join();
-    t_a2.join();
-    t_a3.join();
-    t_a4.join();
-    t_a5.join();
-    t_a6.join();
-    t_a7.join();
+    // t_a1.join();
+    // t_a2.join();
+    // t_a3.join();
+    // t_a4.join();
+    // t_a5.join();
+    // t_a6.join();
+    // t_a7.join();
 
     t_load.join();
     

@@ -1,3 +1,7 @@
+# others
+times.txt
+new.db
+
 # python
 env
 
@@ -6,7 +10,7 @@ env
 */obj
 
 # simulation data
-/simulator/data
+# /simulator/data
 
 # vscode
 /.vscode
