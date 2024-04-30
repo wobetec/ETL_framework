@@ -33,7 +33,7 @@ class ExtractThread : public ThreadWrapper<Queue<std::string, std::string>, Queu
                     df = repoData.extractData();
                     outQueues.enQueue(std::make_pair(key, df));
                 } else if (key == "compras") {
-                    repoData.setStrategy(RepoData::ExtractorCSVType, "../simulator/data/contaverde/purchase_orders.txt");
+                    repoData.setStrategy(RepoData::ExtractorCSVType, "../simulator/data/contaverde/orders.txt");
                     df = repoData.extractData();
                     outQueues.enQueue(std::make_pair(key, df));
                 } else if (key == "cade"){
@@ -43,16 +43,19 @@ class ExtractThread : public ThreadWrapper<Queue<std::string, std::string>, Queu
                 } else if (key == "datacat") {
                     auto lock = map_mutex.getLock("datacat");
 
-                    std::string last_path = map_mutex.get("datacat_behaviour");
+                    std::string last_path = map_mutex.get("datacat_behavior");
                     std::string max_path = last_path;
-                    std::string base_path = "../simulator/data/datacat/behaviour/";
+                    std::string base_path = "../simulator/data/datacat/behavior/";
                     for (const auto & entry : std::filesystem::directory_iterator(base_path)) {
-                        std::string filename = std::string(entry.path());
+                        std::string filename = std::string(entry.path().string());
 
                         if (filename > last_path){
                             repoData.setStrategy(RepoData::ExtractorTXTType, filename);
                             df = repoData.extractData();
-                            outQueues.enQueue(std::make_pair(key, df));
+
+                            if (df.shape.first > 0) {
+                                outQueues.enQueue(std::make_pair(key, df));
+                            }
 
                             if ( filename > max_path ) {
                                 max_path = filename;
@@ -60,7 +63,7 @@ class ExtractThread : public ThreadWrapper<Queue<std::string, std::string>, Queu
                         }
                     }
 
-                    map_mutex.set("datacat_behaviour", max_path);
+                    map_mutex.set("datacat_behavior", max_path);
                     lock.unlock();
                 }
             }

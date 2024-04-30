@@ -43,7 +43,7 @@ int main(){
     t_extract_4.start();
 
 
-    // Spliter
+    // // Spliter
     Queue<string, DataFrame<Object>> q_datacat(DEFAULT_QUEUE_SIZE);
     Queue<string, DataFrame<Object>> q_cade(DEFAULT_QUEUE_SIZE);
     Queue<string, DataFrame<Object>> q_produtos(DEFAULT_QUEUE_SIZE);
@@ -125,9 +125,6 @@ int main(){
     HandlerA6 t_a6(q_t_6, {{"load", &q_load}}, cache);
     t_a6.start();
 
-    // HandlerA7 t_a7(q_t_7, {{"load", &q_load}}, cache);
-    // t_a7.start();
-
     // Load
     LoaderThreads t_load(q_load);
     t_load.start();
@@ -138,32 +135,32 @@ int main(){
         tg_cade.run();
     }
 
-    t_extract_1.join();
-    t_extract_2.join();
-    t_extract_3.join();
-    t_extract_4.join();
+    // t_extract_1.join();
+    // t_extract_2.join();
+    // t_extract_3.join();
+    // t_extract_4.join();
 
-    tg_datacat.join();
-    tg_produtos.join();
-    tg_estoque.join();
-    tg_compras.join();
+    // tg_datacat.join();
+    // tg_produtos.join();
+    // tg_estoque.join();
+    // tg_compras.join();
 
-    t_spliter.join();
-    t_datacat.join();
-    t_cade.join();
-    t_s_vis.join();
-    t_s_compras.join();
-    t_s_estoque.join();
-    t_s_produtos.join();
-    t_a1.join();
-    t_a2.join();
-    t_a3.join();
-    t_a4.join();
-    t_a5.join();
-    t_a6.join();
+    // t_spliter.join();
+    // t_datacat.join();
+    // t_cade.join();
+    // t_s_vis.join();
+    // t_s_compras.join();
+    // t_s_estoque.join();
+    // t_s_produtos.join();
+    // t_a1.join();
+    // t_a2.join();
+    // t_a3.join();
+    // t_a4.join();
+    // t_a5.join();
+    // t_a6.join();
     // t_a7.join();
 
-    t_load.join();
+    // t_load.join();
     
     return 0;
 }
