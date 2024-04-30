@@ -6,7 +6,7 @@
 #include "extractors.h"
 #include "loaders.h"
 
-#define DEFAULT_QUEUE_SIZE 5
+#define DEFAULT_QUEUE_SIZE 10
 
 using namespace std;
 
@@ -135,32 +135,31 @@ int main(){
         tg_cade.run();
     }
 
-    // t_extract_1.join();
-    // t_extract_2.join();
-    // t_extract_3.join();
-    // t_extract_4.join();
+    t_extract_1.join();
+    t_extract_2.join();
+    t_extract_3.join();
+    t_extract_4.join();
 
-    // tg_datacat.join();
-    // tg_produtos.join();
-    // tg_estoque.join();
-    // tg_compras.join();
+    tg_datacat.join();
+    tg_produtos.join();
+    tg_estoque.join();
+    tg_compras.join();
 
-    // t_spliter.join();
-    // t_datacat.join();
-    // t_cade.join();
-    // t_s_vis.join();
-    // t_s_compras.join();
-    // t_s_estoque.join();
-    // t_s_produtos.join();
-    // t_a1.join();
-    // t_a2.join();
-    // t_a3.join();
-    // t_a4.join();
-    // t_a5.join();
-    // t_a6.join();
-    // t_a7.join();
+    t_spliter.join();
+    t_datacat.join();
+    t_cade.join();
+    t_s_vis.join();
+    t_s_compras.join();
+    t_s_estoque.join();
+    t_s_produtos.join();
+    t_a1.join();
+    t_a2.join();
+    t_a3.join();
+    t_a4.join();
+    t_a5.join();
+    t_a6.join();
 
-    // t_load.join();
+    t_load.join();
     
     return 0;
 }

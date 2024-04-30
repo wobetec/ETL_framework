@@ -8,6 +8,12 @@
 #include "dataframe.h"
 #include "sqlite3.h"
 #include "series.h"
+#include <fcntl.h>
+#include <iostream>
+#include <fstream>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/file.h>  // For file locking operations
 
 
 // Constructor
@@ -47,7 +53,26 @@ DataFrame<DefaultObject> RepoData::extractData() {
     * @brief Extract data from the file
     * @return DataFrame<DefaultObject>: Dataframe object
     */
+   int file_descriptor = open(strategy_->path_.c_str(), O_RDONLY);
+
+    if (file_descriptor == -1) {
+        std::cerr << "Error opening file." << std::endl;
+        return DataFrame<DefaultObject>();
+    }
+
+    if (flock(file_descriptor, LOCK_SH) == -1) {
+        std::cerr << "Error acquiring shared lock." << std::endl;
+        close(file_descriptor);
+        return DataFrame<DefaultObject>();
+    }
+
     DataFrame<DefaultObject> df = strategy_->extractData();
+
+    if (flock(file_descriptor, LOCK_UN) == -1) {
+        std::cerr << "Error releasing lock." << std::endl;
+    }
+
+    close(file_descriptor);
     return df;
 }
 

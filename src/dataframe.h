@@ -119,7 +119,7 @@ class DataFrame {
             for (std::string column : columnNames) {
                 int columnId = column_id(column);
                 if (columnId == -1) {
-                    throw std::invalid_argument("Column does not exist");
+                    throw std::invalid_argument("Column does not exist " + column);
                 }
                 result.addColumn(column, series[columnId]);
             }
@@ -329,8 +329,11 @@ class DataFrame {
             int leftColumn = column_id(leftOn);
             int rightColumn = other.column_id(rightOn);
 
-            if (leftColumn == -1 || rightColumn == -1) {
-                throw std::invalid_argument("Column does not exist");
+            if (leftColumn == -1) {
+                throw std::invalid_argument("Column does not exist " + leftOn);
+            }
+            if (rightColumn == -1) {
+                throw std::invalid_argument("Column does not exist " + rightOn);
             }
 
             std::vector<std::string> rightColumns = other.columns;
@@ -489,7 +492,7 @@ class DataFrame {
             for (std::string column : subset) {
                 int columnId = column_id(column);
                 if (columnId == -1) {
-                    throw std::invalid_argument("Column does not exist");
+                    throw std::invalid_argument("Column does not exist " + column);
                 }
                 columnsToConsider.push_back(columnId);
             }
@@ -520,9 +523,7 @@ class DataFrame {
         std::vector<Series<T>> series;
         std::vector<std::string> columns;
         std::pair<int, int> shape;
-    private:
 
-    private:
         int column_id(std::string columnName) {
             for (int i = 0; i < columns.size(); i++) {
                 if (columns[i] == columnName) {

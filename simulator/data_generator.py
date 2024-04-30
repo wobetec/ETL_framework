@@ -4,9 +4,17 @@ import pandas as pd
 from datetime import timedelta
 from datetime import datetime
 import os
+import fcntl
 
 from users import UserGenerator
 from products import ProductGenerator
+
+
+def save(df, file_path, sep=';'):
+    with open(file_path, 'w') as f:
+        fcntl.flock(f, fcntl.LOCK_EX)
+        df.to_csv(f, index=False, sep=sep, header=True, mode='w')
+        fcntl.flock(f, fcntl.LOCK_UN)
 
 
 class Simulation:
@@ -115,7 +123,7 @@ class Simulation:
         file_name = f"log_behavior_{end_date.strftime('%Y-%m-%d_%H-%M-%S')}.txt"
         csv_path = os.path.join('data', 'datacat', 'behavior', file_name)
         df_behavior = pd.DataFrame(df_behavior)
-        df_behavior.to_csv(csv_path, index=False, sep=';')
+        save(df_behavior, csv_path, sep=';')
             
         return pd.DataFrame(visualized_products)
 
@@ -146,14 +154,14 @@ class Simulation:
             })
         csv_path = os.path.join('data', 'cadeanalytics', "cade_analytics.txt")
         df_cadeanalytics = pd.DataFrame(df_cadeanalytics)
-        df_cadeanalytics.to_csv(csv_path, index=False, sep=';')
+        save(df_cadeanalytics, csv_path, sep=';')
 
         return pd.DataFrame(visualized_products)
     
 
     def update_orders(self, visualized_products):
         new_orders = []
-        n_orders = np.random.randint(0, visualized_products.shape[0])
+        n_orders = np.random.randint(0, np.round(np.sqrt(visualized_products.shape[0])))
         visualized_products = visualized_products.sample(n_orders)
         for index, row in visualized_products.iterrows():
             user_id = row['user_id']
@@ -177,15 +185,15 @@ class Simulation:
             self.orders = pd.concat([self.orders, new_orders], ignore_index=True)
         file_name = 'orders.txt'
         csv_path = os.path.join('data', 'contaverde', file_name)
-        self.orders.to_csv(csv_path, index=False, sep=',')
+        save(new_orders, csv_path, sep=',')
         return new_orders
 
 
     def update_stock(self, new_orders):
         # Add random
-        for i in range(np.random.randint(1, self.products.shape[0]//2)):
+        for i in range(np.random.randint(0, 1+np.round(np.sqrt(new_orders.shape[0])))):
             product_id = self.products.sample(1)['product_id'].values[0]
-            quantity = np.random.randint(1, 100)
+            quantity = np.random.randint(1, 10)
             stock_index = self.stock[self.stock['product_id'] == product_id].index[0]
             self.stock.loc[stock_index, 'available_quantity'] += quantity
 
@@ -200,10 +208,10 @@ class Simulation:
     def save_contaverde(self):
         contaverde_path = os.path.join('data', 'contaverde')
 
-        self.users.to_csv(os.path.join(contaverde_path, 'users.txt'), index=False, sep=',')
-        self.products.to_csv(os.path.join(contaverde_path, 'products.txt'), index=False, sep=',')
-        self.stock.to_csv(os.path.join(contaverde_path, 'stock.txt'), index=False, sep=',')
-        self.orders.to_csv(os.path.join(contaverde_path, 'orders.txt'), index=False, sep=',')
+        save(self.users, os.path.join(contaverde_path, 'users.txt'), sep=',')
+        save(self.products, os.path.join(contaverde_path, 'products.txt'), sep=',')
+        save(self.stock, os.path.join(contaverde_path, 'stock.txt'), sep=',')
+        save(self.orders, os.path.join(contaverde_path, 'orders.txt'), sep=',')
 
 
     def run(self, num_events):
