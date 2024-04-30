@@ -49,12 +49,7 @@ class ProductGenerator:
         return {
             'product_id': self.generate_product_id(product_id_num),
             'product_name': self.generate_product_name(),
+            'product_image': 'https://via.placeholder.com/150',
             'product_description': self.generate_product_description(),
             'product_price': self.generate_product_price()
         }
-
-
-class Products:
-
-    def __init__(self):
-        pass

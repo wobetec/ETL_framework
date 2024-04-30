@@ -82,9 +82,3 @@ class UserGenerator:
             'user_signup_date': self.generate_user_signup_date(),
             'user_birthdate': self.generate_user_birthdate()
         }
-
-
-class Users:
-
-    def __init__(self):
-        pass
