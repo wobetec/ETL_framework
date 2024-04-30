@@ -5,6 +5,7 @@ from datetime import timedelta
 from datetime import datetime
 import os
 import fcntl
+import shutil
 
 from users import UserGenerator
 from products import ProductGenerator
@@ -12,9 +13,11 @@ from products import ProductGenerator
 
 def save(df, file_path, sep=';'):
     with open(file_path, 'w') as f:
-        fcntl.flock(f, fcntl.LOCK_EX)
-        df.to_csv(f, index=False, sep=sep, header=True, mode='w')
-        fcntl.flock(f, fcntl.LOCK_UN)
+        try:
+            fcntl.flock(f, fcntl.LOCK_EX)
+            df.to_csv(f, index=False, sep=sep, header=True, mode='w')
+        finally:
+            fcntl.flock(f, fcntl.LOCK_UN)
 
 
 class Simulation:
@@ -48,6 +51,13 @@ class Simulation:
         for folder in self.subsubfolders:
             folder_path = os.path.join(self.main_folder, 'datacat', folder)
             os.makedirs(folder_path, exist_ok=True)
+
+
+    def delete_folders(self):
+        try:
+            shutil.rmtree(self.main_folder)
+        except:
+            pass
 
 
     def clear_old_logs(self, waiting_time):
@@ -238,6 +248,7 @@ class Simulation:
 if __name__ == '__main__':
     start_time = time.perf_counter()
     simulation = Simulation()
+    simulation.delete_folders()
     simulation.create_folders()
     print(f"Initialization time: {time.perf_counter() - start_time}")
 
@@ -246,5 +257,5 @@ if __name__ == '__main__':
         start_time = time.perf_counter()
         num_events = np.random.randint(1000, 10000)
         simulation.run(num_events)
-        simulation.clear_old_logs(120)
+        # simulation.clear_old_logs(120)
         print(f"Execution step time: {time.perf_counter() - start_time}")

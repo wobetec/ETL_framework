@@ -60,18 +60,22 @@ DataFrame<DefaultObject> RepoData::extractData() {
         return DataFrame<DefaultObject>();
     }
 
-    if (flock(file_descriptor, LOCK_SH) == -1) {
-        std::cerr << "Error acquiring shared lock." << std::endl;
-        close(file_descriptor);
+    struct flock fl;
+    fl.l_type   = F_RDLCK;  // F_RDLCK, F_WRLCK, F_UNLCK
+    fl.l_whence = SEEK_SET; // SEEK_SET, SEEK_CUR, SEEK_END
+    fl.l_start  = 0;        // Offset from l_whence
+    fl.l_len    = 0;        // length, 0 = to EOF
+    fl.l_pid    = getpid(); // our PID
+
+    if (fcntl(file_descriptor, F_SETLKW, &fl) == -1) {
+        std::cerr << "Failed to lock the file: " << strategy_->path_ << std::endl;
         return DataFrame<DefaultObject>();
     }
 
     DataFrame<DefaultObject> df = strategy_->extractData();
 
-    if (flock(file_descriptor, LOCK_UN) == -1) {
-        std::cerr << "Error releasing lock." << std::endl;
-    }
-
+    fl.l_type = F_UNLCK;
+    fcntl(file_descriptor, F_SETLK, &fl); // Unlock the file
     close(file_descriptor);
     return df;
 }
@@ -82,7 +86,26 @@ void RepoData::loadData(DataFrame<DefaultObject> *df) {
     * @param df: Dataframe object
     * @return None
     */
+//    int file_descriptor = open(strategy_->path_.c_str(), O_WRONLY);
+
+//     if (file_descriptor == -1) {
+//         std::cerr << "Error opening file load: " << strategy_->path_.c_str() << std::endl;
+//         return;
+//     }
+
+//     if (flock(file_descriptor, LOCK_EX) == -1) {
+//         std::cerr << "Error acquiring shared lock." << std::endl;
+//         close(file_descriptor);
+//         return;
+//     }
+    df->print();
     strategy_->loadData(df);
+
+    // if (flock(file_descriptor, LOCK_UN) == -1) {
+    //     std::cerr << "Error releasing lock." << std::endl;
+    // }
+
+    // close(file_descriptor);
 }
 
 std::vector<std::vector<std::string>> ExtractorEstrategy::readTextFile(std::string sep) {
@@ -177,7 +200,7 @@ void ExtractorCSV::loadData(DataFrame<DefaultObject> *df) {
     * @param df: Dataframe object
     * @return None
     */
-    std::cout << "Loading data from CSV file" << std::endl;
+    std::cout << "Loading data into CSV file" << std::endl;
     saveTextFile(df, ",");
 }
 
@@ -209,7 +232,7 @@ void ExtractorTXT::loadData(DataFrame<DefaultObject> *df) {
     * @param df: Dataframe object
     * @return None
     */
-    std::cout << "Loading data from TXT file" << std::endl;
+    std::cout << "Loading data into TXT file" << std::endl;
     saveTextFile(df, " ");
 }
 
@@ -230,7 +253,7 @@ void ExtractorSQL::loadData(DataFrame<DefaultObject> *df) {
     * @param df: Dataframe object
     * @return None
     */
-    std::cout << "Loading data from SQL database" << std::endl;
+    std::cout << "Loading data into SQL database" << std::endl;
     std::pair<int, int> s = df->shape;
     for (int j = 0; j < s.first; j++) {
         int v = std::get<int>(df->series[0][j]);

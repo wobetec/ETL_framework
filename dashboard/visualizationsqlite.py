@@ -1,56 +1,40 @@
 import sqlite3
 import pandas as pd
-import dash
-from dash import dcc, html
-from dash.dependencies import Input, Output
+from dash import Dash, dcc, html, Input, Output, callback
 import plotly.graph_objs as go
 import sys
+import fcntl
 
-# Conexão ao banco de dados SQLite
-def connect_to_database():
-    return sqlite3.connect("../etl/new.db")
 
-def fetch_data_viewed_per_minute():
-    conn = connect_to_database()
+def fetch_data_viewed_per_minute(conn):
     query = "SELECT datetime, count FROM T1 ORDER BY datetime DESC LIMIT 60"
     df = pd.read_sql_query(query, conn, parse_dates=["datetime"])
-    conn.close()
     return df
 
-def fetch_data_bought_per_minute():
-    conn = connect_to_database()
+def fetch_data_bought_per_minute(conn):
     query = "SELECT datetime, count FROM T2 ORDER BY datetime DESC LIMIT 60"
     df = pd.read_sql_query(query, conn, parse_dates=["datetime"])
-    conn.close()
     return df
 
-def fetch_data_unique_users_per_product():
-    conn = connect_to_database()
+def fetch_data_unique_users_per_product(conn):
     query = "SELECT datetime, count FROM T3 ORDER BY datetime DESC LIMIT 60"
     df = pd.read_sql_query(query, conn, parse_dates=["datetime"])
-    conn.close()
     return df
 
-def fetch_data_most_bought_last_hour():
-    conn = connect_to_database()
+def fetch_data_most_bought_last_hour(conn):
     query = "SELECT datetime, count FROM T4 ORDER BY count DESC LIMIT 10"
     df = pd.read_sql_query(query, conn)
-    conn.close()
     return df
 
-def fetch_data_most_viewed_last_hour():
-    conn = connect_to_database()
+def fetch_data_most_viewed_last_hour(conn):
     query = "SELECT datetime, count FROM T5 ORDER BY count DESC LIMIT 10"
     df = pd.read_sql_query(query, conn)
-    conn.close()
     return df
 
 
-def fetch_data_avg_views_before_purchase():
-    conn = connect_to_database()
+def fetch_data_avg_views_before_purchase(conn):
     query = "SELECT datetime, count FROM T6 ORDER BY datetime DESC LIMIT 60"
     df = pd.read_sql_query(query, conn)
-    conn.close()
     return df
 
 def ler_e_calcular_media(arquivo):
@@ -65,7 +49,9 @@ def ler_e_calcular_media(arquivo):
         return pd.DataFrame(columns=["Tratador", "Duration"])
 
 # Aqui continua o restante do seu código de setup do Dash e callbacks
-app = dash.Dash(__name__)
+app = Dash(__name__)
+
+empty_figure = go.Figure()
 
 app.layout = html.Div([
     html.H1("Dashboard de Monitoramento em Tempo Real"),
@@ -93,104 +79,107 @@ app.layout = html.Div([
     ]),
 ])
 
-@app.callback(
-    Output("graph-viewed-per-minute", "figure"),
-    Input("interval", "n_intervals"))
-def update_graph_viewed_per_minute(n):
-    df = fetch_data_viewed_per_minute()
-    fig = go.Figure()
-    if df.empty:
-        return fig
-    fig.add_trace(go.Scatter(x=df["datetime"], y=df["count"], mode="lines+markers", name="Viewed per Minute"))
-    fig.update_layout(
+
+@callback(
+    [
+        Output("graph-viewed-per-minute", "figure"),
+        Output("graph-bought-per-minute", "figure"),
+        Output("graph-unique-users-per-product", "figure"),
+        Output("graph-most-bought-last-hour", "figure"),
+        Output("graph-most-viewed-last-hour", "figure"),
+        Output("graph-avg-views-before-purchase", "figure"),
+    ],
+    [Input("interval", "n_intervals")]
+)
+def update_from_sql(n):
+    db_file = "../etl/new.db"
+    with open(db_file, 'r') as f:
+        # try:
+            # fcntl.flock(f, fcntl.LOCK_SH)
+        conn = sqlite3.connect(db_file)
+        
+        df_viewed_per_minute = fetch_data_viewed_per_minute(conn)
+        df_bought_per_minute = fetch_data_bought_per_minute(conn)
+        df_unique_users_per_product = fetch_data_unique_users_per_product(conn)
+        df_most_bought_last_hour = fetch_data_most_bought_last_hour(conn)
+        df_most_viewed_last_hour = fetch_data_most_viewed_last_hour(conn)
+        df_avg_views_before_purchase = fetch_data_avg_views_before_purchase(conn)
+        # finally:
+        #     conn.close()
+        # fcntl.flock(f, fcntl.LOCK_UN)
+
+    if df_viewed_per_minute.empty:
+        df_viewed_per_minute = pd.DataFrame(columns=["datetime", "count"])
+    if df_bought_per_minute.empty:
+        df_bought_per_minute = pd.DataFrame(columns=["datetime", "count"])
+    if df_unique_users_per_product.empty:
+        df_unique_users_per_product = pd.DataFrame(columns=["datetime", "count"])
+    if df_most_bought_last_hour.empty:
+        df_most_bought_last_hour = pd.DataFrame(columns=["datetime", "count"])
+    if df_most_viewed_last_hour.empty:
+        df_most_viewed_last_hour = pd.DataFrame(columns=["datetime", "count"])
+    if df_avg_views_before_purchase.empty:
+        df_avg_views_before_purchase = pd.DataFrame(columns=["datetime", "count"])
+    
+    fig_viewed_per_minute = go.Figure()
+    fig_viewed_per_minute.add_trace(go.Scatter(x=df_viewed_per_minute["datetime"], y=df_viewed_per_minute["count"], mode="lines+markers", name="Viewed per Minute"))
+    fig_viewed_per_minute.update_layout(
         title="Número de Produtos Visualizados por Minuto",
         xaxis=dict(type="date", tickformat="%H:%M", dtick=60000),
         yaxis=dict(title="Número de Visualizações")
     )
-    return fig
 
-@app.callback(
-    Output("graph-bought-per-minute", "figure"),
-    Input("interval", "n_intervals"))
-def update_graph_bought_per_minute(n):
-    df = fetch_data_bought_per_minute()
-    fig = go.Figure()
-    if df.empty:
-        return fig
-    fig.add_trace(go.Scatter(x=df["datetime"], y=df["count"], mode="lines+markers", name="Bought per Minute"))
-    fig.update_layout(
+    fig_bought_per_minute = go.Figure()
+    fig_bought_per_minute.add_trace(go.Scatter(x=df_bought_per_minute["datetime"], y=df_bought_per_minute["count"], mode="lines+markers", name="Bought per Minute"))
+    fig_bought_per_minute.update_layout(
         title="Número de Produtos Comprados por Minuto",
         xaxis=dict(type="date", tickformat="%H:%M", dtick=60000),
         yaxis=dict(title="Número de Compras")
     )
-    return fig
 
-@app.callback(
-    Output("graph-unique-users-per-product", "figure"),
-    Input("interval", "n_intervals"))
-def update_graph_unique_users_per_product(n):
-    df = fetch_data_unique_users_per_product()
-    fig = go.Figure()
-    if df.empty:
-        return fig
-    fig.add_trace(go.Scatter(x=df["datetime"], y=df["count"], mode="lines+markers", name="Unique Users per Product"))
-    fig.update_layout(
+    fig_unique_users_per_product = go.Figure()
+    fig_unique_users_per_product.add_trace(go.Scatter(x=df_unique_users_per_product["datetime"], y=df_unique_users_per_product["count"], mode="lines+markers", name="Unique Users per Product"))
+    fig_unique_users_per_product.update_layout(
         title="Número de Usuários Únicos por Produto",
         xaxis=dict(type="date", tickformat="%H:%M", dtick=60000),
         yaxis=dict(title="Número de Usuários Únicos")
     )
-    return fig
 
-@app.callback(
-    Output("graph-most-bought-last-hour", "figure"),
-    Input("interval", "n_intervals"))
-def update_graph_most_bought_last_hour(n):
-    df = fetch_data_most_bought_last_hour()
-    fig = go.Figure()
-    if df.empty:
-        return fig
-    fig.add_trace(go.Bar(y=df["datetime"].astype(str), x=df["count"], orientation="h", name="Most Bought Last Hour"))
-    fig.update_layout(
+    fig_most_bought_last_hour = go.Figure()
+    fig_most_bought_last_hour.add_trace(go.Bar(y=df_most_bought_last_hour["datetime"].astype(str), x=df_most_bought_last_hour["count"], orientation="h", name="Most Bought Last Hour"))
+    fig_most_bought_last_hour.update_layout(
         title="Produtos Mais Comprados na Última Hora",
         xaxis=dict(title="Quantidade Comprada"),
         yaxis=dict(autorange="reversed", title="ID do Produto")
     )
-    return fig
 
-@app.callback(
-    Output("graph-most-viewed-last-hour", "figure"),
-    Input("interval", "n_intervals"))
-def update_graph_most_viewed_last_hour(n):
-    df = fetch_data_most_viewed_last_hour()
-    fig = go.Figure()
-    if df.empty:
-        return fig
-    fig.add_trace(go.Bar(y=df["datetime"].astype(str), x=df["count"], orientation="h", name="Most Viewed Last Hour"))
-    fig.update_layout(
+    fig_most_viewed_last_hour = go.Figure()
+    fig_most_viewed_last_hour.add_trace(go.Bar(y=df_most_viewed_last_hour["datetime"].astype(str), x=df_most_viewed_last_hour["count"], orientation="h", name="Most Viewed Last Hour"))
+    fig_most_viewed_last_hour.update_layout(
         title="Produtos Mais Visualizados na Última Hora",
         xaxis=dict(title="Quantidade de Visualizações"),
         yaxis=dict(autorange="reversed", title="ID do Produto")
     )
-    return fig
 
-@app.callback(
-    Output("graph-avg-views-before-purchase", "figure"),
-    Input("interval", "n_intervals"))
-def update_graph_avg_views_before_purchase(n):
-    df = fetch_data_avg_views_before_purchase()
-    fig = go.Figure()
-    if df.empty:
-        return fig
-    fig.add_trace(go.Scatter(x=df["datetime"].astype(str), y=df["count"], mode="lines+markers", name="Average Views Before Purchase"))
-    fig.update_layout(
+    fig_avg_views_before_purchase = go.Figure()
+    fig_avg_views_before_purchase.add_trace(go.Scatter(x=df_avg_views_before_purchase["datetime"].astype(str), y=df_avg_views_before_purchase["count"], mode="lines+markers", name="Average Views Before Purchase"))
+    fig_avg_views_before_purchase.update_layout(
         title="Média de Visualizações Antes da Compra",
         xaxis=dict(title="ID do Produto"),
         yaxis=dict(title="Média de Visualizações")
     )
-    return fig
+
+    return (
+        fig_viewed_per_minute,
+        fig_bought_per_minute,
+        fig_unique_users_per_product,
+        fig_most_bought_last_hour,
+        fig_most_viewed_last_hour,
+        fig_avg_views_before_purchase
+    )
 
 
-@app.callback(
+@callback(
     Output("graph-treatment-time", "figure"),
     Input("interval", "n_intervals"))
 def update_graph_treatment_time(n):
@@ -205,6 +194,7 @@ def update_graph_treatment_time(n):
         yaxis=dict(title="Tempo Médio (segundos)")
     )
     return fig
+
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "debug":
