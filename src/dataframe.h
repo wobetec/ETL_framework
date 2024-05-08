@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <map>
+#include <set>
 
 #include "series.h"
 
@@ -27,6 +28,11 @@ class DataFrame {
 
             shape.first = series[0].shape();
             shape.second = series.size();
+        }
+        DataFrame(std::map<std::string, Series<T>> data) {
+            for (auto const& [key, val] : data) {
+                addColumn(key, Series<T>(val));
+            }
         }
 
         // Copy constructor
@@ -58,12 +64,23 @@ class DataFrame {
             }
         }
 
+        // Rename column
+        void renameColumn(std::string oldName, std::string newName) {
+            int column = column_id(oldName);
+
+            if (column == -1) {
+                throw std::invalid_argument("Column does not exist" + oldName);
+            }
+
+            columns[column] = newName;
+        }
+        
         // Add to the DataFrame
         void addColumn(std::string columnName, Series<T> newSeries) {
 
             if (shape.first != 0 && shape.first != newSeries.shape()) {
                 std::cout << shape.first << " " << newSeries.shape() << std::endl;
-                throw std::invalid_argument("Series must have the same size");
+                throw std::invalid_argument("New Column must have the same size as the DataFrame");
             }
             
             int column = column_id(columnName);
@@ -137,7 +154,7 @@ class DataFrame {
             int column = column_id(columnName);
 
             if (column == -1) {
-                throw std::invalid_argument("Column does not exist drop " + columnName);
+                throw std::invalid_argument("dropColumn: Column does not exist drop " + columnName);
             }
 
             columns.erase(columns.begin() + column);
@@ -317,38 +334,50 @@ class DataFrame {
         template <typename U>
         DataFrame<T> merge(DataFrame<T> &other, std::string leftOn, std::string rightOn) {
             /**
-             * @brief Merge two DataFrames based on a single column
+             * @brief Merge two DataFrames based on a single column always with inner join
              * 
              * @param other The DataFrame to merge
              * @param leftOn The column to merge from the left DataFrame
              * @param rightOn The column to merge from the right DataFrame
              * @return DataFrame<T> The merged DataFrame
              */
-            DataFrame<T> result = copy();
-
             int leftColumn = column_id(leftOn);
             int rightColumn = other.column_id(rightOn);
 
             if (leftColumn == -1) {
-                throw std::invalid_argument("Column does not exist " + leftOn);
+                throw std::invalid_argument("DataFrame.merge: leftOn column does not exist " + leftOn);
             }
             if (rightColumn == -1) {
-                throw std::invalid_argument("Column does not exist " + rightOn);
+                throw std::invalid_argument("DataFrame.merge: rightOn column does not exist " + rightOn);
             }
 
             std::vector<std::string> rightColumns = other.columns;
             std::map<U, int> rightMap;
+            std::set<U> rightSet;
 
+            // gera o map
             for (int i = 0; i < other.shape.first; i++) {
                 rightMap[std::get<U>(other[rightOn][i])] = i;
+                rightSet.insert(std::get<U>(other[rightOn][i]));
             }
+
+            // filtra os valores que existem nos dois dataframes
+            std::vector<DefaultObject> leftMask;
+            for (int i = 0; i < shape.first; i++) {
+                if (rightSet.find(std::get<U>(series[leftColumn][i])) != rightSet.end()) {
+                    leftMask.push_back(true);
+                } else {
+                    leftMask.push_back(false);
+                }
+            }
+            DataFrame<T> result = filter(Series<DefaultObject>(leftMask));
 
             for(std::string column : rightColumns) {
                 if (column == rightOn) {
                     continue;
                 }
                 std::vector<T> newColumn;
-                for (int i = 0; i < shape.first; i++) {
+                for (int i = 0; i < result.shape.first; i++) {
                     newColumn.push_back(other[column][rightMap[std::get<U>(series[leftColumn][i])]]);
                 }
                 result.addColumn(column, Series<T>(newColumn));

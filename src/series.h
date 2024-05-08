@@ -155,6 +155,8 @@ class Series {
                     throw std::invalid_argument("Invalid operator");
                 }
             }
+
+            return Series<T>(result);
         }
 
         template <typename U, typename V>
