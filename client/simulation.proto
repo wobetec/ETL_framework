@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package simulation;
+
+service SimulationData {
+  rpc SendEvent (EventRequest) returns (EventResponse) {}
+}
+
+message EventRequest {
+  string event_data = 1;
+}
+
+message EventResponse {
+  string response_message = 1;
+}
