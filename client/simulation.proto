@@ -2,13 +2,17 @@ syntax = "proto3";
 
 package simulation;
 
+//Definir um serviço RPC com um método SendEvent
 service SimulationData {
   rpc SendEvent (EventRequest) returns (EventResponse) {}
 }
 
+//Definir um procedimento remoto que recebe uma EventRequest e retorna uma EventResponse. identificador = 1
 message EventRequest {
   string event_data = 1;
 }
+
+// Define uma mensagem com um campo de resposta. '1' é o identificador de campo.
 
 message EventResponse {
   string response_message = 1;
