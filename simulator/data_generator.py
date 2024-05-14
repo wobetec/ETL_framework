@@ -29,13 +29,13 @@ class Simulation:
     subsubfolders = ['audit', 'behavior', 'failings']
 
 
-    def __init__(self):
+    def __init__(self, user_min=0, user_max=1000, product_min=0, product_max=1000):
         # First load of data
         self.user_generator = UserGenerator()
-        self.users = pd.DataFrame([self.user_generator.generate_user(i) for i in range(1000)])
+        self.users = pd.DataFrame([self.user_generator.generate_user(i) for i in range(user_min, user_max)])
 
         self.product_generator = ProductGenerator()
-        self.products = pd.DataFrame([self.product_generator.generate_product(i) for i in range(1000)])
+        self.products = pd.DataFrame([self.product_generator.generate_product(i) for i in range(product_min, product_max)])
         
         self.stock = self.products[['product_id']].copy()
         self.stock['available_quantity'] = np.random.randint(100, 1000, len(self.stock))
@@ -257,5 +257,5 @@ if __name__ == '__main__':
         start_time = time.perf_counter()
         num_events = np.random.randint(1000, 10000)
         simulation.run(num_events)
-        # simulation.clear_old_logs(120)
+        simulation.clear_old_logs(120)
         print(f"Execution step time: {time.perf_counter() - start_time}")

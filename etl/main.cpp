@@ -126,8 +126,8 @@ int main(){
     t_a6.start();
 
     // Load
-    // LoaderThreads t_load(q_load);
-    // t_load.start();
+    LoaderThreads t_load(q_load);
+    t_load.start();
 
     // Simulate
     while(true){
@@ -159,7 +159,7 @@ int main(){
     t_a5.join();
     t_a6.join();
 
-    // t_load.join();
+    t_load.join();
     
     return 0;
 }

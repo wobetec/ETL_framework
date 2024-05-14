@@ -98,7 +98,6 @@ void RepoData::loadData(DataFrame<DefaultObject> *df) {
 //         close(file_descriptor);
 //         return;
 //     }
-    df->print();
     strategy_->loadData(df);
 
     // if (flock(file_descriptor, LOCK_UN) == -1) {
