@@ -62,6 +62,7 @@ class DataFrame {
         void addColumn(std::string columnName, Series<T> newSeries) {
 
             if (shape.first != 0 && shape.first != newSeries.shape()) {
+                std::cout << shape.first << " " << newSeries.shape() << std::endl;
                 throw std::invalid_argument("Series must have the same size");
             }
             
@@ -110,6 +111,20 @@ class DataFrame {
                 // If the column exists, return the existing series
                 return series[column];
             }
+        }
+
+        DataFrame<T> operator[](const std::vector<std::string>& columnNames) {
+            DataFrame<T> result;
+
+            for (std::string column : columnNames) {
+                int columnId = column_id(column);
+                if (columnId == -1) {
+                    throw std::invalid_argument("Column does not exist");
+                }
+                result.addColumn(column, series[columnId]);
+            }
+
+            return result;
         }
 
         // Manipulation methods
@@ -364,7 +379,6 @@ class DataFrame {
                 columnsToAggregateIds.push_back(aggColumnId);
             }
 
-
             std::map<U, std::vector<int>> groups;
 
             for (int i = 0; i < shape.first; i++) {
@@ -436,7 +450,7 @@ class DataFrame {
         }
 
         template <typename U>
-        DataFrame<T> count(std::string columnName) {
+        DataFrame<T> count(std::string columnName, std::string columnNameCount = "count") {
             /**
              * @brief Count the number of occurrences of each value in a column
              * 
@@ -458,7 +472,7 @@ class DataFrame {
             DataFrame<T> result;
 
             for (auto const& [key, val] : counts) {
-                result.append({{columnName, key}, {"count", val}});
+                result.append({{columnName, key}, {columnNameCount, val}});
             }
 
             return result;

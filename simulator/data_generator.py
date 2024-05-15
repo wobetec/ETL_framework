@@ -677,4 +677,4 @@ while True:
     gen_randomlog(num_events)
     folder_path = os.path.join('data', 'datacat')
     delete_old_files(folder_path=folder_path, waiting_time=120)
-    time.sleep(45)
+    time.sleep(10)

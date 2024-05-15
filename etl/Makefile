@@ -1,24 +1,8 @@
-MAKEFILE_DIR = $(dir $(lastword $(MAKEFILE_LIST)))
-
-build:
-	g++ \
-		-c \
-			$(MAKEFILE_DIR)/src/DF_CadeAnalytics.cpp \
-		-o  \
-			$(MAKEFILE_DIR)/etl.o \
-
-build_framework:
-	make -f ../src/Makefile build
-
-main: build_framework
+main: 
 	g++ \
 		main.cpp \
-
-		-L../src/lib \
-		-l:framework.a \
-		
+		../src/datetime.cpp \
+		../src/repodata.cpp \
+		-l sqlite3\
 		-o \
-			test.out \
-
-test: 
-	g++ main.cpp ../src/datetime.cpp ../src/repodata.cpp -o main.out
+			main.out

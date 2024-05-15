@@ -4,6 +4,7 @@
 #include "handlers.h"
 #include "object.h"
 #include "extractors.h"
+#include "loaders.h"
 
 #define DEFAULT_QUEUE_SIZE 5
 
@@ -118,18 +119,20 @@ int main(){
     HandlerA4 t_a4(q_t_4, {{"load", &q_load}}, cache);
     t_a4.start();
 
-    HandlerA5 t_a5(q_t_5, {{"load", &q_load}});
+    HandlerA5 t_a5(q_t_5, {{"load", &q_load}}, cache);
     t_a5.start();
 
     HandlerA6 t_a6(q_t_6, {{"load", &q_load}}, cache);
     t_a6.start();
 
-    HandlerA7 t_a7(q_t_7, {{"load", &q_load}}, cache);
-    t_a7.start();
+    // HandlerA7 t_a7(q_t_7, {{"load", &q_load}}, cache);
+    // t_a7.start();
 
+    // Load
+    LoaderThreads t_load(q_load);
+    t_load.start();
 
     // Simulate
-
     while(true){
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         tg_cade.run();
@@ -158,7 +161,9 @@ int main(){
     t_a4.join();
     t_a5.join();
     t_a6.join();
-    t_a7.join();
+    // t_a7.join();
 
+    t_load.join();
+    
     return 0;
 }
