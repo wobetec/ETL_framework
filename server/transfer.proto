@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package transfer;
+
+service FileService {
+    // recebe um arquivo e retorna uma confirmação
+    rpc UploadFile(FileUploadRequest) returns (FileUploadResponse);
+}
+
+// solicitação para o RPC de upload de arquivo
+message FileUploadRequest {
+    string filename = 1;
+    bytes file_content = 2;
+}
+
+// resposta do RPC de upload de arquivo
+message FileUploadResponse {
+    string message = 1;
+}
