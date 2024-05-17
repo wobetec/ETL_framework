@@ -39,9 +39,9 @@ class ExtractThread : public ThreadWrapper<Queue<std::string, std::string>, Queu
                 } else if (key == "cade"){
                     std::cout << "#######> cade" << std::endl;
                     std::cout << data.second << std::endl;
-                    // repoData.setStrategy(RepoData::ExtractorTXTType, "../simulator/data/cadeanalytics/cade_analytics.txt");
-                    // df = repoData.extractData();
-                    // outQueues.enQueue(std::make_pair(key, df));
+                    repoData.setStrategy(RepoData::ExtractorStringType, data.second);
+                    df = repoData.extractData();
+                    outQueues.enQueue(std::make_pair(key, df));
                 } else if (key == "datacat") {
                     auto lock = map_mutex.getLock("datacat");
 
