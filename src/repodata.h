@@ -19,7 +19,8 @@ public:
     enum ExtractorEstrategyType {
         ExtractorCSVType,
         ExtractorTXTType,
-        ExtractorSQLType
+        ExtractorSQLType,
+        ExtractorStringType
     };
     RepoData();
     void setStrategy(int type, std::string path = "", DB *db = nullptr, std::string table = "");
@@ -67,6 +68,16 @@ public:
     ExtractorSQL(DB *db, std::string table = ""){
         db_ = db;
         table_ = table;
+    };
+    DataFrame<DefaultObject> extractData() override;
+    void loadData(DataFrame<DefaultObject> *df) override;
+};
+
+class ExtractorString : public ExtractorEstrategy {
+public:
+    std::string data_;
+    ExtractorString(std::string data){
+        data_ = data;
     };
     DataFrame<DefaultObject> extractData() override;
     void loadData(DataFrame<DefaultObject> *df) override;
