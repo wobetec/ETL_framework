@@ -5,6 +5,7 @@
 #include "object.h"
 #include "extractors.h"
 #include "loaders.h"
+#include "rpc_trigger.h"
 
 #define DEFAULT_QUEUE_SIZE 5
 
@@ -21,12 +22,13 @@ int main(){
     TimeTrigger tg_produtos(q_trigger, 1000, "produtos", "extract");
     TimeTrigger tg_estoque(q_trigger, 1000, "estoque", "extract");
     TimeTrigger tg_compras(q_trigger, 1000, "compras", "extract");
-    RequestTrigger tg_cade(q_trigger, "cade", "extract");
+    RCPTrigger tg_cade_rpc(q_trigger, "cade", "extract");
 
     tg_datacat.start();
     tg_produtos.start();
     tg_estoque.start();
     tg_compras.start();
+    tg_cade_rpc.start();
 
     MapMutex<string> map_mutex;
 
@@ -129,12 +131,6 @@ int main(){
     LoaderThreads t_load(q_load);
     t_load.start();
 
-    // Simulate
-    while(true){
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-        tg_cade.run();
-    }
-
     t_extract_1.join();
     t_extract_2.join();
     t_extract_3.join();
@@ -144,6 +140,7 @@ int main(){
     tg_produtos.join();
     tg_estoque.join();
     tg_compras.join();
+    tg_cade_rpc.join();
 
     t_spliter.join();
     t_datacat.join();

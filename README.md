@@ -29,6 +29,20 @@ Para executar o projeto, com o simulador em execução e os arquivos compilados,
 ./main.out
 ```
 
+## Proto3
+
+    pip install grpcio-tools
+
+    python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. simulation.proto
+
+
+## sqlite3
+
+    sudo apt-get update
+    sudo apt-get install libsqlite3-dev
+
+
+
 ## Dashboard Dash/Plotly
 Primeiro é necessário instalar as dependências do projeto. Cada aplicação (Dashboard e Simulador) possuiem suas dependências de forma separada.
 ```

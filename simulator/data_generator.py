@@ -1,3 +1,4 @@
+from pdb import run
 import time
 import numpy as np
 import pandas as pd
@@ -138,7 +139,7 @@ class Simulation:
         return pd.DataFrame(visualized_products)
 
 
-    def gen_cadeanalytics(self, num_events):
+    def gen_cadeanalytics(self, num_events, return_cadeanalytics=False):
 
         df_cadeanalytics = []
         visualized_products = []
@@ -164,6 +165,10 @@ class Simulation:
             })
         csv_path = os.path.join('data', 'cadeanalytics', "cade_analytics.txt")
         df_cadeanalytics = pd.DataFrame(df_cadeanalytics)
+
+        if return_cadeanalytics:
+            return df_cadeanalytics.to_csv(index=False, sep=';')
+        
         save(df_cadeanalytics, csv_path, sep=';')
 
         return pd.DataFrame(visualized_products)
@@ -224,7 +229,7 @@ class Simulation:
         save(self.orders, os.path.join(contaverde_path, 'orders.txt'), sep=',')
 
 
-    def run(self, num_events):
+    def run_others(self, num_events):
         # Generate events
         start_time = time.perf_counter()
         vis_datacat = self.gen_datacat(num_events//2)
@@ -245,9 +250,17 @@ class Simulation:
         self.save_contaverde()
 
 
+    def run_cadeanalytics(self, num_events):
+        # Generate events
+        start_time = time.perf_counter()
+        string_cadeanalytics = self.gen_cadeanalytics(num_events, True)
+        print(f"\tCadeanalytics time: {time.perf_counter() - start_time}")
+        return string_cadeanalytics
+
+
 if __name__ == '__main__':
     start_time = time.perf_counter()
-    simulation = Simulation()
+    simulation = Simulation(user_min=0, user_max=1000, product_min=0, product_max=1000)
     simulation.delete_folders()
     simulation.create_folders()
     print(f"Initialization time: {time.perf_counter() - start_time}")
@@ -256,6 +269,7 @@ if __name__ == '__main__':
     while True:
         start_time = time.perf_counter()
         num_events = np.random.randint(1000, 10000)
-        simulation.run(num_events)
+        simulation.run_others(num_events)
         simulation.clear_old_logs(120)
         print(f"Execution step time: {time.perf_counter() - start_time}")
+
