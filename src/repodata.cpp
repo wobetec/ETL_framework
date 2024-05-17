@@ -284,6 +284,8 @@ DataFrame<DefaultObject> ExtractorString::extractData() {
     std::vector<std::vector<std::string>> allData = {};
     std::stringstream ss(data_);
 
+    std::cout << "Data 2: " << data_ << std::endl;
+
     while (std::getline(ss, line, '\n')) {
         std::stringstream ss(line);
         std::string cell;
@@ -295,7 +297,7 @@ DataFrame<DefaultObject> ExtractorString::extractData() {
     }
 
     std::vector<std::string> columns = allData[0];
-    
+
     DataFrame<DefaultObject> df;
     allData.erase(allData.begin());
     for (auto row : allData) {

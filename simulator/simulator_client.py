@@ -36,7 +36,7 @@ def simulator_thread(user_min, user_max):
 
 if __name__ == "__main__":
 
-    N = 4
+    N = 3
     user_min = 500
     user_max = 1000
     delta = int((user_max - user_min) / N)

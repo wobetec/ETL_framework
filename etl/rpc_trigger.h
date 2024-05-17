@@ -32,9 +32,10 @@ class RCPTrigger : public Trigger {
             while(running){
                 new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen);
                 read(new_socket, buffer, BUFFER_SIZE);
-                std::cout << "Data received: " << buffer << std::endl;
-                second = buffer;
-                addToQueue();
+                // create a hard copy of the buffer to var second
+                std::string second = buffer;
+                outQueue.enQueue(std::make_pair("cade", second));
+                //addToQueue();
             }
 
             close(new_socket);

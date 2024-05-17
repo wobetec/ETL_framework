@@ -38,7 +38,8 @@ class ExtractThread : public ThreadWrapper<Queue<std::string, std::string>, Queu
                     outQueues.enQueue(std::make_pair(key, df));
                 } else if (key == "cade"){
                     std::cout << "#######> cade" << std::endl;
-                    repoData.setStrategy(RepoData::ExtractorStringType, data.second);
+                    std::cout << "HHHHHHHHHH " << value << std::endl;
+                    repoData.setStrategy(RepoData::ExtractorStringType, value);
                     df = repoData.extractData();
                     std::cout << "#######> cade" << std::endl;
                     outQueues.enQueue(std::make_pair(key, df));
