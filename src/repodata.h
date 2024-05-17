@@ -23,7 +23,7 @@ public:
         ExtractorStringType
     };
     RepoData();
-    void setStrategy(int type, std::string path = "", DB *db = nullptr, std::string table = "");
+    void setStrategy(int type, std::string path = "", DB *db = nullptr, std::string table = "", std::string data = "");
     DataFrame<DefaultObject> extractData();
     void loadData(DataFrame<DefaultObject> *df);
     ExtractorEstrategy* strategy_ = nullptr;

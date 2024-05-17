@@ -22,7 +22,7 @@ RepoData::RepoData() {
 }
 
 // Set Strategy
-void RepoData::setStrategy(int type, std::string path, DB *db, std::string table) {
+void RepoData::setStrategy(int type, std::string path, DB *db, std::string table, std::string data) {
     /**
     * @brief Set the strategy to extract data
     * @param type: Type of the strategy
@@ -43,7 +43,7 @@ void RepoData::setStrategy(int type, std::string path, DB *db, std::string table
             strategy_ = new ExtractorSQL(db, table);
             break;
         case ExtractorStringType:
-            strategy_ = new ExtractorEstrategy(data);
+            strategy_ = new ExtractorString(data);
             break;
         default:
             strategy_ = nullptr;
@@ -280,10 +280,10 @@ DataFrame<DefaultObject> ExtractorString::extractData() {
     * @return DataFrame<DefaultObject>: Dataframe object
     */
     std::cout << "Extracting data from String" << std::endl;
-    std::vector<std::vector<std::string>> data;
-
-    std::stringstream ss(data_);
     std::string line;
+    std::vector<std::vector<std::string>> allData = {};
+    std::stringstream ss(data_);
+
     while (std::getline(ss, line, '\n')) {
         std::stringstream ss(line);
         std::string cell;
@@ -291,13 +291,14 @@ DataFrame<DefaultObject> ExtractorString::extractData() {
         while (std::getline(ss, cell, ',')) {
             data.push_back(cell);
         }
-        data.push_back(data);
+        allData.push_back(data);
     }
 
-    std::vector<std::string> columns = data[0];
+    std::vector<std::string> columns = allData[0];
+    
     DataFrame<DefaultObject> df;
-    data.erase(data.begin());
-    for (auto row : data) {
+    allData.erase(allData.begin());
+    for (auto row : allData) {
         std::map<std::string, DefaultObject> rowMap;
         for (int i = 0; i < columns.size(); i++) {
             rowMap[columns[i]] = row[i];

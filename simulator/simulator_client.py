@@ -25,8 +25,10 @@ def simulator_thread(user_min, user_max):
 
     # Main loop
     while True:
+        print(f"Generating data for {user_min} to {user_max} users")
         start_time = time.perf_counter()
         num_events = np.random.randint(1000, 10000)
+        print(f"Number of events: {num_events}")
         data = simulation.run_cadeanalytics(num_events)
         send_event(data)
         print(f"Execution step time: {time.perf_counter() - start_time}")
@@ -34,7 +36,7 @@ def simulator_thread(user_min, user_max):
 
 if __name__ == "__main__":
 
-    N = 1
+    N = 4
     user_min = 500
     user_max = 1000
     delta = int((user_max - user_min) / N)
